@@ -1,0 +1,1 @@
+export { fakeReducer } from './fakeReducer';
