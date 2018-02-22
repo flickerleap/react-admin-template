@@ -12,9 +12,11 @@ const data = [
     {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
 ];
 
-const data01 = [{name: '18 - 25', value: 400}, {name: '25 - 35', value: 300},
+const data01 = [
+    {name: '18 - 25', value: 400}, {name: '25 - 35', value: 300},
     {name: '35 - 45', value: 300}, {name: '45 - 55', value: 200},
-    {name: '55 - 65', value: 278}, {name: '65 - 75', value: 189}]
+    {name: '55 - 65', value: 278}, {name: '65 - 75', value: 189}
+];
 
 const DashboardScreen = () => (
     <div className='row'>
