@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../components/Card';
+import Card from '../components/display/Card';
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const data = [
