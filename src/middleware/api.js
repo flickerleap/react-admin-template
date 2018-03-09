@@ -1,4 +1,3 @@
-import qs from "query-string";
 import attemptRefresh, {createFSAConverter} from "redux-refresh-token";
 import {attemptTokenRefresh, logout} from "../store/actions/actions";
 
@@ -15,7 +14,7 @@ export default store =>
                 return next(action);
             }
 
-            let {endpoint, method, body, query, headers = {}} = callAPI;
+            let {endpoint, method, body, headers = {}} = callAPI;
             const {types} = callAPI;
 
             headers["Content-Type"] = "application/json";
@@ -40,13 +39,8 @@ export default store =>
                 body = JSON.stringify(body);
             }
 
-            let queryString = "";
-            if (query) {
-                queryString += "?" + qs.stringify(query);
-            }
-
             return (
-                fetch(`${API_ROOT}${endpoint}${queryString}`, {
+                fetch(`${API_ROOT}${endpoint}`, {
                     method,
                     body,
                     headers,
