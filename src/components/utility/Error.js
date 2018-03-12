@@ -1,9 +1,9 @@
-import React from 'react';
-
-const Error = (props) => (
+const Error = ({errors = []}) => (
     <div className="alert alert-danger" role="alert">
-        {props.error}
+        {
+            errors.map((error) => (
+                <span>{error}<br/></span>
+            ))
+        }
     </div>
 );
-
-export default Error;
