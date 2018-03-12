@@ -1,5 +1,5 @@
 {
-  "name": "boilerplate",
+  "name": "react-admin-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,20 +8,11 @@
     "build": "webpack",
     "watch": "webpack-dev-server"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Flicker Leap",
+  "license": "MIT",
   "dependencies": {
-    "axios": "^0.18.0",
-    "babel-cli": "6.24.1",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.0.0",
-    "enzyme": "^3.3.0",
     "jquery": "^3.3.1",
-    "live-server": "^1.2.0",
-    "node-sass": "^4.7.2",
     "normalize.css": "^7.0.0",
     "popper.js": "^1.12.9",
     "react": "^16.0.0",
@@ -29,27 +20,30 @@
     "react-modal": "^3.1.12",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "recharts": "^1.0.0-beta.10",
     "redux": "^3.7.2",
     "redux-auth-wrapper": "^2.0.2",
     "redux-persist": "^5.9.1",
     "redux-refresh-token": "^0.1.0",
     "redux-thunk": "^2.2.0",
-    "sass-loader": "^6.0.6",
-    "uuid": "^3.2.1",
-    "validator": "^9.4.0",
-    "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
+    "validator": "^9.4.0"
   },
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-cli": "6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.9",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "install": "^0.10.4",
     "jest": "^22.4.2",
     "npm": "^5.6.0",
-    "style-loader": "^0.20.1"
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.20.1",
+    "webpack": "^3.1.0",
+    "webpack-dev-server": "^2.5.1"
   }
 }

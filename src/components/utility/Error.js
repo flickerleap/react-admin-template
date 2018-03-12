@@ -1,9 +1,22 @@
-const Error = ({errors = []}) => (
+import React from 'react';
+
+/**
+ *
+ * @param errors
+ * @returns {*}
+ * @constructor
+ */
+const Error = ({errors = {}}) => (
     <div className="alert alert-danger" role="alert">
         {
-            errors.map((error) => (
-                <span>{error}<br/></span>
+            Object.keys(errors).map((key, index)=>(
+                <div key={index}>
+                    <span>{errors[key]}</span>
+                    <br/>
+                </div>
             ))
         }
     </div>
 );
+
+export default Error;

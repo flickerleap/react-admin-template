@@ -13,15 +13,16 @@ export default class Form extends React.Component {
             data = undefined,
             fields = [],
             newRecord = true,
-            dataType = ''
+            dataType = '',
+            error = undefined
         } = this.props;
 
         this.state = {
             data,
             fields,
-            newRecord: newRecord !== undefined ? newRecord : true,
+            newRecord,
             dataType,
-            error: undefined,
+            error,
         };
 
         this.setup();
@@ -96,10 +97,11 @@ export default class Form extends React.Component {
     };
 
     render() {
+        const {errors = []} = this.props;
         return (
             <div>
                 {
-                    this.state.error && <Error error={this.state.error} />
+                    Object.keys(errors).length > 0 && <Error errors={errors} />
                 }
                 <form onSubmit={this.onSubmit}>
                     <div className="row">
