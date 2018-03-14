@@ -1,8 +1,21 @@
 import React from 'react';
 
-const Error = (props) => (
+/**
+ *
+ * @param errors
+ * @returns {*}
+ * @constructor
+ */
+const Error = ({errors = {}}) => (
     <div className="alert alert-danger" role="alert">
-        {props.error}
+        {
+            Object.keys(errors).map((key, index)=>(
+                <div key={index}>
+                    <span>{errors[key]}</span>
+                    <br/>
+                </div>
+            ))
+        }
     </div>
 );
 
