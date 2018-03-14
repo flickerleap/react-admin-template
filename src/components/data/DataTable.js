@@ -1,5 +1,6 @@
 import React from 'react';
 import ActionColumn from "./ActionColumn";
+import Pagination from "./Pagination";
 
 export default class DataTable extends React.Component {
     constructor(props) {
@@ -9,6 +10,11 @@ export default class DataTable extends React.Component {
             items: props.items !== undefined ? props.items : [],
             first: props.items.length > 0 ? props.items[0] : undefined,
             fields: props.fields !== undefined ? props.fields : [],
+            pagination: props.meta !== undefined ? props.meta : {
+                total: 1,
+                currentPage: 1,
+                link: ''
+            },
             filters: [],
             rows: [],
             headers: []
@@ -31,7 +37,7 @@ export default class DataTable extends React.Component {
         if (this.state.first) {
             this.setState(() => ({
                 headers: Object.keys(this.state.first).map((name) => {
-                    if(this.includeField(name)) {
+                    if (this.includeField(name)) {
                         return this.getHeaderName(name);
                     }
                 })
@@ -61,7 +67,7 @@ export default class DataTable extends React.Component {
                 {Object.keys(item).map((name) => {
                     return this.includeField(name) && <td key={name}>{item[name]}</td>;
                 })}
-                <ActionColumn item={item} actions={actions} />
+                <ActionColumn item={item} actions={actions}/>
             </tr>;
         });
     }
@@ -78,7 +84,7 @@ export default class DataTable extends React.Component {
 
     render() {
         const {title = ''} = this.props;
-
+        const {pagination} = this.state;
         return (
             <div>
                 <h4>{title}</h4>
@@ -96,6 +102,7 @@ export default class DataTable extends React.Component {
                     {this.getRows()}
                     </tbody>
                 </table>
+                <Pagination pageCount={pagination.total} current={pagination.currentPage} link={pagination.link}/>
             </div>
         );
     }

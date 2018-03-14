@@ -25,13 +25,13 @@ const Nav = ({className, links = []}) => (
                 } : {};
                 return (
                     <li key={index} className={hasItems ? "nav-item dropdown" : "nav-items"}>
-                        <NavLink className={hasItems ? "nav-link dropdown-toggle" : "nav-link"} to={hasItems ? "#" : link.path} {...dropdownProps}>{link.label}</NavLink>
+                        <NavLink className={hasItems ? "nav-link dropdown-toggle" : "nav-link"} to={hasItems ? "#" : link.url} {...dropdownProps}>{link.label}</NavLink>
                         {
                             hasItems && (
                                 <div className="dropdown-menu">
                                     {
                                         items.map((item, index)=>(
-                                            <NavLink key={index} className="dropdown-item" to={item.path}>{item.label}</NavLink>
+                                            <NavLink key={index} className="dropdown-item" to={item.url}>{item.label}</NavLink>
                                         ))
                                     }
                                 </div>
