@@ -1,7 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { AdminLayout } from './layouts/layouts';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {connect, Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {userNeedsAuthentication, userDoesNotNeedAuthentication} from "./helpers/authGuard";
+import Loading from "./components/utility/Loading";
 
 class Root extends React.Component {
 
@@ -12,19 +14,47 @@ class Root extends React.Component {
         );
     };
 
+    processComponent = ({
+        component,
+        isPublic = false,
+    }) => {
+        if (!isPublic) {
+            return userNeedsAuthentication(component);
+        } else {
+            return userDoesNotNeedAuthentication(component);
+        }
+    };
+
     render() {
+        const {store, persistor, routes, LayoutComponent} = this.props;
+
         return (
-            <Provider store={this.props.store}>
-                <Router>
-                    <Switch>
-                        <Route path='/' render={(props) => {
-                            return this.setComponentProps(AdminLayout, props, {routes: this.props.routes});
-                        }} />
-                    </Switch>
-                </Router>
+            <Provider store={store}>
+                <PersistGate loading={<Loading/>} persistor={persistor}>
+                    <Router>
+                        <Switch>
+                            <Route path='/' render={(props) => {
+                                return this.setComponentProps(LayoutComponent, props, {
+                                    routes,
+                                    getComponent: this.processComponent
+                                });
+                            }}/>
+                        </Switch>
+                    </Router>
+                </PersistGate>
             </Provider>
         );
-    }
+    };
 }
 
-export default Root;
+const mapStateToProps = (state) => ({
+    isAuthenticated: !!state.auth.accessToken,
+    accessToken: state.auth.accessToken,
+    refreshToken: state.auth.refreshToken
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    login: ({accessToken, refreshToken}) => dispatch(login({accessToken, refreshToken}))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root);
