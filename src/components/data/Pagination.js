@@ -1,7 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const Pagination = ({link, pageCount = 1, current = 1}) => {
+/**
+ * Component to add Pagination to a table or list
+ *
+ * @param link
+ * @param total
+ * @param perPage
+ * @param current
+ * @returns {*}
+ * @constructor
+ */
+const Pagination = ({link, total = 1, perPage = 1, current = 1}) => {
+    const pageCount = Math.ceil(total/perPage);
     let pages = [];
     for(let i = 1; i <= pageCount; i++){
         pages.push({

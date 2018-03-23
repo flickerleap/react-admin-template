@@ -2,6 +2,13 @@ import React from 'react';
 import ActionColumn from "./ActionColumn";
 import Pagination from "./Pagination";
 
+/**
+ * Component to display rows of data in a table
+ *
+ * @param props
+ * @returns {*}
+ * @constructor
+ */
 export default class DataTable extends React.Component {
     constructor(props) {
         super(props);
@@ -10,15 +17,18 @@ export default class DataTable extends React.Component {
             items: props.items !== undefined ? props.items : [],
             first: props.items.length > 0 ? props.items[0] : undefined,
             fields: props.fields !== undefined ? props.fields : [],
-            pagination: props.meta !== undefined ? props.meta : {
+            pagination: props.pagination !== undefined ? props.pagination : {
                 total: 1,
-                currentPage: 1,
+                current: 1,
+                perPage: 1,
                 link: ''
             },
             filters: [],
             rows: [],
             headers: []
         };
+
+        console.log(this.state.pagination);
     }
 
     componentDidMount() {
@@ -102,7 +112,7 @@ export default class DataTable extends React.Component {
                     {this.getRows()}
                     </tbody>
                 </table>
-                <Pagination pageCount={pagination.total} current={pagination.currentPage} link={pagination.link}/>
+                <Pagination {...pagination}/>
             </div>
         );
     }
