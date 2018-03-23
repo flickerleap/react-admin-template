@@ -11,9 +11,12 @@ import CampusScreen from "../screens/Campus/CampusScreen";
 import AddCampusScreen from "../screens/Campus/AddCampusScreen";
 import AddMeetingTypeScreen from "../screens/MeetingType/AddMeetingTypeScreen";
 
-export const AdminLayout = ({ routes = []}) => (
+export const AdminLayout = ({ 
+    routes = [], 
+    appConfig
+}) => (
     <div>
-        <Header />
+        <Header {...appConfig}/>
         <div className='container-fluid'>
             <div className='row flex-xl-nowrap'>
                 <div className='col-lg-2 col-md-3 sidebar p-4 bg-light border-right'>

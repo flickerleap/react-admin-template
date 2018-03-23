@@ -26,7 +26,7 @@ class Root extends React.Component {
     };
 
     render() {
-        const {store, persistor, routes, LayoutComponent} = this.props;
+        const {store, persistor, routes, LayoutComponent, appConfig = {title='Admin'}} = this.props;
 
         return (
             <Provider store={store}>
@@ -35,6 +35,7 @@ class Root extends React.Component {
                         <Switch>
                             <Route path='/' render={(props) => {
                                 return this.setComponentProps(LayoutComponent, props, {
+                                    appConfig,
                                     routes,
                                     getComponent: this.processComponent
                                 });
