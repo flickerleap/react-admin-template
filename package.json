@@ -2,16 +2,18 @@
   "name": "react-admin-template",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/react-admin-template.js",
   "scripts": {
-    "serve": "live-server public",
-    "build": "webpack",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
     "watch": "webpack-dev-server"
   },
   "author": "Flicker Leap",
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "html-webpack-plugin": "^3.0.6",
     "jquery": "^3.3.1",
     "normalize.css": "^7.0.0",
     "popper.js": "^1.12.9",
@@ -28,11 +30,11 @@
     "validator": "^9.4.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-cli": "6.24.1",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.9",
@@ -40,10 +42,14 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "install": "^0.10.4",
     "jest": "^22.4.2",
+    "node-sass": "^4.7.2",
     "npm": "^5.6.0",
+    "request-promise-core": "^1.1.1",
+    "request-promise-native": "^1.0.5",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.1",
     "webpack": "^3.1.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.5.1",
+    "webpack-merge": "^4.1.2"
   }
 }
