@@ -35,7 +35,7 @@ export {now} from './helpers/time';
 export {AdminLayout} from "./layouts/layouts";
 
 /** MIDDLEWARE */
-export {apiMiddleware} from "./middleware/api";
+export {apiMiddleware, CALL_API} from "./middleware/api";
 
 /** STORE */
 export {authReducer} from "./store/reducers/reducers";
