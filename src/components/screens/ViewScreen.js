@@ -1,6 +1,6 @@
 import React from 'react';
 import {DataTable} from '../data/DataTable';
-import Loading from "../utility/Loading";
+import {Loading} from "../utility/Loading";
 
 export class ViewScreen extends React.Component {
 

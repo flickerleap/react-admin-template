@@ -1,6 +1,6 @@
 import React from 'react';
-import ActionColumn from "./ActionColumn";
-import Pagination from "./Pagination";
+import {ActionColumn} from "./ActionColumn";
+import {Pagination} from "./Pagination";
 
 /**
  * Component to display rows of data in a table

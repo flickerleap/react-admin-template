@@ -1,13 +1,12 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import {connect, Provider} from 'react-redux';
+import {Provider} from 'react-redux';
 import {AdminLayout} from './layouts/layouts';
 import {PersistGate} from 'redux-persist/integration/react';
-import {login} from "./store/actions/actions";
 import {userNeedsAuthentication, userDoesNotNeedAuthentication} from "./helpers/authGuard";
-import Loading from "./components/utility/Loading";
+import {Loading} from "./components/utility/Loading";
 
-class Root extends React.Component {
+export class Root extends React.Component {
 
     setComponentProps = (component, ...rest) => {
         const finalProps = Object.assign({}, ...rest);
@@ -50,15 +49,3 @@ class Root extends React.Component {
         );
     };
 }
-
-const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.auth.accessToken,
-    accessToken: state.auth.accessToken,
-    refreshToken: state.auth.refreshToken
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    login: ({accessToken, refreshToken}) => dispatch(login({accessToken, refreshToken}))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
