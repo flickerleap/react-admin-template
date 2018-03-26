@@ -11,7 +11,7 @@ import {NavLink} from 'react-router-dom';
  * @returns {*}
  * @constructor
  */
-const Nav = ({className, links = []}) => (
+export const Nav = ({className, links = []}) => (
     <ul className={className}>
         {
             links.map((link, index) => {
@@ -44,5 +44,3 @@ const Nav = ({className, links = []}) => (
         }
     </ul>
 );
-
-export default Nav;

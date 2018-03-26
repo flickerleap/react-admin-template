@@ -6,7 +6,7 @@ import React from 'react';
  * @returns {*}
  * @constructor
  */
-const Error = ({errors = {}}) => (
+export const Error = ({errors = {}}) => (
     <div className="alert alert-danger" role="alert">
         {
             Object.keys(errors).map((key, index)=>(
@@ -18,5 +18,3 @@ const Error = ({errors = {}}) => (
         }
     </div>
 );
-
-export default Error;

@@ -4,9 +4,14 @@
   "description": "",
   "main": "dist/react-admin-template.js",
   "scripts": {
+    "build": "webpack --env dev && webpack --env build && npm run test",
+    "dev": "webpack --progress --colors --watch --env dev",
     "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
     "watch": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flickerleap/react-admin-template.git"
   },
   "author": "Flicker Leap",
   "license": "MIT",
@@ -18,6 +23,7 @@
     "normalize.css": "^7.0.0",
     "popper.js": "^1.12.9",
     "react": "^16.0.0",
+    "react-dates": "^16.4.0",
     "react-dom": "^16.0.0",
     "react-modal": "^3.1.12",
     "react-redux": "^5.0.7",
@@ -44,8 +50,6 @@
     "jest": "^22.4.2",
     "node-sass": "^4.7.2",
     "npm": "^5.6.0",
-    "request-promise-core": "^1.1.1",
-    "request-promise-native": "^1.0.5",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.1",
     "webpack": "^3.1.0",

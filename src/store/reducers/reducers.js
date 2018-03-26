@@ -1,1 +1,1 @@
-export { fakeReducer } from './fakeReducer';
+export { reducer as authReducer } from './authReducer';

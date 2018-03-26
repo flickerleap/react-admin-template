@@ -6,7 +6,7 @@ const buttonDefault = {
     className: 'btn btn-primary'
 };
 
-const Card = ({title = '', text = '', image = '', button = {buttonDefault}}) => (
+export const Card = ({title = '', text = '', image = '', button = {buttonDefault}}) => (
     <div className="card">
         {image && <img className="card-img-top" src={image} alt="Card image cap" />}
         <div className="card-body">
@@ -16,5 +16,3 @@ const Card = ({title = '', text = '', image = '', button = {buttonDefault}}) => 
         </div>
     </div>
 );
-
-  export default Card;

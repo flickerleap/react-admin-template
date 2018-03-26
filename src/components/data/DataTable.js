@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
  * @returns {*}
  * @constructor
  */
-export default class DataTable extends React.Component {
+export class DataTable extends React.Component {
     constructor(props) {
         super(props);
 

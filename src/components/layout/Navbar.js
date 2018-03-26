@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 
-const Navbar = ({className = 'nav', title}) => (
+export const Navbar = ({className = 'nav', title}) => (
     <nav className={className}>
         <a className="navbar-brand" href="#">{title}</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,5 +17,3 @@ const Navbar = ({className = 'nav', title}) => (
         </div>
     </nav>
 );
-
-export default Navbar;

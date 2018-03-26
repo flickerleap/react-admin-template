@@ -1,8 +1,8 @@
 import React from 'react';
-import DataTable from '../data/DataTable';
+import {DataTable} from '../data/DataTable';
 import Loading from "../utility/Loading";
 
-export default class ViewScreen extends React.Component {
+export class ViewScreen extends React.Component {
 
     componentWillMount() {
         this.setState(() => ({
