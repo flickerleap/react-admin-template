@@ -1,4 +1,5 @@
-import attemptRefresh, {createFSAConverter} from "redux-refresh-token";
+import attemptRefresh from "redux-refresh-token";
+import {createFSAConverter} from "../helpers/createFSAConverter";
 import {attemptTokenRefresh, logout} from "../store/actions/actions";
 
 export const CALL_API = 'Call API';
