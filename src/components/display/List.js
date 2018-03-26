@@ -1,6 +1,6 @@
 import React from 'react';
-import Loading from '../utility/Loading';
-import ListItem from './ListItem';
+import {Loading} from '../utility/Loading';
+import {ListItem} from './ListItem';
 
 export class List extends React.Component {
 

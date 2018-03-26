@@ -1,8 +1,8 @@
 import React from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import Error from "../utility/Error";
-import Field from "./Field";
+import {Error} from "../utility/Error";
+import {Field} from "./Field";
 
 export class DynamicForm extends React.Component {
 

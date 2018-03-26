@@ -5,8 +5,6 @@ export class Model {
         this.fields = fields;
         this.links = links;
         this.actions = actions;
-
-        console.log(this.getDefaultObject());
     }
 
     getLinks() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {DynamicForm} from '../form/form';
-import Loading from '../utility/Loading';
+import {Loading} from '../utility/Loading';
 
 export class EditScreen extends React.Component {
     state = {

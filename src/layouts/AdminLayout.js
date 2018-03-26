@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import Header from "../components/layout/Header";
-import Nav from "../components/layout/Nav";
+import {Header} from "../components/layout/Header";
+import {Nav} from "../components/layout/Nav";
 
 export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) => (
     <div>
@@ -29,5 +29,3 @@ export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) 
         </div>
     </div>
 );
-
-export default AdminLayout;
