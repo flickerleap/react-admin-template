@@ -1,8 +1,8 @@
 import React from 'react';
-import Grid from '../../components/grid/Grid';
-import Loading from "../../components/utility/Loading";
+import DataTable from '../data/DataTable';
+import Loading from "../utility/Loading";
 
-export default class MeetingTypeScreen extends React.Component {
+export default class ViewScreen extends React.Component {
 
     componentWillMount() {
         this.setState(() => ({
@@ -20,7 +20,7 @@ export default class MeetingTypeScreen extends React.Component {
     }
 
     render() {
-        const {title = 'View', fields = [], items = [], actions = []} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination={}} = this.props;
         return (
             <div className='row'>
                 <div className='col-md-12'>
@@ -34,11 +34,12 @@ export default class MeetingTypeScreen extends React.Component {
                     {
                         this.state.loading ? <Loading active={this.state.loading}/>
                             :
-                            <Grid
+                            <DataTable
                                 title={title}
                                 fields={fields}
                                 items={items}
                                 actions={actions}
+                                pagination={pagination}
                             />
                     }
                 </div>

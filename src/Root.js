@@ -1,7 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {connect, Provider} from 'react-redux';
+import {AdminLayout} from './layouts/layouts';
 import {PersistGate} from 'redux-persist/integration/react';
+import {login} from "./store/actions/actions";
 import {userNeedsAuthentication, userDoesNotNeedAuthentication} from "./helpers/authGuard";
 import Loading from "./components/utility/Loading";
 
@@ -26,7 +28,7 @@ class Root extends React.Component {
     };
 
     render() {
-        const {store, persistor, routes, LayoutComponent} = this.props;
+        const {store, persistor, routes = [], links = [], appConfig = {title: 'Admin'}} = this.props;
 
         return (
             <Provider store={store}>
@@ -34,8 +36,10 @@ class Root extends React.Component {
                     <Router>
                         <Switch>
                             <Route path='/' render={(props) => {
-                                return this.setComponentProps(LayoutComponent, props, {
+                                return this.setComponentProps(AdminLayout, props, {
                                     routes,
+                                    appConfig,
+                                    links,
                                     getComponent: this.processComponent
                                 });
                             }}/>
