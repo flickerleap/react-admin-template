@@ -5,8 +5,7 @@ export const CALL_API = 'Call API';
 
 const API_ROOT = process.env.MIX_BASE_URL;
 
-
-export default store =>
+export const apiMiddleware = store =>
     next =>
         action => {
             const callAPI = action[CALL_API];

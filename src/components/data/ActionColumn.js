@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const ActionColumn = ({item, actions=[]}) => (
+export const ActionColumn = ({item, actions=[]}) => (
     <td>
         {
             actions.map((action, index)=>(
@@ -10,5 +10,3 @@ const ActionColumn = ({item, actions=[]}) => (
         }
     </td>
 );
-
-export default ActionColumn;

@@ -1,7 +1,7 @@
 import React from 'react';
-import Form from '../../components/form/Form';
+import {DynamicForm} from '../form/form';
 
-export default class AddScreen extends React.Component {
+export class AddScreen extends React.Component {
     onSubmit = (item) => {
         const {redirectPath, add} = this.props;
         add(item).then((response) => {
@@ -15,7 +15,7 @@ export default class AddScreen extends React.Component {
         return (
             <div>
                 <h3>{title}</h3>
-                <Form
+                <DynamicForm
                     fields={fields}
                     onSubmit={this.onSubmit}
                 />

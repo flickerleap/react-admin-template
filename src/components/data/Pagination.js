@@ -11,7 +11,7 @@ import {Link} from 'react-router-dom';
  * @returns {*}
  * @constructor
  */
-const Pagination = ({link, total = 1, perPage = 1, current = 1}) => {
+export const Pagination = ({link, total = 1, perPage = 1, current = 1}) => {
     const pageCount = Math.ceil(total/perPage);
     let pages = [];
     for(let i = 1; i <= pageCount; i++){
@@ -32,5 +32,3 @@ const Pagination = ({link, total = 1, perPage = 1, current = 1}) => {
         </ul>
     );
 };
-
-export default Pagination;

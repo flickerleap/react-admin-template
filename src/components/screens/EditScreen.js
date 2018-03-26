@@ -1,8 +1,8 @@
 import React from 'react';
-import Form from '../../components/form/Form';
+import {DynamicForm} from '../form/form';
 import Loading from '../utility/Loading';
 
-export default class EditScreen extends React.Component {
+export class EditScreen extends React.Component {
     state = {
         loading: false,
         item: {}
@@ -38,7 +38,7 @@ export default class EditScreen extends React.Component {
                 <h3>{title}</h3>
                 {
                     this.state.loading ? <Loading active={this.state.loading}/>
-                        : <Form
+                        : <DynamicForm
                             newRecord={false}
                             fields={fields}
                             onSubmit={this.onSubmit}
