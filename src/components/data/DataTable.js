@@ -6,7 +6,7 @@ import {Pagination} from "./Pagination";
  * Component to display rows of data in a table
  *
  * @param props
- * @returns {*}
+ * @returns {DataTable}
  * @constructor
  */
 export class DataTable extends React.Component {
@@ -27,8 +27,6 @@ export class DataTable extends React.Component {
             rows: [],
             headers: []
         };
-
-        console.log(this.state.pagination);
     }
 
     componentDidMount() {

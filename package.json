@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "clean": "rm -rf dist coverage",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "watch": "webpack-dev-server",
+    "start": "webpack-dev-server --open --config webpack.config.js",
+    "watch": "webpack-dev-server --config ./webpack.config.js",
     "build": "NODE_ENV=production rollup -c",
     "build:staging": "NODE_ENV=staging rollup -c"
   },
@@ -28,6 +28,7 @@
     "jquery": "^3.3.1",
     "normalize.css": "^7.0.0",
     "popper.js": "^1.14.1",
+    "query-string": "^6.0.0",
     "react": "^16.2.0",
     "react-dates": "^16.4.0",
     "react-dom": "^16.2.0",
@@ -69,6 +70,7 @@
     "style-loader": "^0.20.3",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.2",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "webpack-serve": "^0.2.0"
   }
 }

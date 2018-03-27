@@ -8,13 +8,12 @@ export class DynamicForm extends React.Component {
 
     constructor(props) {
         super(props);
-
         const {
             data = undefined,
             fields = [],
             newRecord = true,
             dataType = '',
-            error = undefined
+            errors = []
         } = this.props;
 
         this.state = {
@@ -22,7 +21,7 @@ export class DynamicForm extends React.Component {
             fields,
             newRecord,
             dataType,
-            error,
+            errors
         };
 
         this.setup();
@@ -77,27 +76,36 @@ export class DynamicForm extends React.Component {
 
         let hasError = false;
 
-        let error = '';
+        let errors = [];
+
         this.state.fields.forEach((field) => {
             if(!field.value) {
-                error += `\nPlease set ${field.label}.`;
-                this.setState(() => ({error}));
+                errors.push(`\nPlease set ${field.label}.`);
                 hasError = true;
             }
         });
 
+        this.setState(() => ({errors}));
+
         if(!hasError) {
-            this.setState(() => ({error: ''}));
             const data = this.getData();
-            console.log(data);
             this.props.onSubmit({
                 ...data
             });
         }
     };
 
+    getColumnClass = (columns) => {
+        const total = 12;
+        const amount = total/columns;
+
+        return `col-md-${amount}`;
+    };
+
     render() {
-        const {errors = []} = this.props;
+        const {columns = 2} = this.props;
+        const {errors} = this.state;
+        const columnClass = this.getColumnClass(columns);
         return (
             <div>
                 {
@@ -108,7 +116,7 @@ export class DynamicForm extends React.Component {
                         {
                             this.state.fields.map((field, index) => {
                                 return (
-                                    <div key={index} className="col">
+                                    <div key={index} className={columnClass}>
                                         <div className="form-group">
                                             <Field {...field} onChange={this.onFieldChange} />
                                         </div>
