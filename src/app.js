@@ -15,7 +15,7 @@ export {Field, DynamicForm, Input, Date, DropDown} from './components/form/form'
 export {Header, Nav, Navbar} from "./components/layout/layout";
 
 /** SCREENS */
-export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, LoginScreen, LogoutScreen} from "./components/screens/screens";
+export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";
 
 /** UTILITY */
 export {Loading, Error} from "./components/utility/utility";
