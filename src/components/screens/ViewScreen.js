@@ -22,8 +22,6 @@ export class ViewScreen extends React.Component {
             params,
             currentPage: params.page
         };
-
-        console.log(this.state.params);
     }
 
     componentWillMount() {

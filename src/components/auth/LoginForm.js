@@ -71,7 +71,6 @@ export class LoginForm extends React.Component {
         if(!hasError) {
             this.setState(() => ({error: ''}));
             const data = this.getData();
-            console.log(data);
             this.props.onSubmit(data.email, data.password);
         }
     };
