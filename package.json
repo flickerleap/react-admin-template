@@ -21,6 +21,7 @@
   "author": "Flicker Leap",
   "license": "MIT",
   "dependencies": {
+    "@coreui/react": "^1.0.10",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.19",

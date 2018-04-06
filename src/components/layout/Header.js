@@ -32,20 +32,15 @@ export class Header extends React.Component {
     };
 
     render() {
-        const {rootUrl = '/', title, logo} = this.props;
+        const {rootUrl = '/', title} = this.props;
         return (
             <header className="app-header navbar">
                 <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
                 <NavbarBrand href={rootUrl}>
-                    {logo && <img src={logo} alt="Brand Logo" />}
-                    <span>{title}</span>
                 </NavbarBrand>
                 <NavbarToggler className="d-md-down-none mr-auto" onClick={this.sidebarToggle}>
-                    <span className="navbar-toggler-icon"></span>
-                </NavbarToggler>
-                <NavbarToggler className="d-md-down-none" onClick={this.asideToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
             </header>

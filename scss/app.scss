@@ -2,12 +2,15 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
-// Variables
-@import "variables";
-
 // Bootstrap
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import 'bootstrap-variables';
+
+// Variables
+@import "variables";
+
+// Core
+@import '../node_modules/@coreui/react/React_Starter/scss/core/core';
 
 // Base
 @import "base/base";

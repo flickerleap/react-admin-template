@@ -15,7 +15,7 @@ export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) 
                             routes.map((route, index) => {
                                 return (
                                     <Route key={index} path={route.path} component={getComponent(route)}
-                                           exact={route.exact !== undefined ? route.exact : false}/>
+                                        exact={route.exact !== undefined ? route.exact : false} />
                                 );
                             })
                         }
@@ -23,7 +23,6 @@ export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) 
                 </Container>
 
             </main>
-            <Aside />
         </div>
 
         <Footer copyright={appConfig.copyright}/>
