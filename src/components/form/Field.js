@@ -1,24 +1,20 @@
 import React from "react";
+import {Input} from './inputs/Input';
+import {DropDown} from "./inputs/DropDown";
+import {Date} from "./inputs/Date";
 
 export class Field extends React.Component {
-    getDefaultInput()
-    {
-       return (
-           <input
-               name={this.props.name}
-               className="form-control"
-               type={this.props.type}
-               placeholder={this.props.label}
-               value={this.props.value}
-               onChange={this.props.onChange}
-           />
-       );
-    }
-
     render() {
+        const {custom = (props)=>{}} = this.props;
         switch(this.props.type) {
+            case 'dropdown':
+                return <DropDown {...this.props} />;
+            case 'date':
+                return <Date {...this.props} />;
+            case 'custom':
+                return custom(this.props);
             default:
-                return this.getDefaultInput()
+                return <Input {...this.props} />;
         }
     }
 }
