@@ -9,7 +9,7 @@ export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/
 export {Card, List, ListItem} from "./components/display/display";
 
 /** FORM */
-export {Field, DynamicForm, Input, Date, DropDown} from './components/form/form';
+export {Field, DynamicForm, Input, DropDown} from './components/form/form';
 
 /** LAYOUT */
 export {Header, Nav, Navbar} from "./components/layout/layout";
