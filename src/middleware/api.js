@@ -18,7 +18,7 @@ export const apiMiddleware = store =>
             const {types} = callAPI;
 
             headers["Content-Type"] = "application/json";
-            headers.Accepts = "application/json";
+            headers.Accept = "application/json";
 
             const token = store.getState().auth.accessToken;
             const refreshToken = store.getState().auth.refreshToken;

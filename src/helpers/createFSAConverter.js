@@ -1,14 +1,14 @@
 export const createFSAConverter = (successType, failureType) => {
     return (response) => {
         if (!response.ok) {
-            return {
+            return response.json().then((payload) => ({
                 error: true,
                 payload: {
                     status: response.status,
-                    response: response.json()
+                    response: payload
                 },
                 type: failureType
-            };
+            }));
         }
 
         const contentType = response.headers.get("Content-Type");
