@@ -46,5 +46,7 @@ export {
     getUser
 } from './store/actions/actions';
 
+import 'react-dates/initialize';
+
 /** ROOT */
 export {Root} from './Root';
