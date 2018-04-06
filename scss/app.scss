@@ -6,8 +6,12 @@
 @import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import 'bootstrap-variables';
 
-// Layouts
+// Base
+@import "base/base";
+
+// Components
 @import "components/sidebar";
 @import "components/navbar";
