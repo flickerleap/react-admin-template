@@ -12,7 +12,7 @@ export {Card, List, ListItem} from "./components/display/display";
 export {Field, DynamicForm, Input, DropDown} from './components/form/form';
 
 /** LAYOUT */
-export {Header, Nav, Navbar} from "./components/layout/layout";
+export {Header, Sidebar} from "./components/layout/layout";
 
 /** SCREENS */
 export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";
@@ -46,7 +46,8 @@ export {
     getUser
 } from './store/actions/actions';
 
-import 'react-dates/initialize';
+export {defaultAppConfig} from './config/config';
 
 /** ROOT */
 export {Root} from './Root';
+
