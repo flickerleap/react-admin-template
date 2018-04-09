@@ -19,7 +19,7 @@ export const links = [
     {
         name: 'Dashboard',
         url: '/dashboard',
-        icon: 'icon-speedometer',
+        icon: 'fa fa-tachometer',
         badge: {
             variant: 'info',
             text: 'NEW'

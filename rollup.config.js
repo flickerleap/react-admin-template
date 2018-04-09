@@ -1,7 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 
-
 // Convert CJS modules to ES6, so they can be included in a bundle
 import commonjs from 'rollup-plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
@@ -15,15 +14,18 @@ export default {
     input: 'src/app.js',
     output: {
         file: 'dist/bundle.js',
-        format: 'cjs'
+        format: 'cjs',
+        sourcemap: true
     },
-    sourcemap: true,
     external: [
         'react',
-        'react-proptypes'
+        'react-proptypes',
+        'commonjs-external:url'
     ],
     plugins: [
-        resolve(),
+        resolve({
+            preferBuiltins: true
+        }),
         postcss({
             plugins: [
                 postcssModules({
@@ -39,14 +41,16 @@ export default {
             extract: 'dist/styles.css',
         }),
         babel({
-            exclude: 'node_modules/**'
+            exclude: 'node_modules/**',
+            plugins: ['external-helpers']
         }),
         commonjs({
             namedExports: {
                 // left-hand side can be an absolute path, a path
                 // relative to the current directory, or the name
                 // of a module in node_modules
-                'node_modules/react-dom/index.js': [ 'createPortal' ]
+                'node_modules/react-dom/index.js': [ 'createPortal' ],
+                'node_modules/react-dates/index.js': [ 'SingleDatePicker' ]
             }
         }),
         isProd && uglify(),
