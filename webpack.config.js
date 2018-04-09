@@ -1,10 +1,12 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/preview.js',
     output: {
         path: path.join(__dirname, 'public'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     module: {
         rules: [{
@@ -42,6 +44,12 @@ module.exports = {
     devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: path.join(__dirname, "preview"),
+        historyApiFallback: true,
         compress: true
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: 'preview/index.html'
+        })
+    ]
 };
