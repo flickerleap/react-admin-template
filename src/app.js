@@ -60,3 +60,5 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'simple-line-icons/css/simple-line-icons.css';
 import 'react-dates/initialize';
 
+import '../scss/app.scss';
+
