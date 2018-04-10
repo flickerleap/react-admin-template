@@ -12,6 +12,7 @@ export class Model {
         return this.links.map((link) => ({
             url: `${baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
+            icon: link.icon,
             items: link.items !== undefined ? link.items.map((item) => ({
                 url: `${baseUrl}${item.url}`,
                 name: item.name

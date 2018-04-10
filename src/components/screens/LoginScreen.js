@@ -38,9 +38,11 @@ class LoginScreen extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Login</h1>
-                <LoginForm errors={this.state.errors} onSubmit={this.onLogin}/>
+            <div className="row">
+                <div className="col-md-12">
+                    <h1>Login</h1>
+                    <LoginForm errors={this.state.errors} onSubmit={this.onLogin}/>
+                </div>
             </div>
         );
     }

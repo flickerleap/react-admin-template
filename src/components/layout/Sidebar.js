@@ -44,7 +44,6 @@ export class Sidebar extends React.Component {
     };
     getTitle = (title, key) => {
         const classes = classNames('nav-title', title.class);
-        return (<li key={key} className={classes}>{this.wrapper(title)} </li>);
     };
     getDivider = (divider, key) => {
         const classes = classNames('divider', divider.class);
@@ -57,7 +56,7 @@ export class Sidebar extends React.Component {
             item: classNames('hidden-cn', item.class),
             link: classNames('nav-label', item.class ? item.class : ''),
             icon: classNames(
-                !item.icon ? 'fa fa-circle' : item.icon,
+                !item.icon ? 'fas fa-circle' : item.icon,
                 item.label.variant ? `text-${item.label.variant}` : '',
                 item.label.class ? item.label.class : ''
             )
@@ -73,11 +72,11 @@ export class Sidebar extends React.Component {
             <NavItem key={key} className={classes.item}>
                 {this.isExternal(url) ?
                     <RsNavLink href={url} className={classes.link} active>
-                        <i className={classes.icon}></i>{item.name}{this.getBadge(item.badge)}
+                        <i className={classes.icon}></i> {item.name} {this.getBadge(item.badge)}
                     </RsNavLink>
                     :
                     <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile}>
-                        <i className={classes.icon}></i>{item.name}{this.getBadge(item.badge)}
+                        <i className={classes.icon}></i> {item.name} {this.getBadge(item.badge)}
                     </NavLink>
                 }
             </NavItem>
@@ -88,7 +87,7 @@ export class Sidebar extends React.Component {
         return (
             <li key={key} className={this.activeRoute(item.url, props)}>
                 <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick}>
-                    <i className={item.icon}></i>{item.name}
+                    <i className={item.icon}></i> {item.name}
                 </a>
                 <ul className="nav-dropdown-items">
                     {this.getNavList(item.children)}

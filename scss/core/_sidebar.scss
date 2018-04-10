@@ -133,6 +133,15 @@
       text-align: center;
     }
 
+    svg {
+      display: inline-block;
+      width: 20px;
+      margin: 0 ($sidebar-nav-link-padding-x / 2) 0 0;
+      font-size: 14px;
+      color: $sidebar-nav-link-icon-color;
+      text-align: center;
+    }
+
     .badge {
       float: right;
       margin-top: 2px;
