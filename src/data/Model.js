@@ -11,10 +11,10 @@ export class Model {
         const baseUrl = this.getBaseUrl();
         return this.links.map((link) => ({
             url: `${baseUrl}/${link.url}`,
-            label: link.label ? link.label : this.plural,
+            name: link.name ? link.name : this.plural,
             items: link.items !== undefined ? link.items.map((item) => ({
                 url: `${baseUrl}${item.url}`,
-                label: item.label
+                name: item.name
             })) : []
         }));
     }
