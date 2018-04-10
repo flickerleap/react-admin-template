@@ -3,7 +3,7 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap/scss/bootstrap';
 @import 'bootstrap-variables';
 
 // Variables
@@ -11,9 +11,6 @@
 
 // Core
 @import 'core/core';
-
-// Base
-@import "base/base";
 
 // Components
 @import "components/sidebar";

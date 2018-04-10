@@ -17,7 +17,7 @@ export const Card = ({
             {text && <div className="card-text">{text}</div>}
             {button.href && <a href={button.href} className={button.className}>{button.label}</a>}
         </div>
-        <div class="card-footer text-muted">
+        <div className="card-footer text-muted">
             {footer && <span>{footer}</span>}
         </div>
     </div>

@@ -6,7 +6,6 @@ import commonjs from 'rollup-plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import postcssModules from 'postcss-modules';
 import uglify from 'rollup-plugin-uglify';
-import tailwindcss from 'tailwindcss';
 
 const cssExportMap = {};
 const isProd = process.env.NODE_ENV === 'production';
@@ -33,15 +32,14 @@ export default {
                     getJSON (id, exportTokens) {
                         cssExportMap[id] = exportTokens;
                     }
-                }),
-                tailwindcss('./tailwind.js'),
-                require('autoprefixer'),
+                })
             ],
+            extensions: [ '.css' ],
             getExportNamed: false,
-            getExport (id) {
+            getExport(id) {
                 return cssExportMap[id];
             },
-            extract: 'dist/styles.css',
+            extract: 'dist/styles.css'
         }),
         babel({
             exclude: 'node_modules/**',
