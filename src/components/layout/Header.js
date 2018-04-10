@@ -1,9 +1,10 @@
 import React from 'react';
-import {Navbar} from "./Navbar";
+import HeaderDropdown from './HeaderDropdown';
 import {
     Nav,
     NavItem,
     NavbarToggler,
+    NavLink,
     NavbarBrand,
 } from 'reactstrap';
 
@@ -32,7 +33,7 @@ export class Header extends React.Component {
     };
 
     render() {
-        const {rootUrl = '/', title, logo = undefined} = this.props;
+        const {rootUrl = '/', title, logo = undefined, items = []} = this.props;
         return (
             <header className="app-header navbar">
                 <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
@@ -44,6 +45,9 @@ export class Header extends React.Component {
                 <NavbarToggler className="d-md-down-none mr-auto" onClick={this.sidebarToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
+                <Nav className="ml-auto" navbar>
+                    {items.length > 0 && <HeaderDropdown items={items} toggle={<i className="fas fa-user"></i>}/>}
+                </Nav>
             </header>
         );
     }

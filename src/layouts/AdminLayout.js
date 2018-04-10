@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {Header, Footer, Aside, Sidebar} from "../components/layout/layout";
+import {Footer, Header, Sidebar} from "../components/layout/layout";
 import {Container} from 'reactstrap';
 
 export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) => (
@@ -15,13 +15,12 @@ export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) 
                             routes.map((route, index) => {
                                 return (
                                     <Route key={index} path={route.path} component={getComponent(route)}
-                                        exact={route.exact !== undefined ? route.exact : false} />
+                                           exact={route.exact !== undefined ? route.exact : false}/>
                                 );
                             })
                         }
                     </Switch>
                 </Container>
-
             </main>
         </div>
 

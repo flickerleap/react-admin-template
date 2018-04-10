@@ -1,6 +1,6 @@
 {
   "name": "react-admin-template",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
@@ -12,8 +12,7 @@
     "clean": "rm -rf dist coverage",
     "start": "webpack-dev-server --open --config webpack.config.js",
     "watch": "webpack-dev-server --config ./webpack.config.js",
-    "build-css": "sudo sass scss/app.scss dist/bundle.css",
-    "build": "NODE_ENV=production rollup -c && npm run build-css",
+    "build": "NODE_ENV=production rollup -c",
     "build:staging": "NODE_ENV=staging rollup -c"
   },
   "repository": {
@@ -23,6 +22,7 @@
   "author": "Flicker Leap",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.5",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.19",
