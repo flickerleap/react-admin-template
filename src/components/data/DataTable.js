@@ -54,26 +54,43 @@ export class DataTable extends React.Component {
     }
 
     includeField(name) {
-        const result = this.state.fields.find((field) => field.name === name);
+        const result = this.getField(name);
         return result !== undefined;
     }
 
+    getField = (name) => {
+        return this.state.fields.find((field) => field.name === name);
+    };
 
-    getHeaderName = (header) => {
-        const name = header.charAt(0).toUpperCase() + header.slice(1);
-        return name.replace(/_/g, " ");
+    getHeaderName = (name) => {
+        const field = this.getField(name);
+        if(field.label === undefined) {
+            const header = name.charAt(0).toUpperCase() + name.slice(1);
+            return header.replace(/_/g, " ");
+        }
+
+        return field.label;
     };
 
     setFilters() {
 
     }
 
+    getValue = (item, name) => {
+        const field = this.getField(name);
+        if(field.valueFn !== undefined)
+        {
+            return field.valueFn(item);
+        }
+        return item[name];
+    };
+
     getRows() {
         const {actions = []} = this.props;
         return this.state.items.map((item, index) => {
             return <tr key={index}>
                 {Object.keys(item).map((name) => {
-                    return this.includeField(name) && <td key={name}>{item[name]}</td>;
+                    return this.includeField(name) && <td key={name}>{this.getValue(item, name)}</td>;
                 })}
                 <ActionColumn item={item} actions={actions}/>
             </tr>;
@@ -92,25 +109,35 @@ export class DataTable extends React.Component {
 
     render() {
         const {title = ''} = this.props;
-        const {pagination} = this.state;
+        const {pagination, items} = this.state;
         return (
-            <div>
-                <h4>{title}</h4>
-                <table className="table table-striped">
-                    <thead>
-                    <tr>
-                        {this.getHeaders()}
-                        <th>Actions</th>
-                    </tr>
-                    <tr>
-                        {this.getFilters()}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.getRows()}
-                    </tbody>
-                </table>
-                <Pagination {...pagination}/>
+            <div className="card">
+                <div className="card-header">
+                    <span>{title}</span>
+                </div>
+                <div className="card-body">
+                {
+                    items.length > 0 ?
+                        <div className="table-responsive">
+                            <table className="table-outline table table-hover">
+                                <thead className="thead-light">
+                                <tr>
+                                    {this.getHeaders()}
+                                    <th>Actions</th>
+                                </tr>
+                                <tr>
+                                    {this.getFilters()}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.getRows()}
+                                </tbody>
+                            </table>
+                            <Pagination {...pagination}/>
+                        </div> :
+                        <p>No records found.</p>
+                }
+                </div>
             </div>
         );
     }

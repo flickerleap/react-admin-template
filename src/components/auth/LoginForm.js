@@ -97,7 +97,7 @@ export class LoginForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col pull-left">
-                            <button className="btn btn-success">Login</button>
+                            <button className="btn btn-primary">Login</button>
                         </div>
                     </div>
                 </form>

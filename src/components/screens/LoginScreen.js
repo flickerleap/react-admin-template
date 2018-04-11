@@ -41,6 +41,7 @@ class LoginScreen extends React.Component {
             <div className="row">
                 <div className="col-md-12">
                     <h1>Login</h1>
+                    <p className="text-muted">Sign In to your account</p>
                     <LoginForm errors={this.state.errors} onSubmit={this.onLogin}/>
                 </div>
             </div>

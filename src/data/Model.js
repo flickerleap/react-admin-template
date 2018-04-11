@@ -13,9 +13,10 @@ export class Model {
             url: `${baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
             icon: link.icon,
-            items: link.items !== undefined ? link.items.map((item) => ({
+            children: link.children !== undefined ? link.children.map((item) => ({
                 url: `${baseUrl}${item.url}`,
-                name: item.name
+                name: item.name,
+                icon: item.icon
             })) : []
         }));
     }

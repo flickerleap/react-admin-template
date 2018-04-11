@@ -30,14 +30,25 @@ export class ViewScreen extends React.Component {
         }));
     }
 
+    getParams = () => {
+        return {
+            ...this.state.params,
+            page: this.state.currentPage
+        };
+    };
+
     componentDidMount() {
         const {fetch} = this.props;
-        fetch({page:this.state.currentPage}).then((response) => {
+        fetch(this.getParams()).then((response) => {
             this.setState(() => ({
                 loading: false
             }));
         });
     }
+
+    getAddUrl = () => {
+        return this.props.location.pathname + "add";
+    };
 
     render() {
         const {title = 'View', fields = [], items = [], actions = [], pagination={}} = this.props;
@@ -47,7 +58,7 @@ export class ViewScreen extends React.Component {
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    <AddButton link={""} type={title} />
+                    <AddButton link={this.getAddUrl()} type={title} />
                     <br/>
                 </div>
 

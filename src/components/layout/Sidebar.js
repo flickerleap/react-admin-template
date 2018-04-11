@@ -35,6 +35,7 @@ export class Sidebar extends React.Component {
     hasItems = (items) => {
         return items !== undefined && items.length > 0;
     };
+
     getNavType = (item, idx) => {
         return item.title ? this.getTitle(item, idx) :
             item.divider ? this.getDivider(item, idx) :
@@ -42,15 +43,18 @@ export class Sidebar extends React.Component {
                     item.children ? this.getNavDropdown(item, idx)
                         : this.getNavItem(item, idx);
     };
+
     getTitle = (title, key) => {
         const classes = classNames('nav-title', title.class);
     };
+
     getDivider = (divider, key) => {
         const classes = classNames('divider', divider.class);
         return (<li key={key} className={classes}>
 
         </li>);
     };
+
     getNavLabel = (item, key) => {
         const classes = {
             item: classNames('hidden-cn', item.class),
@@ -65,7 +69,7 @@ export class Sidebar extends React.Component {
             this.getNavLink(item, key, classes)
         );
     };
-    // nav link
+
     getNavLink = (item, key, classes) => {
         const url = item.url ? item.url : '';
         return (
@@ -82,10 +86,10 @@ export class Sidebar extends React.Component {
             </NavItem>
         )
     };
-    // nav dropdown
+
     getNavDropdown = (item, key) => {
         return (
-            <li key={key} className={this.activeRoute(item.url, props)}>
+            <li key={key} className={this.activeRoute(item.url, this.props)}>
                 <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick}>
                     <i className={item.icon}></i> {item.name}
                 </a>
@@ -109,7 +113,7 @@ export class Sidebar extends React.Component {
     wrapper = (item) => {
         return (item.wrapper && item.wrapper.element ? (React.createElement(item.wrapper.element, item.wrapper.attributes, item.name)) : item.name);
     };
-    // badge addon to NavItem
+
     getBadge = (badge) => {
         if (badge) {
             const classes = classNames(badge.class);
@@ -123,7 +127,6 @@ export class Sidebar extends React.Component {
     };
 
     getNavList(links) {
-
         return links.map((link, index) => this.getNavType(link, index));
     }
 

@@ -18,11 +18,18 @@ routes.push({component: NotFoundScreen});
 export const links = [
     {
         name: 'Dashboard',
-        url: '/dashboard',
+        url: '/',
         icon: 'fa fa-tachometer',
         badge: {
             variant: 'info',
             text: 'NEW'
-        }
+        },
+        children: [
+            {
+                name: 'Dashboard',
+                url: '/',
+                icon: 'fa fa-tachometer',
+            }
+        ]
     }
 ];

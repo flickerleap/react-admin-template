@@ -18,7 +18,7 @@ export const Pagination = ({link, total = 1, perPage = 1, current = 1}) => {
         pages.push({
             number: i,
             active: current === i ? 'active' : '',
-            to: `${link}?page=${i}`
+            to: `?page=${i}`
         });
     }
 

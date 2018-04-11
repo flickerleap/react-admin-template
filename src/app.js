@@ -12,7 +12,7 @@ export {Card, List, ListItem} from "./components/display/display";
 export {Field, DynamicForm, Input, DropDown} from './components/form/form';
 
 /** LAYOUT */
-export {Header, Sidebar} from "./components/layout/layout";
+export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
 
 /** SCREENS */
 export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";

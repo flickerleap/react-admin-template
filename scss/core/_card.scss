@@ -111,6 +111,9 @@
   > i {
     margin-right: $spacer / 2;
   }
+  > svg {
+    margin-right: $spacer / 2;
+  }
   .card-actions {
     position: absolute;
     top: 0;
@@ -140,6 +143,11 @@
       }
 
       i {
+        display: inline-block;
+        transition: .4s;
+      }
+
+      svg {
         display: inline-block;
         transition: .4s;
       }

@@ -1,12 +1,5 @@
 import React from 'react';
-import HeaderDropdown from './HeaderDropdown';
-import {
-    Nav,
-    NavItem,
-    NavbarToggler,
-    NavLink,
-    NavbarBrand,
-} from 'reactstrap';
+import {Nav, NavbarBrand, NavbarToggler} from 'reactstrap';
 
 export class Header extends React.Component {
 
@@ -33,20 +26,24 @@ export class Header extends React.Component {
     };
 
     render() {
-        const {rootUrl = '/', title, logo = undefined, items = []} = this.props;
+        const {rootUrl = '/', title, logo = undefined, dropDownMenus = []} = this.props;
         return (
             <header className="app-header navbar">
                 <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
                 <NavbarBrand href={rootUrl}>
-                    {logo !== undefined ? <img src={logo} alt="Logo" /> : <span>{title}</span>}
+                    {logo !== undefined ? <img src={logo} alt="Logo"/> : <span>{title}</span>}
                 </NavbarBrand>
                 <NavbarToggler className="d-md-down-none mr-auto" onClick={this.sidebarToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
                 <Nav className="ml-auto" navbar>
-                    {items.length > 0 && <HeaderDropdown items={items} toggle={<i className="fas fa-user"></i>}/>}
+                    {
+                        dropDownMenus.map((menu, index) => (
+                            <div key={index}>{menu}</div>
+                        ))
+                    }
                 </Nav>
             </header>
         );
