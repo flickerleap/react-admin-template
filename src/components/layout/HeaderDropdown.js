@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {
-    Badge,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Dropdown
-} from 'reactstrap';
+import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 
-class HeaderDropdown extends Component {
+export class HeaderDropdown extends Component {
+
+    toggle = () => {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
+    };
 
     constructor(props) {
         super(props);
@@ -16,12 +16,6 @@ class HeaderDropdown extends Component {
             dropdownOpen: false
         };
     }
-
-    toggle = () => {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    };
 
     getDropDownMenu() {
         const {items, toggle} = this.props;
@@ -32,8 +26,8 @@ class HeaderDropdown extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                     {
-                        items.map((item) => (
-                            <DropdownItem>
+                        items.map((item, index) => (
+                            <DropdownItem key={index}>
                                 {item.icon && <i className={item.icon}></i>}
                                 {item.name}
                                 {item.badge && <Badge color={item.badge.variant}>{item.badge.text}</Badge>}
@@ -52,5 +46,3 @@ class HeaderDropdown extends Component {
         );
     }
 }
-
-export default HeaderDropdown;

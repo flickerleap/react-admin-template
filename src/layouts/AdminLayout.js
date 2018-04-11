@@ -3,11 +3,11 @@ import {Route, Switch} from 'react-router-dom';
 import {Footer, Header, Sidebar} from "../components/layout/layout";
 import {Container} from 'reactstrap';
 
-export const AdminLayout = ({routes = [], links = [], getComponent, appConfig}) => (
+export const AdminLayout = ({routes = [], links = [], dropDownMenus = [], getComponent, appConfig, ...rest}) => (
     <div className="app">
-        <Header {...appConfig}/>
+        <Header {...appConfig} dropDownMenus={dropDownMenus}/>
         <div className='app-body'>
-            <Sidebar className='nav flex-column' links={links}/>
+            <Sidebar links={links} {...rest}/>
             <main className="main">
                 <Container fluid>
                     <Switch>

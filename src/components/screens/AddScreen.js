@@ -5,7 +5,6 @@ export class AddScreen extends React.Component {
     onSubmit = (item) => {
         const {redirectPath, add} = this.props;
         add(item).then((response) => {
-            console.log(response);
             this.props.history.push(redirectPath);
         });
     };
