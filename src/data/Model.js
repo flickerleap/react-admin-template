@@ -34,7 +34,7 @@ export class Model {
     getFormFields() {
         return this.fields.reduce((result, field) => {
             if (!Model.exclude(field) && Model.isEditable(field)) {
-                field.value = '';
+                field.value = field.defaultValue ? field.defaultValue : '';
                 result.push(field);
             }
             return result;

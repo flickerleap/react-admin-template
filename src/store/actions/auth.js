@@ -3,7 +3,8 @@ import {
     LOGIN_FAILURE, LOGIN_REQUEST,
     LOGIN_SUCCESS, LOGOUT_REQUEST, LOGOUT_SUCCESS
 } from "./actionTypes";
-import {CALL_API} from "../../middleware/api";
+
+const CALL_API = 'Call API';
 
 const prefix = process.env.MIX_API_PREFIX;
 

@@ -6,7 +6,7 @@ export {LoginForm} from './components/auth/auth';
 export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/data";
 
 /** DISPLAY */
-export {Card, List, ListItem} from "./components/display/display";
+export {Card, List, ListItem, Modal, InfoCard} from "./components/display/display";
 
 /** FORM */
 export {Field, DynamicForm, Input, DropDown} from './components/form/form';
