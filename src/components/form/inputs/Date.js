@@ -1,10 +1,15 @@
 import React from 'react';
 import {SingleDatePicker} from 'react-dates';
+import moment from 'moment';
 
 export class Date extends React.Component {
-    state = {
-        focused: false
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            focused: false
+        };
+    }
 
     onFocusChanged = ({focused}) => {
         this.setState(() => ({focused: focused}));
@@ -14,19 +19,20 @@ export class Date extends React.Component {
         const event = {
             target: {
                 name: this.props.name,
-                value: date
+                value: date.format()
             }
         };
         this.props.onChange(event);
     };
 
     render() {
-        const {name, label, value, numberOfMonths = 1} = this.props;
+        const {name, label, numberOfMonths = 1} = this.props;
+        const date = moment(this.props.value);
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
                 <SingleDatePicker
-                    date={value} // momentPropTypes.momentObj or null
+                    date={date} // momentPropTypes.momentObj or null
                     onDateChange={this.onChange} // PropTypes.func.isRequired
                     focused={this.state.focused} // PropTypes.bool
                     onFocusChange={this.onFocusChanged} // PropTypes.func.isRequired

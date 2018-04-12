@@ -27,7 +27,7 @@ export class HeaderDropdown extends Component {
                 <DropdownMenu right>
                     {
                         items.map((item, index) => (
-                            <DropdownItem key={index}>
+                            <DropdownItem key={index} href={item.url}>
                                 {item.icon && <i className={item.icon}></i>}
                                 {item.name}
                                 {item.badge && <Badge color={item.badge.variant}>{item.badge.text}</Badge>}
