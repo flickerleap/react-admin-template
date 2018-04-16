@@ -1,8 +1,7 @@
 import attemptRefresh from "redux-refresh-token";
 import {createFSAConverter} from "../helpers/createFSAConverter";
 import {attemptTokenRefresh, logout} from "../store/actions/actions";
-
-export const CALL_API = 'Call API';
+import {CALL_API} from "./statics";
 
 const API_ROOT = process.env.MIX_BASE_URL;
 
