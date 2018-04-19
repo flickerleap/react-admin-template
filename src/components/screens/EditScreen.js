@@ -1,18 +1,27 @@
 import React from 'react';
 import {DynamicForm} from '../form/form';
 import {Loading} from '../utility/Loading';
+import {contains} from "../../helpers/string";
 
 export class EditScreen extends React.Component {
     state = {
         loading: false,
-        item: {}
+        item: {},
+        errors: []
     };
 
     onSubmit = (item) => {
         const {redirectPath, edit} = this.props;
-        edit({id: this.state.item.id, ...item}).then((response) => {
-            console.log(response);
-            this.props.history.push(redirectPath);
+        edit({id: this.state.item.id, ...item}).then((action) => {
+            const data = action.payload.response;
+            if (contains(action.type, 'FAILURE')) {
+                this.setState(() => ({
+                    errors: action.errors,
+                    errorMessage: data.message
+                }));
+            } else {
+                this.props.history.push(redirectPath);
+            }
         });
     };
 
@@ -41,6 +50,7 @@ export class EditScreen extends React.Component {
                         : <DynamicForm
                             newRecord={false}
                             fields={fields}
+                            errors={this.state.errors}
                             onSubmit={this.onSubmit}
                             data={this.state.item}
                         />

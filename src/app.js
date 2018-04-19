@@ -29,13 +29,14 @@ export {userNeedsAuthentication, userDoesNotNeedAuthentication} from './helpers/
 export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';
 export {contains} from './helpers/string';
-export {now} from './helpers/time';
+export {now, timestamp} from './helpers/time';
 
 /** LAYOUTS */
 export {AdminLayout} from "./layouts/layouts";
 
 /** MIDDLEWARE */
-export {apiMiddleware, CALL_API} from "./middleware/api";
+export {apiMiddleware} from "./middleware/api";
+export {CALL_API} from "./middleware/statics";
 
 /** STORE */
 export {authReducer} from "./store/reducers/reducers";

@@ -11,7 +11,12 @@ export const Error = ({errors = {}}) => (
         {
             Object.keys(errors).map((key, index)=>(
                 <div key={index}>
-                    <span>{errors[key]}</span>
+                    <span>
+                        {
+                            typeof(errors[key]) === 'array' ?
+                                errors[key][0] : errors[key]
+                        }
+                    </span>
                     <br/>
                 </div>
             ))
