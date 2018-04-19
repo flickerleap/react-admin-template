@@ -29,7 +29,7 @@ export {userNeedsAuthentication, userDoesNotNeedAuthentication} from './helpers/
 export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';
 export {contains} from './helpers/string';
-export {now} from './helpers/time';
+export {now, timestamp} from './helpers/time';
 
 /** LAYOUTS */
 export {AdminLayout} from "./layouts/layouts";

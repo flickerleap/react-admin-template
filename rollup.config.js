@@ -20,7 +20,8 @@ export default {
     external: [
         'react',
         'react-proptypes',
-        'commonjs-external:url'
+        'url',
+        'events'
     ],
     plugins: [
         resolve({

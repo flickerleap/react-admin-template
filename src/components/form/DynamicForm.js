@@ -13,7 +13,7 @@ export class DynamicForm extends React.Component {
             fields = [],
             newRecord = true,
             dataType = '',
-            errors = []
+            errors = this.props.errors || []
         } = this.props;
 
         this.state = {
@@ -127,7 +127,7 @@ export class DynamicForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col pull-left">
-                            <button className="btn btn-success">{this.state.newRecord ? 'Add' : 'Edit'} {this.state.dataType}</button>
+                            <button className="btn btn-success">{this.state.newRecord ? 'Add' : 'Update'} {this.state.dataType}</button>
                         </div>
                     </div>
                 </form>
