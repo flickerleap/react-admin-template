@@ -125,11 +125,11 @@ export class DataTable extends React.Component {
                                     {this.getHeaders()}
                                     <th>Actions</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     {this.getFilters()}
                                 </tr>
-                                </thead>
-                                <tbody>
                                 {this.getRows()}
                                 </tbody>
                             </table>

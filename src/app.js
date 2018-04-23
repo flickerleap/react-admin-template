@@ -6,7 +6,7 @@ export {LoginForm} from './components/auth/auth';
 export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/data";
 
 /** DISPLAY */
-export {Card, List, ListItem, Modal, InfoCard} from "./components/display/display";
+export {Card, List, ListItem, Modal, InfoCard, PopupBuilder} from "./components/display/display";
 
 /** FORM */
 export {Field, DynamicForm, Input, DropDown} from './components/form/form';
@@ -15,7 +15,15 @@ export {Field, DynamicForm, Input, DropDown} from './components/form/form';
 export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
 
 /** SCREENS */
-export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";
+export {
+    ViewScreen,
+    AddScreen,
+    EditScreen,
+    DashboardScreen,
+    NotFoundScreen,
+    Login as LoginScreen,
+    Logout as LogoutScreen
+} from "./components/screens/screens";
 
 /** UTILITY */
 export {Loading, Error} from "./components/utility/utility";

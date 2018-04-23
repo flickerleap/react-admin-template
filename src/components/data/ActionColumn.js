@@ -6,7 +6,9 @@ export const ActionColumn = ({item, actions=[]}) => (
         <div className="action-container">
         {
             actions.map((action, index)=>(
-                <Link className={action.classes} key={index} to={action.to(item)}>{action.label}</Link>
+                action.type === 'link' ?
+                    <Link className={action.classes} key={index} to={action.to(item)}>{action.label}</Link> :
+                    <button className={action.classes} key={index} onClick={()=>{action.to(item)}}>{action.label}</button>
             ))
         }
         </div>
