@@ -47,7 +47,7 @@ export class ViewScreen extends React.Component {
     }
 
     getAddUrl = () => {
-        return this.props.location.pathname + "/add";
+        return this.props.location.pathname + "add";
     };
 
     render() {

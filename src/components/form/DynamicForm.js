@@ -102,6 +102,23 @@ export class DynamicForm extends React.Component {
         return `col-md-${amount}`;
     };
 
+    showField = (field) => {
+        if(field.conditional !== undefined) {
+            return field.conditional(this.getData());
+        }
+
+        return true;
+    };
+
+    hasErrors() {
+        const {errors} = this.state;
+        if(errors instanceof Array) {
+            return errors.length > 0;
+        } else {
+            return Object.keys(errors).length > 0;
+        }
+    }
+
     render() {
         const {columns = 2} = this.props;
         const {errors} = this.state;
@@ -109,19 +126,20 @@ export class DynamicForm extends React.Component {
         return (
             <div>
                 {
-                    Object.keys(errors).length > 0 && <Error errors={errors} />
+                    this.hasErrors() && <Error errors={errors} />
                 }
                 <form onSubmit={this.onSubmit}>
                     <div className="row">
                         {
                             this.state.fields.map((field, index) => {
-                                return (
-                                    <div key={index} className={columnClass}>
-                                        <div className="form-group">
-                                            <Field {...field} onChange={this.onFieldChange} />
+                                return this.showField(field) &&
+                                    (
+                                        <div key={index} className={columnClass}>
+                                            <div className="form-group">
+                                                <Field {...field} onChange={this.onFieldChange} />
+                                            </div>
                                         </div>
-                                    </div>
-                                );
+                                    );
                             })
                         }
                     </div>
