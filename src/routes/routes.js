@@ -8,6 +8,7 @@ export const routes = [
         path: '/',
         component: DashboardScreen,
         label: 'Dashboard',
+        isPublic: true,
         exact: true
     }
 ];

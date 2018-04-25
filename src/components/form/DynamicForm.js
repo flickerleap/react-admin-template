@@ -23,8 +23,17 @@ export class DynamicForm extends React.Component {
             dataType,
             errors
         };
+    }
 
-        this.setup();
+    componentDidMount() {
+        this.setState((prevState) => ({
+            fields: prevState.fields.map((field) => {
+                field.show = this.showField(field);
+                return field;
+            })
+        }));
+
+        this.setInitialData();
     }
 
     getCurrentField(fields, key) {
@@ -33,8 +42,7 @@ export class DynamicForm extends React.Component {
         });
     }
 
-    setup() {
-
+    setInitialData() {
         if(this.state.data) {
             Object.keys(this.state.data).forEach((key) => {
                 const field = this.getCurrentField(this.state.fields, key);
@@ -102,6 +110,23 @@ export class DynamicForm extends React.Component {
         return `col-md-${amount}`;
     };
 
+    showField = (field) => {
+        if(field.conditional !== undefined) {
+            return field.conditional(this.getData());
+        }
+
+        return true;
+    };
+
+    hasErrors() {
+        const {errors} = this.state;
+        if(errors instanceof Array) {
+            return errors.length > 0;
+        } else {
+            return Object.keys(errors).length > 0;
+        }
+    }
+
     render() {
         const {columns = 2} = this.props;
         const {errors} = this.state;
@@ -109,19 +134,20 @@ export class DynamicForm extends React.Component {
         return (
             <div>
                 {
-                    Object.keys(errors).length > 0 && <Error errors={errors} />
+                    this.hasErrors() && <Error errors={errors} />
                 }
                 <form onSubmit={this.onSubmit}>
                     <div className="row">
                         {
                             this.state.fields.map((field, index) => {
-                                return (
-                                    <div key={index} className={columnClass}>
-                                        <div className="form-group">
-                                            <Field {...field} onChange={this.onFieldChange} />
+                                return field.show &&
+                                    (
+                                        <div key={index} className={columnClass}>
+                                            <div className="form-group">
+                                                <Field {...field} onChange={this.onFieldChange} />
+                                            </div>
                                         </div>
-                                    </div>
-                                );
+                                    );
                             })
                         }
                     </div>

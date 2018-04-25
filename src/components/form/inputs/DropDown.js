@@ -19,6 +19,14 @@ export class DropDown extends React.Component {
         });
     }
 
+    onChange = (event) => {
+        const value = event.target.value;
+        this.setState(()=>({
+            value
+        }));
+        this.props.onChange(event);
+    };
+
     render() {
         const {
             name, label, onChange, className="form-control", items = [], nameField='name'
@@ -31,7 +39,7 @@ export class DropDown extends React.Component {
                     name={name}
                     className={className}
                     value={this.state.value}
-                    onChange={onChange}
+                    onChange={this.onChange}
                 >
                     {
                         items.map((item) => (
