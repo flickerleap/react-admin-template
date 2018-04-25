@@ -23,8 +23,17 @@ export class DynamicForm extends React.Component {
             dataType,
             errors
         };
+    }
 
-        this.setup();
+    componentDidMount() {
+        this.setState((prevState) => ({
+            fields: prevState.fields.map((field) => {
+                field.show = this.showField(field);
+                return field;
+            })
+        }));
+
+        this.setInitialData();
     }
 
     getCurrentField(fields, key) {
@@ -33,8 +42,7 @@ export class DynamicForm extends React.Component {
         });
     }
 
-    setup() {
-
+    setInitialData() {
         if(this.state.data) {
             Object.keys(this.state.data).forEach((key) => {
                 const field = this.getCurrentField(this.state.fields, key);
@@ -132,7 +140,7 @@ export class DynamicForm extends React.Component {
                     <div className="row">
                         {
                             this.state.fields.map((field, index) => {
-                                return this.showField(field) &&
+                                return field.show &&
                                     (
                                         <div key={index} className={columnClass}>
                                             <div className="form-group">
