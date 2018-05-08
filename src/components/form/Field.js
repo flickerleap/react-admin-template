@@ -6,18 +6,34 @@ import {TextArea} from "./inputs/TextArea";
 
 export class Field extends React.Component {
     render() {
-        const {custom = (props)=>{}} = this.props;
-        switch(this.props.type) {
+        const {
+            custom = (props) => {
+            }
+        } = this.props;
+        let element = undefined;
+        switch (this.props.type) {
             case 'dropdown':
-                return <DropDown {...this.props} />;
+                element = <DropDown {...this.props} />;
+                break;
             case 'date':
-                return <Date {...this.props} />;
+                element = <Date {...this.props} />;
+                break;
             case 'textarea':
-                return <TextArea {...this.props} />;
+                element = <TextArea {...this.props} />;
+                break;
             case 'custom':
-                return custom(this.props);
+                element = custom(this.props);
+                break;
             default:
-                return <Input {...this.props} />;
+                element = <Input {...this.props} />;
+                break;
         }
+
+        return (
+            <div>
+                {element}
+                {this.props.error && <p>{this.props.error}</p>}
+            </div>
+        );
     }
 }
