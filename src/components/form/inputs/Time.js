@@ -37,7 +37,7 @@ export class Time extends React.Component {
     };
 
     render() {
-        const {name, label, interval = 15} = this.props;
+        const {name, label, interval = 15, format = 'HH:mm'} = this.props;
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
@@ -47,6 +47,7 @@ export class Time extends React.Component {
                         onChange={this.onChange}
                         showTimeSelect
                         showTimeSelectOnly
+                        timeFormat={format}
                         timeIntervals={interval}
                         dateFormat="LT"
                         timeCaption="Time"
