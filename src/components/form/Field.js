@@ -27,6 +27,10 @@ export class Field extends React.Component {
     };
 
     getElement() {
+        let props = this.props;
+        if(props.ref !== undefined) {
+            delete props.ref;
+        }
         return React.createElement(this.getComponent(this.props.type), this.props);
     }
 

@@ -16,7 +16,7 @@ export class Select extends React.Component {
 
     getEventObject = (value) => {
         return {
-            target:{
+            target: {
                 name: this.props.name,
                 value: value
             }
@@ -24,9 +24,10 @@ export class Select extends React.Component {
     };
 
     onChange = (items) => {
-        const value = this.props.multi ? items.map((item)=>item.value) : items.value;
+        const {multipleItems = true} = this.props;
+        const value = multipleItems ? items.map((item) => item.value) : items.value;
 
-        this.setState(()=>({
+        this.setState(() => ({
             value
         }));
 
@@ -35,7 +36,7 @@ export class Select extends React.Component {
 
     render() {
         const {
-            name, label, multipleItems = false, className="form-control", items = []
+            name, label, multipleItems = true, className = "form-control", items = []
         } = this.props;
 
         return (
@@ -48,7 +49,7 @@ export class Select extends React.Component {
                     onChange={this.onChange}
                     multi={multipleItems}
                     options={items}
-                />;
+                />
             </div>
         );
     }
