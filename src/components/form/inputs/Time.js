@@ -3,34 +3,34 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {timestamp} from '../../../helpers/time';
 
-export class Date extends React.Component {
+export class Time extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             focused: false,
-            date: moment(this.props.value)
+            time: moment(this.props.value)
         };
     }
 
     componentDidMount() {
-        this.onChange(this.state.date);
+        this.onChange(this.state.time);
     }
 
     onFocusChanged = ({focused}) => {
         this.setState(() => ({focused: focused}));
     };
 
-    onChange = (date) => {
+    onChange = (time) => {
         const event = {
             target: {
                 name: this.props.name,
-                value: timestamp(date)
+                value: timestamp(time)
             }
         };
 
         this.setState(() => ({
-            date
+            time
         }));
 
         this.props.onChange(event);
@@ -43,9 +43,10 @@ export class Date extends React.Component {
                 <label htmlFor={name}>{label}</label>
                 <div className="form-control">
                     <DatePicker
-                        selected={this.state.date}
+                        selected={this.state.time}
                         onChange={this.onChange}
-                    />
+                        showTimeSelect
+                        dateFormat="LLL" />
                 </div>
             </div>
         );
