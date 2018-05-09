@@ -46,6 +46,7 @@ export class Date extends React.Component {
                         selected={this.state.date}
                         onChange={this.onChange}
                         dateFormat={format}
+                        withPortal
                     />
                 </div>
             </div>

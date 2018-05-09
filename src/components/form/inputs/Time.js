@@ -47,7 +47,8 @@ export class Time extends React.Component {
                         showTimeSelectOnly
                         timeIntervals={interval}
                         dateFormat="LT"
-                        timeCaption="Time" />
+                        timeCaption="Time"
+                        withPortal />
                 </div>
             </div>
         );
