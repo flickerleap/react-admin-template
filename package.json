@@ -1,6 +1,6 @@
 {
   "name": "react-admin-template",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
@@ -35,7 +35,7 @@
     "normalize.css": "^7.0.0",
     "query-string": "^6.0.0",
     "react": "^16.3.1",
-    "react-dates": "^16.5.0",
+    "react-datepicker": "^1.4.1",
     "react-dom": "^16.3.1",
     "react-modal": "^3.3.2",
     "react-popup": "^0.9.2",

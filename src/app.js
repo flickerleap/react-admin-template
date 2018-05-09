@@ -1,6 +1,6 @@
 /** COMPONENTS */
 /** AUTH */
-export {LoginForm} from './components/auth/auth';
+
 
 /** DATA */
 export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/data";
@@ -18,7 +18,7 @@ export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
 export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";
 
 /** UTILITY */
-export {Loading, Error} from "./components/utility/utility";
+export {Loading, Error, ErrorBlock} from "./components/utility/utility";
 
 /** DATA */
 export {Model} from './data/Model';
@@ -30,6 +30,7 @@ export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';
 export {contains} from './helpers/string';
 export {now, timestamp} from './helpers/time';
+export {hasErrors, getErrors} from './helpers/validate';
 
 /** LAYOUTS */
 export {AdminLayout} from "./layouts/layouts";
@@ -52,6 +53,5 @@ export {defaultAppConfig} from './config/config';
 /** ROOT */
 export {Root} from './Root';
 
-import 'react-dates/initialize';
 import '../scss/app.scss';
 

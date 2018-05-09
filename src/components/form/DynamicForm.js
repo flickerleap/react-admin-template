@@ -1,7 +1,4 @@
 import React from 'react';
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
-import {Error} from "../utility/Error";
 import {Field} from "./Field";
 import {validateField} from "../../helpers/validate";
 
@@ -151,9 +148,12 @@ export class DynamicForm extends React.Component {
         return errorCount > 0;
     }
 
+    getDefaultSubmitLabel() {
+        return this.state.newRecord ? 'Add' : 'Update' + this.state.dataType;
+    }
+
     render() {
-        const {columns = 2} = this.props;
-        const {errors} = this.state;
+        const {columns = 2, submitLabel = this.getDefaultSubmitLabel()} = this.props;
         const columnClass = this.getColumnClass(columns);
         return (
             <div>
@@ -175,7 +175,7 @@ export class DynamicForm extends React.Component {
                     <div className="row">
                         <div className="col pull-left">
                             <button
-                                className="btn btn-success">{this.state.newRecord ? 'Add' : 'Update'} {this.state.dataType}</button>
+                                className="btn btn-success">{submitLabel}</button>
                         </div>
                     </div>
                 </form>
