@@ -23,8 +23,8 @@ export class Select extends React.Component {
         };
     };
 
-    onChange = (items) => {
-        const value = items.map((item)=>item.value);
+    onChange = (e) => {
+        const value = this.props.multi ? e.map((item)=>item.value) : e.target.value;
 
         this.setState(()=>({
             value

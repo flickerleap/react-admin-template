@@ -23,8 +23,6 @@ export class Field extends React.Component {
             component = Input;
         }
 
-        console.log(component);
-
         return component;
     };
 
