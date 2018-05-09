@@ -3,6 +3,7 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import {Error} from "../utility/Error";
 import {Field} from "./Field";
+import {validateField} from "../../helpers/validate";
 
 export class DynamicForm extends React.Component {
 
@@ -12,16 +13,14 @@ export class DynamicForm extends React.Component {
             data = undefined,
             fields = [],
             newRecord = true,
-            dataType = '',
-            errors = this.props.errors || []
+            dataType = ''
         } = this.props;
 
         this.state = {
             data,
             fields,
             newRecord,
-            dataType,
-            errors
+            dataType
         };
     }
 
@@ -36,6 +35,20 @@ export class DynamicForm extends React.Component {
         this.setInitialData();
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            console.log(nextProps.errors);
+            this.setState(prevState => ({
+                fields: prevState.fields.map((field) => {
+                    if (nextProps.errors[field.name]) {
+                        field.error = nextProps.errors[field.name][0];
+                    }
+                    return field;
+                })
+            }));
+        }
+    }
+
     getCurrentField(fields, key) {
         return fields.find((field) => {
             return field.name === key;
@@ -43,11 +56,11 @@ export class DynamicForm extends React.Component {
     }
 
     setInitialData() {
-        if(this.state.data) {
+        if (this.state.data) {
             Object.keys(this.state.data).forEach((key) => {
                 const field = this.getCurrentField(this.state.fields, key);
 
-                if(field) {
+                if (field) {
                     field.value = this.state.data[key];
                 }
             });
@@ -60,7 +73,7 @@ export class DynamicForm extends React.Component {
         this.setState((prevState) => {
             return {
                 fields: prevState.fields.map((field) => {
-                    if(field.name === key) {
+                    if (field.name === key) {
                         field.value = value;
                     }
 
@@ -68,9 +81,10 @@ export class DynamicForm extends React.Component {
                 })
             };
         });
+        this.validate(key);
     };
 
-    getData () {
+    getData() {
         let data = {};
         this.state.fields.forEach((field) => {
             data[field.name] = field.value;
@@ -82,36 +96,44 @@ export class DynamicForm extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        let hasError = false;
+        this.validateForm();
 
-        let errors = [];
-
-        this.state.fields.forEach((field) => {
-            if(!field.value) {
-                errors.push(`\nPlease set ${field.label}.`);
-                hasError = true;
-            }
-        });
-
-        this.setState(() => ({errors}));
-
-        if(!hasError) {
+        if (!this.hasErrors()) {
             const data = this.getData();
-            this.props.onSubmit({
-                ...data
-            });
+            this.props.onSubmit(data);
         }
+    };
+
+    validate = (fieldName) => {
+        this.setState((prevState) => ({
+            fields: prevState.fields.map((field) => {
+                if (field.name === fieldName)
+                    field.error = validateField(field.name, field.value, field.validation);
+
+                return field;
+            })
+        }));
+    };
+
+    validateForm = () => {
+        this.setState((prevState) => ({
+            fields: prevState.fields.map((field) => {
+                field.error = validateField(field.name, field.value, field.validation);
+
+                return field;
+            })
+        }));
     };
 
     getColumnClass = (columns) => {
         const total = 12;
-        const amount = total/columns;
+        const amount = total / columns;
 
         return `col-md-${amount}`;
     };
 
     showField = (field) => {
-        if(field.conditional !== undefined) {
+        if (field.conditional !== undefined) {
             return field.conditional(this.getData());
         }
 
@@ -119,12 +141,14 @@ export class DynamicForm extends React.Component {
     };
 
     hasErrors() {
-        const {errors} = this.state;
-        if(errors instanceof Array) {
-            return errors.length > 0;
-        } else {
-            return Object.keys(errors).length > 0;
-        }
+        let errorCount = 0;
+        this.state.fields.forEach((field) => {
+            if (field.error) {
+                errorCount++;
+            }
+        });
+
+        return errorCount > 0;
     }
 
     render() {
@@ -133,9 +157,6 @@ export class DynamicForm extends React.Component {
         const columnClass = this.getColumnClass(columns);
         return (
             <div>
-                {
-                    this.hasErrors() && <Error errors={errors} />
-                }
                 <form onSubmit={this.onSubmit}>
                     <div className="row">
                         {
@@ -144,7 +165,7 @@ export class DynamicForm extends React.Component {
                                     (
                                         <div key={index} className={columnClass}>
                                             <div className="form-group">
-                                                <Field {...field} onChange={this.onFieldChange} />
+                                                <Field {...field} onChange={this.onFieldChange}/>
                                             </div>
                                         </div>
                                     );
@@ -153,7 +174,8 @@ export class DynamicForm extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col pull-left">
-                            <button className="btn btn-success">{this.state.newRecord ? 'Add' : 'Update'} {this.state.dataType}</button>
+                            <button
+                                className="btn btn-success">{this.state.newRecord ? 'Add' : 'Update'} {this.state.dataType}</button>
                         </div>
                     </div>
                 </form>

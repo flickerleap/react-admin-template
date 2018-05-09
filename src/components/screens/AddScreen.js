@@ -1,6 +1,6 @@
 import React from 'react';
 import {DynamicForm} from '../form/form';
-import {contains} from "../../helpers/string";
+import {hasErrors} from "../../helpers/validate";
 
 export class AddScreen extends React.Component {
     constructor(props) {
@@ -11,18 +11,29 @@ export class AddScreen extends React.Component {
         };
     }
 
+    resultHasErrors = (action) => {
+        if (hasErrors(action)) {
+            this.setState(() => ({
+                loading: false,
+                errors: action.payload.response
+            }));
+            return true;
+        }
+
+        return false;
+    };
+
     onSubmit = (item) => {
         const {redirectPath, add} = this.props;
         add(item).then((action) => {
-            const data = action.payload.response;
-            if (contains(action.type, 'FAILURE')) {
-                this.setState(() => ({
-                    errors: action.errors,
-                    errorMessage: data.message
-                }));
-            } else {
+            if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
             }
+        }).catch((error) => {
+            this.setState(() => ({
+                loading: false,
+                errors: error.payload.response
+            }));
         });
     };
 
