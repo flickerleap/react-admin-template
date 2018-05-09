@@ -3,8 +3,6 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {timestamp} from '../../../helpers/time';
 
-import 'react-datepicker/dist/react-datepicker.css';
-
 export class Time extends React.Component {
     constructor(props) {
         super(props);
@@ -39,16 +37,17 @@ export class Time extends React.Component {
     };
 
     render() {
-        const {name, label} = this.props;
+        const {name, label, interval = 15} = this.props;
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
                 <div className="form-control">
                     <DatePicker
-                        selected={this.state.time}
-                        onChange={this.onChange}
                         showTimeSelect
-                        dateFormat="LLL" />
+                        showTimeSelectOnly
+                        timeIntervals={interval}
+                        dateFormat="LT"
+                        timeCaption="Time" />
                 </div>
             </div>
         );

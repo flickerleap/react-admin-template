@@ -3,8 +3,6 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {timestamp} from '../../../helpers/time';
 
-import 'react-datepicker/dist/react-datepicker.css';
-
 export class Date extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +37,7 @@ export class Date extends React.Component {
     };
 
     render() {
-        const {name, label} = this.props;
+        const {name, label, format="YYYY-MM-DD"} = this.props;
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
@@ -47,6 +45,7 @@ export class Date extends React.Component {
                     <DatePicker
                         selected={this.state.date}
                         onChange={this.onChange}
+                        dateFormat={format}
                     />
                 </div>
             </div>
