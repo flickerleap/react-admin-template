@@ -6,7 +6,7 @@ export class Select extends React.Component {
         super(props);
 
         this.state = {
-            value: props.value || (props.items.length > 0 ? props.items[0].id : '')
+            value: props.value || (props.items.length > 0 ? props.items[0].value : '')
         };
     }
 
@@ -23,8 +23,8 @@ export class Select extends React.Component {
         };
     };
 
-    onChange = (e) => {
-        const value = this.props.multi ? e.map((item)=>item.value) : e.target.value;
+    onChange = (items) => {
+        const value = this.props.multi ? items.map((item)=>item.value) : items.value;
 
         this.setState(()=>({
             value
@@ -35,7 +35,7 @@ export class Select extends React.Component {
 
     render() {
         const {
-            name, label, multi = false, className="form-control", items = []
+            name, label, multipleItems = false, className="form-control", items = []
         } = this.props;
 
         return (
@@ -46,7 +46,7 @@ export class Select extends React.Component {
                     className={className}
                     value={this.state.value}
                     onChange={this.onChange}
-                    multi={multi}
+                    multi={multipleItems}
                     options={items}
                 />;
             </div>
