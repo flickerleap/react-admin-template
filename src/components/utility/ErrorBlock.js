@@ -1,13 +1,30 @@
 import React from 'react';
+import {Alert} from "reactstrap";
 
 /**
  *
- * @param errors
- * @returns {*}
- * @constructor
  */
-export const ErrorBlock = ({error, classes = 'alert alert-danger error'}) => (
-    <div className={classes} role="alert">
-        {error}
-    </div>
-);
+export class ErrorBlock extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            open: true
+        };
+    }
+
+    onDismiss = () => {
+        this.setState(() => ({
+            open: false
+        }));
+    };
+
+    render() {
+        const {error} = this.props;
+        return (
+            <Alert color="info" isOpen={this.state.open} toggle={this.onDismiss}>
+                {error}
+            </Alert>
+        );
+    }
+}

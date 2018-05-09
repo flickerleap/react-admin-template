@@ -29,7 +29,7 @@ export class DropDown extends React.Component {
 
     render() {
         const {
-            name, label, onChange, className="form-control", items = [], nameField='name'
+            name, label, className="form-control", items = [], nameField='name'
         } = this.props;
 
         return (

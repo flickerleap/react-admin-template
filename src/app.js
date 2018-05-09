@@ -28,7 +28,7 @@ export {getUserFromStore} from './helpers/auth';
 export {userNeedsAuthentication, userDoesNotNeedAuthentication} from './helpers/authGuard';
 export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';
-export {contains} from './helpers/string';
+export {contains, capitalizeFirstLetter} from './helpers/string';
 export {now, timestamp} from './helpers/time';
 export {hasErrors, getErrors} from './helpers/validate';
 export {getSelectors, updateParams} from './helpers/selectors';
