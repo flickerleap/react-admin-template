@@ -52,6 +52,5 @@ export {defaultAppConfig} from './config/config';
 /** ROOT */
 export {Root} from './Root';
 
-import 'react-dates/initialize';
 import '../scss/app.scss';
 
