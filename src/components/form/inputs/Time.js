@@ -22,10 +22,11 @@ export class Time extends React.Component {
     };
 
     onChange = (time) => {
+        const {format = 'HH:mm'} = this.props;
         const event = {
             target: {
                 name: this.props.name,
-                value: timestamp(time)
+                value: time.format(format)
             }
         };
 

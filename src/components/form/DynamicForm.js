@@ -32,7 +32,7 @@ export class DynamicForm extends React.Component {
         this.setInitialData();
     }
 
-    componentWillReceiveProps(nextProps) {
+    getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps.errors) {
             console.log(nextProps.errors);
             this.setState(prevState => ({
