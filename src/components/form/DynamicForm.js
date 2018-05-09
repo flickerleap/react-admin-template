@@ -33,17 +33,21 @@ export class DynamicForm extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.errors) {
-            console.log(nextProps.errors);
-            this.setState(prevState => ({
+        let state = prevState;
+        if (nextProps.errors || (Array.isArray(nextProps.errors) && nextProps.errors.length > 0)) {
+            state = {
+                ...prevState,
                 fields: prevState.fields.map((field) => {
                     if (nextProps.errors[field.name]) {
                         field.error = nextProps.errors[field.name][0];
                     }
+
                     return field;
                 })
-            }));
+            };
         }
+
+        return state;
     }
 
     getCurrentField(fields, key) {

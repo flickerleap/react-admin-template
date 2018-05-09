@@ -56,10 +56,14 @@ class LoginScreen extends React.Component {
                     }
                 }).catch((error) => {
                     this.setState(()=>({
-                        errors: error.payload.response
+                        errors: error.payload.response.errors
                     }));
                 });
             }
+        }).catch((error) => {
+            this.setState(()=>({
+                errors: error.payload.response.errors
+            }));
         });
     };
 
@@ -67,7 +71,7 @@ class LoginScreen extends React.Component {
         if (hasErrors(action)) {
             this.setState(() => ({
                 loading: false,
-                errors: action.payload.response
+                errors: action.payload.response.errors
             }));
             return true;
         }
