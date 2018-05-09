@@ -165,11 +165,13 @@ export class DynamicForm extends React.Component {
                     <div className="row">
                         {
                             this.state.fields.map((field, index) => {
+                                field.onChange = field.onChange === undefined
+                                    ? this.onFieldChange : field.onChange;
                                 return field.show &&
                                     (
                                         <div key={index} className={columnClass}>
                                             <div className="form-group">
-                                                <Field {...field} onChange={this.onFieldChange}/>
+                                                <Field {...field}/>
                                             </div>
                                         </div>
                                     );

@@ -1,5 +1,5 @@
 import React from "react";
-import {Input, DropDown, Date, TextArea, Time, DateTime, Select} from './inputs/inputs';
+import {Date, DateTime, DropDown, Input, Select, TextArea, Time} from './inputs/inputs';
 import {ErrorBlock} from "../utility/ErrorBlock";
 
 export class Field extends React.Component {
@@ -19,7 +19,7 @@ export class Field extends React.Component {
 
     getComponent = (type) => {
         let component = this.components[type];
-        if(component === undefined) {
+        if (component === undefined) {
             component = Input;
         }
 
@@ -38,7 +38,7 @@ export class Field extends React.Component {
         return (
             <div>
                 {element}
-                {this.props.error && <ErrorBlock error={this.props.error} />}
+                {this.props.error && <ErrorBlock error={this.props.error}/>}
             </div>
         );
     }
