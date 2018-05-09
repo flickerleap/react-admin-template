@@ -2,6 +2,9 @@ import React from 'react';
 import {Nav, NavbarBrand, NavbarToggler} from 'reactstrap';
 
 export class Header extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     sidebarToggle = (e) => {
         e.preventDefault();

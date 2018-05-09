@@ -5,6 +5,10 @@ import {Date} from "./inputs/Date";
 import {TextArea} from "./inputs/TextArea";
 
 export class Field extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         const {
             custom = (props) => {

@@ -5,10 +5,13 @@ import {login, getUser} from "../../store/actions/auth";
 
 
 class LoginScreen extends React.Component {
-    state = {
-        errors: [],
-        errorMessage: ''
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            errors: [],
+        };
+    }
 
     onLogin = (email, password) => {
         this.props.login(email, password).then((action)=>{
@@ -17,6 +20,10 @@ class LoginScreen extends React.Component {
                     if(!this.hasErrors(action))  {
                         this.props.history.push("/");
                     }
+                }).catch((error) => {
+                    this.setState(()=>({
+                        errors: error.payload.response
+                    }));
                 });
             }
         });
@@ -24,12 +31,10 @@ class LoginScreen extends React.Component {
 
     hasErrors = (action) => {
         if(contains(action.type, 'FAILURE')) {
-            action.payload.response.then((data)=>{
-                this.setState(()=>({
-                    errors: data.errors,
-                    errorMessage: data.message
-                }));
-            });
+            const errors = action.payload.response;
+            this.setState(()=>({
+                errors: errors
+            }));
             return true;
         }
 

@@ -7,6 +7,9 @@ import {userNeedsAuthentication, userDoesNotNeedAuthentication} from "./helpers/
 import {Loading} from "./components/utility/Loading";
 
 export class Root extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     setComponentProps = (component, ...rest) => {
         const finalProps = Object.assign({}, ...rest);

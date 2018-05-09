@@ -2,7 +2,7 @@ import {GET_USER_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS} from "../actions/action
 
 /**
  *
- * @type {{accessToken: undefined, refreshToken: undefined, isAuthenticated: boolean}}
+ * @type {{accessToken: undefined, refreshToken: undefined, user: undefined}}
  */
 const defaultState = {
     accessToken: undefined,
