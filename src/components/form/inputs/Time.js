@@ -43,6 +43,8 @@ export class Time extends React.Component {
                 <label htmlFor={name}>{label}</label>
                 <div className="form-control">
                     <DatePicker
+                        selected={this.state.time}
+                        onChange={this.onChange}
                         showTimeSelect
                         showTimeSelectOnly
                         timeIntervals={interval}
