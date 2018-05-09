@@ -5,6 +5,7 @@ import {Date} from "./inputs/Date";
 import {TextArea} from "./inputs/TextArea";
 import {Time} from "./inputs/Time";
 import {ErrorBlock} from "../utility/ErrorBlock";
+import {DateTime} from "./inputs/DateTime";
 
 export class Field extends React.Component {
     constructor(props) {
@@ -26,6 +27,9 @@ export class Field extends React.Component {
                 break;
             case 'time':
                 element = <Time {...this.props} />;
+                break;
+            case 'datetime':
+                element = <DateTime {...this.props} />;
                 break;
             case 'textarea':
                 element = <TextArea {...this.props} />;
