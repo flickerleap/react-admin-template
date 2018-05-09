@@ -31,6 +31,7 @@ export {get, set} from './helpers/storage';
 export {contains} from './helpers/string';
 export {now, timestamp} from './helpers/time';
 export {hasErrors, getErrors} from './helpers/validate';
+export {getSelectors, updateParams} from './helpers/selectors';
 
 /** LAYOUTS */
 export {AdminLayout} from "./layouts/layouts";
