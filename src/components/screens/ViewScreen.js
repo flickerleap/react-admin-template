@@ -51,14 +51,14 @@ export class ViewScreen extends React.Component {
     };
 
     render() {
-        const {title = 'View', fields = [], items = [], actions = [], pagination={}} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination = {}} = this.props;
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    <AddButton link={this.getAddUrl()} type={title} />
+                    <AddButton link={this.getAddUrl()} type={title}/>
                     <br/>
                 </div>
 

@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export class Aside extends Component {
+export class Aside extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <aside className="aside-menu">

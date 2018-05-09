@@ -1,8 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 
-export class HeaderDropdown extends Component {
-
+export class HeaderDropdown extends React.Component {
     toggle = () => {
         this.setState({
             dropdownOpen: !this.state.dropdownOpen
@@ -40,7 +39,6 @@ export class HeaderDropdown extends Component {
     }
 
     render() {
-        const {...attributes} = this.props;
         return (
             this.getDropDownMenu()
         );
