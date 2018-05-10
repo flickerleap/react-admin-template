@@ -7,8 +7,6 @@ export class CheckboxList extends React.Component {
         this.state = {
             values: props.value || []
         };
-
-        console.log(this.state.values);
     }
 
     componentDidMount() {
@@ -29,9 +27,13 @@ export class CheckboxList extends React.Component {
         const value = event.target.value;
 
         const values = this.state.values;
-        von
-        if(values.find())
-        values.splice(index, 0, value);
+
+        if(values.indexOf(value) > -1) {
+            delete values[index];
+        } else {
+            values.splice(index, 0, value);
+        }
+
         this.props.onChange(this.getEventObject(values));
 
         this.setState(() => ({
