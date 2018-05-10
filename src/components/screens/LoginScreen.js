@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {login, getUser} from "../../store/actions/auth";
+import {getUser, login} from "../../store/actions/auth";
 import {DynamicForm} from "../form/DynamicForm";
 import {hasErrors} from "../../helpers/validate";
 
@@ -48,20 +48,20 @@ class LoginScreen extends React.Component {
     }
 
     onLogin = ({email, password}) => {
-        this.props.login(email, password).then((action)=>{
-            if(!this.resultHasErrors(action)) {
-                this.props.getUser().then((action)=>{
-                    if(!this.hasErrors(action))  {
+        this.props.login(email, password).then((action) => {
+            if (!this.resultHasErrors(action)) {
+                this.props.getUser().then((action) => {
+                    if (!this.hasErrors(action)) {
                         this.props.history.push("/");
                     }
                 }).catch((error) => {
-                    this.setState(()=>({
+                    this.setState(() => ({
                         errors: error.payload.response.errors
                     }));
                 });
             }
         }).catch((error) => {
-            this.setState(()=>({
+            this.setState(() => ({
                 errors: error.payload.response.errors
             }));
         });

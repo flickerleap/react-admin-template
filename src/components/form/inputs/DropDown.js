@@ -6,7 +6,7 @@ export class DropDown extends React.Component {
         super(props);
 
         this.state = {
-            value: props.value || (props.items.length > 0 ? props.items[0].id : '')
+            value: props.value || (props.items.length > 0 ? props.items[0].value : '')
         };
     }
 
@@ -29,7 +29,7 @@ export class DropDown extends React.Component {
 
     render() {
         const {
-            name, label, className="form-control", items = [], nameField='name'
+            name, label, className="form-control", items = []
         } = this.props;
 
         return (
@@ -42,12 +42,12 @@ export class DropDown extends React.Component {
                     onChange={this.onChange}
                 >
                     {
-                        items.map((item) => (
+                        items.map((item, index) => (
                             <option
-                                key={item.id}
-                                value={item.id}
+                                key={index}
+                                value={item.value}
                             >
-                                {item[nameField]}
+                                {item.label}
                             </option>
                         ))
                     }
