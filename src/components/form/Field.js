@@ -1,45 +1,52 @@
 import React from "react";
-import {Date, DateTime, DropDown, Input, Select, TextArea, Time} from './inputs/inputs';
+import {CheckboxList, Date, DateTime, DropDown, Input, TextArea, Time} from './inputs/inputs';
 import {ErrorBlock} from "../utility/ErrorBlock";
 
 export class Field extends React.Component {
     constructor(props) {
         super(props);
-
-        this.components = {
-            dropdown: <DropDown {...props}/>,
-            date: <Date {...props}/>,
-            textarea: <TextArea {...props}/>,
-            time: <Time {...props}/>,
-            datetime: <DateTime {...props}/>,
-            select: <Select {...props}/>,
-            custom: (props) => props.custom(props)
-        };
     }
 
-    getComponent = (type) => {
-        let component = this.components[type];
-        if (component === undefined) {
-            component = <Input  {...props}/>;
+    getElement() {
+        const {
+            custom = (props) => {
+            }, type
+        } = this.props;
+        let element = undefined;
+        switch (type) {
+            case 'dropdown':
+                element = <DropDown {...this.props} />;
+                break;
+            case 'checkboxlist':
+                element = <CheckboxList {...this.props} />;
+                break;
+            case 'date':
+                element = <Date {...this.props} />;
+                break;
+            case 'time':
+                element = <Time {...this.props} />;
+                break;
+            case 'datetime':
+                element = <DateTime {...this.props} />;
+                break;
+            case 'textarea':
+                element = <TextArea {...this.props} />;
+                break;
+            case 'custom':
+                element = custom(this.props);
+                break;
+            default:
+                element = <Input {...this.props} />;
+                break;
         }
 
-        return component;
-    };
-
-    /*getElement() {
-        let props = this.props;
-        if(props.ref !== undefined) {
-            delete props.ref;
-        }
-        return React.createElement(this.getComponent(this.props.type), this.props);
-    }*/
+        return element;
+    }
 
     render() {
-        const element = this.getComponent(this.props.type);
-
         return (
             <div>
-                {element}
+                {this.getElement()}
                 {this.props.error && <ErrorBlock error={this.props.error}/>}
             </div>
         );
