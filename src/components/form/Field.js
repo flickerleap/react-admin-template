@@ -1,26 +1,24 @@
 import React from "react";
-import {Input} from './inputs/Input';
-import {DropDown} from "./inputs/DropDown";
-import {Date} from "./inputs/Date";
-import {TextArea} from "./inputs/TextArea";
-import {Time} from "./inputs/Time";
+import {CheckboxList, Date, DateTime, DropDown, Input, TextArea, Time} from './inputs/inputs';
 import {ErrorBlock} from "../utility/ErrorBlock";
-import {DateTime} from "./inputs/DateTime";
 
 export class Field extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    render() {
+    getElement() {
         const {
             custom = (props) => {
-            }
+            }, type
         } = this.props;
         let element = undefined;
-        switch (this.props.type) {
+        switch (type) {
             case 'dropdown':
                 element = <DropDown {...this.props} />;
+                break;
+            case 'checkboxlist':
+                element = <CheckboxList {...this.props} />;
                 break;
             case 'date':
                 element = <Date {...this.props} />;
@@ -42,10 +40,14 @@ export class Field extends React.Component {
                 break;
         }
 
+        return element;
+    }
+
+    render() {
         return (
             <div>
-                {element}
-                {this.props.error && <ErrorBlock error={this.props.error} classes={"error"} />}
+                {this.getElement()}
+                {this.props.error && <ErrorBlock error={this.props.error}/>}
             </div>
         );
     }

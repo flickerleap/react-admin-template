@@ -9,7 +9,8 @@ export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/
 export {Card, List, ListItem, Modal, InfoCard} from "./components/display/display";
 
 /** FORM */
-export {Field, DynamicForm, Input, DropDown} from './components/form/form';
+export {Field, DynamicForm} from './components/form/form';
+export {Input, DropDown, Date, DateTime, CheckboxList, Time, TextArea} from './components/form/inputs/inputs';
 
 /** LAYOUT */
 export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
@@ -28,7 +29,7 @@ export {getUserFromStore} from './helpers/auth';
 export {userNeedsAuthentication, userDoesNotNeedAuthentication} from './helpers/authGuard';
 export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';
-export {contains} from './helpers/string';
+export {contains, capitalizeFirstLetter} from './helpers/string';
 export {now, timestamp} from './helpers/time';
 export {hasErrors, getErrors} from './helpers/validate';
 export {getSelectors, updateParams} from './helpers/selectors';
