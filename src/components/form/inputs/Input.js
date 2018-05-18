@@ -27,7 +27,7 @@ export class Input extends React.Component {
                     name={name}
                     className={className}
                     type={type}
-                    value={this.value}
+                    value={this.state.value}
                     onChange={this.onChange}
                 />
             </div>
