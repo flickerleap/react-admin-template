@@ -25,7 +25,8 @@ export class AddScreen extends React.Component {
 
     onSubmit = (item) => {
         const {redirectPath, add} = this.props;
-        add(item).then((action) => {
+        const userID = this.props.user.id
+        add(item, userID).then((action) => {
             if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
             }
