@@ -22,9 +22,20 @@ export class Checkbox extends React.Component {
         };
     };
 
+    onChange = (event) => {
+        this.setState((prevState) => {
+            const value = !prevState.value;
+            this.props.onChange(this.getEventObject(value));
+
+            return {
+                value
+            };
+        });
+    };
+
     render() {
         const {
-            name, label, className = "form-control col-md-4", value, onChange
+            name, label, className = "form-control col-md-4", value
         } = this.props;
 
         return (
@@ -33,7 +44,7 @@ export class Checkbox extends React.Component {
                 <div className="row">
                     <div className={className}>
                         <input
-                            onChange={onChange}
+                            onChange={this.onChange}
                             id={name}
                             name={name}
                             type="checkbox"
