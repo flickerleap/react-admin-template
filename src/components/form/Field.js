@@ -1,5 +1,5 @@
 import React from "react";
-import {CheckboxList, Date, DateTime, DropDown, Input, TextArea, Time} from './inputs/inputs';
+import {CheckboxList, Date, DateTime, DropDown, Input, TextArea, Time, Checkbox} from './inputs/inputs';
 import {ErrorBlock} from "../utility/ErrorBlock";
 
 export class Field extends React.Component {
@@ -9,13 +9,16 @@ export class Field extends React.Component {
 
     getElement() {
         const {
-            custom = (props) => {
-            }, type
+            custom = (props) => {},
+            type
         } = this.props;
         let element = undefined;
         switch (type) {
             case 'dropdown':
                 element = <DropDown {...this.props} />;
+                break;
+            case 'checkbox':
+                element = <Checkbox {...this.props} />;
                 break;
             case 'checkboxlist':
                 element = <CheckboxList {...this.props} />;
