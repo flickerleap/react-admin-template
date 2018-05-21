@@ -1,6 +1,7 @@
 import React from 'react';
 import {ActionColumn} from "./ActionColumn";
 import {Pagination} from "./Pagination";
+import {FilterBar} from "./FilterBar";
 
 /**
  * Component to display rows of data in a table
@@ -72,10 +73,6 @@ export class DataTable extends React.Component {
         return field.label;
     };
 
-    setFilters() {
-
-    }
-
     getValue = (item, name) => {
         const field = this.getField(name);
         if(field.valueFn !== undefined)
@@ -103,9 +100,10 @@ export class DataTable extends React.Component {
         ));
     }
 
-    getFilters() {
-
-    }
+    onFilter = (data) => {
+        const {onFilter} = this.props;
+        onFilter(data);
+    };
 
     render() {
         const {title = ''} = this.props;
@@ -125,9 +123,7 @@ export class DataTable extends React.Component {
                                     {this.getHeaders()}
                                     <th>Actions</th>
                                 </tr>
-                                <tr>
-                                    {this.getFilters()}
-                                </tr>
+                                <FilterBar fields={this.state.fields} onFilter={this.onFilter} />
                                 </thead>
                                 <tbody>
                                 {this.getRows()}

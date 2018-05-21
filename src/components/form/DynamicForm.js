@@ -25,11 +25,13 @@ export class DynamicForm extends React.Component {
         this.setState((prevState) => ({
             fields: prevState.fields.map((field) => {
                 field.show = this.showField(field);
+                if(prevState.data && prevState.data[field.name]){
+                    field.value = prevState.data[field.name];
+                }
+
                 return field;
             })
         }));
-
-        this.setInitialData();
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -54,18 +56,6 @@ export class DynamicForm extends React.Component {
         return fields.find((field) => {
             return field.name === key;
         });
-    }
-
-    setInitialData() {
-        if (this.state.data) {
-            Object.keys(this.state.data).forEach((key) => {
-                const field = this.getCurrentField(this.state.fields, key);
-
-                if (field) {
-                    field.value = this.state.data[key];
-                }
-            });
-        }
     }
 
     onFieldChange = (e) => {
