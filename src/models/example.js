@@ -66,7 +66,7 @@ export const model = new Model({
         },
         {
             name: 'interests',
-            label: 'Campuses to Notify',
+            label: 'Interests',
             type: 'checkboxlist',
             filterType: 'dropdown',
             items: [

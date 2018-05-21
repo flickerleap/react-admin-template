@@ -20,7 +20,7 @@ export class FilterBar extends React.Component {
         this.setState((prevState) => ({
             fields: prevState.fields.map((field) => {
                 field.canFilter = this.setCanFilter(field);
-                if(prevState.data && prevState.data[field.name]){
+                if (prevState.data && prevState.data[field.name]) {
                     field.value = prevState.data[field.name];
                 }
 

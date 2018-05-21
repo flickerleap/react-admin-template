@@ -100,13 +100,8 @@ export class DataTable extends React.Component {
         ));
     }
 
-    onFilter = (data) => {
-        const {onFilter} = this.props;
-        onFilter(data);
-    };
-
     render() {
-        const {title = ''} = this.props;
+        const {title = '', onFilter} = this.props;
         const {pagination, items} = this.state;
         return (
             <div className="card">
@@ -123,7 +118,7 @@ export class DataTable extends React.Component {
                                     {this.getHeaders()}
                                     <th>Actions</th>
                                 </tr>
-                                <FilterBar fields={this.state.fields} onFilter={this.onFilter} />
+                                <FilterBar fields={this.state.fields} onFilter={onFilter} />
                                 </thead>
                                 <tbody>
                                 {this.getRows()}
