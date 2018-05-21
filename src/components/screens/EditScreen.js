@@ -28,7 +28,8 @@ export class EditScreen extends React.Component {
 
     onSubmit = (item) => {
         const {redirectPath, edit} = this.props;
-        edit({id: this.state.item.id, ...item}).then((action) => {
+        const userID = this.props.user.id
+        edit({id: this.state.item.id, ...item},userID).then((action) => {
             if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
             }
