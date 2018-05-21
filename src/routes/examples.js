@@ -5,6 +5,7 @@ export const examples = [
     {
         path:'/examples/',
         component: ExampleScreen,
+        exact: true,
         isPublic: true,
     },
     {
