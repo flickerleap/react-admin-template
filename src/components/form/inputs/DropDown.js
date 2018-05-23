@@ -10,6 +10,13 @@ export class DropDown extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.value = nextProps.value;
+
+        return state;
+    }
+
     componentDidMount() {
         this.props.onChange({
             target:{

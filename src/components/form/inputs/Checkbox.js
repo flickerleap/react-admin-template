@@ -13,6 +13,13 @@ export class Checkbox extends React.Component {
         this.props.onChange(this.getEventObject(this.props.value));
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.value = nextProps.value;
+
+        return state;
+    }
+
     getEventObject = (value) => {
         return {
             target: {

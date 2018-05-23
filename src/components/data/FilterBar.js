@@ -48,12 +48,23 @@ export class FilterBar extends React.Component {
         event.preventDefault();
         const data = {};
         this.state.fields.forEach((field) => {
-            if(field.value) {
+            if (field.value) {
                 data[field.name] = field.value
             }
         });
 
         this.props.onFilter(data);
+    };
+
+    onReset = (event) => {
+        event.preventDefault();
+        this.setState((prevState) => ({
+            ...prevState,
+            fields: prevState.fields.map((field) => {
+                field.value = field.defaultValue ? field.defaultValue : '';
+                return field;
+            })
+        }));
     };
 
     setCanFilter = (field) => {
@@ -74,6 +85,7 @@ export class FilterBar extends React.Component {
                                 <td className="filter-cell" key={index}>
                                     <Field
                                         {...field}
+                                        value={field.value}
                                         type={field.filterType ? field.filterType : field.type}
                                         onChange={this.onFieldChange}
                                         label={false}
@@ -89,6 +101,7 @@ export class FilterBar extends React.Component {
                 <td className="filter-cell">
                     <div>
                         <a href="#" className="btn btn-primary" onClick={this.onFilter}>Filter</a>
+                        <a href="#" className="btn btn-danger" onClick={this.onReset}>Reset</a>
                     </div>
                 </td>
             </tr>

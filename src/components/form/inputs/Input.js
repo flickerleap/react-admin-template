@@ -9,6 +9,13 @@ export class Input extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.value = nextProps.value;
+
+        return state;
+    }
+
     onChange = (event) => {
         const value = event.target.value;
         this.setState(()=>({
