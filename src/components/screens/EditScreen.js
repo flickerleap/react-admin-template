@@ -28,7 +28,7 @@ export class EditScreen extends React.Component {
 
     onSubmit = (item) => {
         const {redirectPath, edit} = this.props;
-        const userID = this.props.user.id
+        const userID = this.props.user ? this.props.user.id : undefined;
         edit({id: this.state.item.id, ...item},userID).then((action) => {
             if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
@@ -48,7 +48,8 @@ export class EditScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetch().then(() => {
+        const userID = this.props.user ? this.props.user.id : undefined;
+        this.props.fetch(undefined, userID).then(() => {
             this.setState(() => ({
                 item: this.props.items.find((item) => parseInt(item.id) === parseInt(this.props.match.params.id)),
                 loading: false,
