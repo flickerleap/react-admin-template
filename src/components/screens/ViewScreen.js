@@ -38,6 +38,7 @@ export class ViewScreen extends React.Component {
 
     fetchItems = (params = {}) => {
         const {fetch} = this.props;
+        console.log('Here');
         fetch(params).then((action) => {
             this.setState(() => ({
                 loading: false
@@ -49,11 +50,14 @@ export class ViewScreen extends React.Component {
         return this.props.location.pathname + "/add";
     };
 
-    onFilter = (data) => {
+    onFilter = (filters) => {
+        const params = {
+            filters
+        };
         this.setState(() => ({
             loading: true
         }));
-        this.fetchItems(data);
+        this.fetchItems(params);
     };
 
     render() {

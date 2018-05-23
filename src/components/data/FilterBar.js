@@ -44,11 +44,16 @@ export class FilterBar extends React.Component {
         }));
     };
 
-    getData = (key, value) => {
-        let data = {};
-        data[key] = value;
+    onFilter = (event) => {
+        event.preventDefault();
+        const data = {};
+        this.state.fields.forEach((field) => {
+            if(field.value) {
+                data[field.name] = field.value
+            }
+        });
 
-        return data;
+        this.props.onFilter(data);
     };
 
     setCanFilter = (field) => {
@@ -64,9 +69,9 @@ export class FilterBar extends React.Component {
             <tr>
                 {
                     this.state.fields.map((field, index) => {
-                        return field.canFilter &&
+                        return field.canFilter ?
                             (
-                                <td key={index}>
+                                <td className="filter-cell" key={index}>
                                     <Field
                                         {...field}
                                         type={field.filterType ? field.filterType : field.type}
@@ -74,9 +79,18 @@ export class FilterBar extends React.Component {
                                         label={false}
                                     />
                                 </td>
+                            ) : (
+                                <td className="filter-cell" key={index}>
+
+                                </td>
                             );
                     })
                 }
+                <td className="filter-cell">
+                    <div>
+                        <a href="#" className="btn btn-primary" onClick={this.onFilter}>Filter</a>
+                    </div>
+                </td>
             </tr>
         );
     };
