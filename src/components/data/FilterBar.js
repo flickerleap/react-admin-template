@@ -61,7 +61,7 @@ export class FilterBar extends React.Component {
         this.setState((prevState) => ({
             ...prevState,
             fields: prevState.fields.map((field) => {
-                field.value = field.defaultValue ? field.defaultValue : '';
+                field.value = field.defaultValue ? undefined : '';
                 return field;
             })
         }));
