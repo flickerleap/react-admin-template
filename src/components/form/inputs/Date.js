@@ -13,6 +13,13 @@ export class Date extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.date = moment(nextProps.value);
+
+        return state;
+    }
+
     componentDidMount() {
         this.onChange(this.state.date);
     }

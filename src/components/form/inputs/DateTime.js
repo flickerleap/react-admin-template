@@ -13,6 +13,13 @@ export class DateTime extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.datetime = moment(nextProps.value);
+
+        return state;
+    }
+
     componentDidMount() {
         this.onChange(this.state.datetime);
     }

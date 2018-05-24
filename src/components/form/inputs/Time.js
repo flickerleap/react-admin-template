@@ -13,6 +13,13 @@ export class Time extends React.Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.time = moment(nextProps.value);
+
+        return state;
+    }
+
     componentDidMount() {
         this.onChange(this.state.time);
     }

@@ -13,6 +13,13 @@ export class CheckboxList extends React.Component {
         this.props.onChange(this.getEventObject(this.state.values));
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.values = nextProps.value;
+
+        return state;
+    }
+
     getEventObject = (value) => {
         return {
             target: {

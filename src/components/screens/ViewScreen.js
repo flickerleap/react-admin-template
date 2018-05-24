@@ -20,14 +20,9 @@ export class ViewScreen extends React.Component {
 
         this.state = {
             params,
-            currentPage: params.page
-        };
-    }
-
-    componentWillMount() {
-        this.setState(() => ({
+            currentPage: params.page,
             loading: true
-        }));
+        };
     }
 
     getParams = () => {
@@ -38,17 +33,31 @@ export class ViewScreen extends React.Component {
     };
 
     componentDidMount() {
+        this.fetchItems(this.getParams());
+    }
+
+    fetchItems = (params = {}) => {
         const {fetch} = this.props;
         const userID = this.props.user ? this.props.user.id : undefined;
-        fetch(this.getParams(), userID).then((response) => {
+        fetch(params, userID).then((action) => {
             this.setState(() => ({
                 loading: false
             }));
         });
-    }
+    };
 
     getAddUrl = () => {
-        return this.props.location.pathname + "add";
+        return this.props.location.pathname + "/add";
+    };
+
+    onFilter = (filters) => {
+        const params = {
+            filters
+        };
+        this.setState(() => ({
+            loading: true
+        }));
+        this.fetchItems(params);
     };
 
     render() {
@@ -73,6 +82,7 @@ export class ViewScreen extends React.Component {
                                 items={items}
                                 actions={actions}
                                 pagination={pagination}
+                                onFilter={this.onFilter}
                             />
                     }
                 </div>
