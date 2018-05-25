@@ -8,7 +8,7 @@ export class EditScreen extends React.Component {
         super(props);
 
         this.state = {
-            loading: false,
+            loading: true,
             item: {},
             errors: []
         };
@@ -17,7 +17,6 @@ export class EditScreen extends React.Component {
     resultHasErrors = (action) => {
         if (hasErrors(action)) {
             this.setState(() => ({
-                loading: false,
                 errors: action.payload.response.errors
             }));
             return true;
@@ -27,9 +26,15 @@ export class EditScreen extends React.Component {
     };
 
     onSubmit = (item) => {
+        this.setState(() => ({
+            loading: true
+        }));
         const {redirectPath, edit} = this.props;
         const userID = this.props.user ? this.props.user.id : undefined;
-        edit({id: this.state.item.id, ...item},userID).then((action) => {
+        edit({id: this.state.item.id, ...item}, userID).then((action) => {
+            this.setState(() => ({
+                loading: false
+            }));
             if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
             }
@@ -40,12 +45,6 @@ export class EditScreen extends React.Component {
             }));
         });
     };
-
-    componentWillMount(){
-        this.setState(() => ({
-            loading:true
-        }));
-    }
 
     componentDidMount() {
         const userID = this.props.user ? this.props.user.id : undefined;

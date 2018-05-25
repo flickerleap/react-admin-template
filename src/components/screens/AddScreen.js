@@ -14,9 +14,9 @@ export class AddScreen extends React.Component {
     resultHasErrors = (action) => {
         if (hasErrors(action)) {
             this.setState(() => ({
-                loading: false,
                 errors: action.payload.response.errors
             }));
+
             return true;
         }
 
@@ -24,9 +24,15 @@ export class AddScreen extends React.Component {
     };
 
     onSubmit = (item) => {
+        this.setState(() => ({
+            loading: true
+        }));
         const {redirectPath, add} = this.props;
         const userID = this.props.user ? this.props.user.id : undefined;
         add(item, userID).then((action) => {
+            this.setState(() => ({
+                loading: false
+            }));
             if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
             }

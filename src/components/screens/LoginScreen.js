@@ -48,20 +48,33 @@ class LoginScreen extends React.Component {
     }
 
     onLogin = ({email, password}) => {
+        this.setState(() => ({
+            loading: true
+        }));
         this.props.login(email, password).then((action) => {
             if (!this.resultHasErrors(action)) {
                 this.props.getUser().then((action) => {
+                    this.setState(() => ({
+                        loading: false
+                    }));
                     if (!this.hasErrors(action)) {
                         this.props.history.push("/");
                     }
                 }).catch((error) => {
                     this.setState(() => ({
+                        loading: false,
                         errors: error.payload.response.errors
                     }));
                 });
             }
+            else {
+                this.setState(() => ({
+                    loading: false
+                }));
+            }
         }).catch((error) => {
             this.setState(() => ({
+                loading: false,
                 errors: error.payload.response.errors
             }));
         });
@@ -70,7 +83,6 @@ class LoginScreen extends React.Component {
     resultHasErrors = (action) => {
         if (hasErrors(action)) {
             this.setState(() => ({
-                loading: false,
                 errors: action.payload.response.errors
             }));
             return true;
