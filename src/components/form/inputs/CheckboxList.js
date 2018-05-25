@@ -5,7 +5,8 @@ export class CheckboxList extends React.Component {
         super(props);
 
         this.state = {
-            values: props.value || []
+            values: props.value ? CheckboxList.setValues(this.props.items, [], props.value)
+                : this.props.items.map(() => undefined)
         };
     }
 
@@ -14,10 +15,24 @@ export class CheckboxList extends React.Component {
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.values = nextProps.value;
+        const state = prevState;
+        state.values = CheckboxList.setValues(nextProps.items, state.values, nextProps.value);
 
         return state;
+    }
+
+    static setValues(items, values, value) {
+        if (Array.isArray(value)) {
+            values = value;
+        }
+        else {
+            const index = CheckboxList.getIndexOfValue(items, value);
+            if (index < 0 && values[index] === undefined) {
+                values[index] = value;
+            }
+        }
+
+        return values;
     }
 
     getEventObject = (value) => {
@@ -29,16 +44,21 @@ export class CheckboxList extends React.Component {
         };
     };
 
-    onChange = (event) => {
-        const index = parseInt(event.target.id.replace(this.props.name, ''));
-        const value = event.target.value;
+    static getIndexOfValue = (items, value) => {
+        return items.findIndex((item) => {
+            return item.value === value;
+        });
+    };
 
+    onChange = (event) => {
+        const value = event.target.value;
+        const index = CheckboxList.getIndexOfValue(this.props.items, value);
         const values = this.state.values;
 
-        if(values.indexOf(value) > -1) {
-            delete values[index];
+        if (values.includes(value)) {
+            values[index] = undefined;
         } else {
-            values.splice(index, 0, value);
+            values[index] = value;
         }
 
         this.props.onChange(this.getEventObject(values));
@@ -66,9 +86,9 @@ export class CheckboxList extends React.Component {
                             <div key={index} className={className}>
                                 <input
                                     onChange={this.onChange}
-                                    id={name+index} name={name}
+                                    id={name + index} name={name}
                                     type="checkbox" value={item.value}
-                                    checked={this.isSelected(index)} />
+                                    checked={this.isSelected(index)}/>
                                 <span> {item.label}</span>
                             </div>
                         ))
