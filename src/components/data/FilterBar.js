@@ -11,23 +11,16 @@ export class FilterBar extends React.Component {
 
         this.state = {
             data,
-            fields,
-            loading: true
-        };
-    }
-
-    componentDidMount() {
-        this.setState((prevState) => ({
-            fields: prevState.fields.map((field) => {
-                field.canFilter = this.setCanFilter(field);
-                if (prevState.data && prevState.data[field.name]) {
-                    field.value = prevState.data[field.name];
+            fields: fields.map((field) => {
+                field.filter = field.filter || {};
+                field.filter.enabled = this.getCanFilter(field);
+                if (data && data[field.name]) {
+                    field.value = data[field.name];
                 }
 
                 return field;
-            }),
-            loading: false
-        }));
+            })
+        };
     }
 
     onFieldChange = (e) => {
@@ -65,11 +58,13 @@ export class FilterBar extends React.Component {
                 return field;
             })
         }));
+
+        this.props.onFilter({});
     };
 
-    setCanFilter = (field) => {
-        if (field.canFilter !== undefined) {
-            return field.canFilter;
+    getCanFilter = (field) => {
+        if (field.filter !== undefined && field.filter.enabled !== undefined) {
+            return field.filter.enabled;
         }
 
         return true;
@@ -80,13 +75,13 @@ export class FilterBar extends React.Component {
             <tr>
                 {
                     this.state.fields.map((field, index) => {
-                        return field.canFilter ?
+                        return field.filter.enabled ?
                             (
                                 <td className="filter-cell" key={index}>
                                     <Field
                                         {...field}
                                         value={field.value}
-                                        type={field.filterType ? field.filterType : field.type}
+                                        type={field.filter.type ? field.filter.type : 'text'}
                                         onChange={this.onFieldChange}
                                         label={false}
                                     />
