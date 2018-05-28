@@ -14,6 +14,9 @@ import classNames from 'classnames';
  * @constructor
  */
 export class Sidebar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     handleClick = (e) => {
         e.preventDefault();

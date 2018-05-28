@@ -1,7 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import moment from 'moment';
 
-export class Footer extends Component {
+export class Footer extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         const {copyright} = this.props;
         const year = moment().format('Y');

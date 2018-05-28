@@ -1,5 +1,5 @@
 import React from 'react';
-import {SingleDatePicker} from 'react-dates';
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {timestamp} from '../../../helpers/time';
 
@@ -11,6 +11,13 @@ export class Date extends React.Component {
             focused: false,
             date: moment(this.props.value)
         };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.date = moment(nextProps.value);
+
+        return state;
     }
 
     componentDidMount() {
@@ -37,18 +44,16 @@ export class Date extends React.Component {
     };
 
     render() {
-        const {name, label, numberOfMonths = 1} = this.props;
+        const {name, label, format="YYYY-MM-DD"} = this.props;
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
                 <div className="form-control">
-                    <SingleDatePicker
-                        date={this.state.date} // momentPropTypes.momentObj or null
-                        onDateChange={this.onChange} // PropTypes.func.isRequired
-                        focused={this.state.focused} // PropTypes.bool
-                        onFocusChange={this.onFocusChanged} // PropTypes.func.isRequired
-                        numberOfMonths={numberOfMonths}
-                        isOutsideRange={() => false}
+                    <DatePicker
+                        selected={this.state.date}
+                        onChange={this.onChange}
+                        dateFormat={format}
+                        withPortal
                     />
                 </div>
             </div>

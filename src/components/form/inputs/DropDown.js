@@ -6,8 +6,15 @@ export class DropDown extends React.Component {
         super(props);
 
         this.state = {
-            value: props.value || (props.items.length > 0 ? props.items[0].id : '')
+            value: props.value || (props.items.length > 0 ? props.items[0].value : '')
         };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.value = nextProps.value;
+
+        return state;
     }
 
     componentDidMount() {
@@ -19,9 +26,17 @@ export class DropDown extends React.Component {
         });
     }
 
+    onChange = (event) => {
+        const value = event.target.value;
+        this.setState(()=>({
+            value
+        }));
+        this.props.onChange(event);
+    };
+
     render() {
         const {
-            name, label, onChange, className="form-control", items = [], nameField='name'
+            name, label, className="form-control", items = []
         } = this.props;
 
         return (
@@ -31,15 +46,15 @@ export class DropDown extends React.Component {
                     name={name}
                     className={className}
                     value={this.state.value}
-                    onChange={onChange}
+                    onChange={this.onChange}
                 >
                     {
-                        items.map((item) => (
+                        items.map((item, index) => (
                             <option
-                                key={item.id}
-                                value={item.id}
+                                key={index}
+                                value={item.value}
                             >
-                                {item[nameField]}
+                                {item.label}
                             </option>
                         ))
                     }

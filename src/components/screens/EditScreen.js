@@ -1,38 +1,54 @@
 import React from 'react';
 import {DynamicForm} from '../form/form';
 import {Loading} from '../utility/Loading';
-import {contains} from "../../helpers/string";
+import {hasErrors} from "../../helpers/validate";
 
 export class EditScreen extends React.Component {
-    state = {
-        loading: false,
-        item: {},
-        errors: []
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: true,
+            item: {},
+            errors: []
+        };
+    }
+
+    resultHasErrors = (action) => {
+        if (hasErrors(action)) {
+            this.setState(() => ({
+                errors: action.payload.response.errors
+            }));
+            return true;
+        }
+
+        return false;
     };
 
     onSubmit = (item) => {
+        this.setState(() => ({
+            loading: true
+        }));
         const {redirectPath, edit} = this.props;
-        edit({id: this.state.item.id, ...item}).then((action) => {
-            const data = action.payload.response;
-            if (contains(action.type, 'FAILURE')) {
-                this.setState(() => ({
-                    errors: action.errors,
-                    errorMessage: data.message
-                }));
-            } else {
+        const userID = this.props.user ? this.props.user.id : undefined;
+        edit({id: this.state.item.id, ...item}, userID).then((action) => {
+            this.setState(() => ({
+                loading: false
+            }));
+            if (!this.resultHasErrors(action)) {
                 this.props.history.push(redirectPath);
             }
+        }).catch((error) => {
+            this.setState(() => ({
+                loading: false,
+                errors: error.payload.response.errors
+            }));
         });
     };
 
-    componentWillMount(){
-        this.setState(() => ({
-            loading:true
-        }));
-    }
-
     componentDidMount() {
-        this.props.fetch().then(() => {
+        const userID = this.props.user ? this.props.user.id : undefined;
+        this.props.fetch(undefined, userID).then(() => {
             this.setState(() => ({
                 item: this.props.items.find((item) => parseInt(item.id) === parseInt(this.props.match.params.id)),
                 loading: false,

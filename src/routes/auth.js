@@ -4,7 +4,6 @@ import {Logout as LogoutScreen} from "../components/screens/LogoutScreen";
 export const auth = [
     {
         path:'/login',
-        label: 'Login',
         component: LoginScreen,
         exact: true,
         isPublic: true,
@@ -12,7 +11,6 @@ export const auth = [
     },
     {
         path:'/logout',
-        label: 'Logout',
         component: LogoutScreen,
         exact: true,
         isPublic: false,

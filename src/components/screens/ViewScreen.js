@@ -20,14 +20,9 @@ export class ViewScreen extends React.Component {
 
         this.state = {
             params,
-            currentPage: params.page
-        };
-    }
-
-    componentWillMount() {
-        this.setState(() => ({
+            currentPage: params.page,
             loading: true
-        }));
+        };
     }
 
     getParams = () => {
@@ -38,27 +33,42 @@ export class ViewScreen extends React.Component {
     };
 
     componentDidMount() {
+        this.fetchItems(this.getParams());
+    }
+
+    fetchItems = (params = {}) => {
         const {fetch} = this.props;
-        fetch(this.getParams()).then((response) => {
+        const userID = this.props.user ? this.props.user.id : undefined;
+        fetch(params, userID).then((action) => {
             this.setState(() => ({
                 loading: false
             }));
         });
-    }
+    };
 
     getAddUrl = () => {
         return this.props.location.pathname + "/add";
     };
 
+    onFilter = (filters) => {
+        const params = {
+            filters
+        };
+        this.setState(() => ({
+            loading: true
+        }));
+        this.fetchItems(params);
+    };
+
     render() {
-        const {title = 'View', fields = [], items = [], actions = [], pagination={}} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination = {}} = this.props;
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    <AddButton link={this.getAddUrl()} type={title} />
+                    <AddButton link={this.getAddUrl()} type={title}/>
                     <br/>
                 </div>
 
@@ -72,6 +82,7 @@ export class ViewScreen extends React.Component {
                                 items={items}
                                 actions={actions}
                                 pagination={pagination}
+                                onFilter={this.onFilter}
                             />
                     }
                 </div>

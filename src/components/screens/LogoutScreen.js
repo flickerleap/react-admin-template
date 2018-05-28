@@ -4,6 +4,9 @@ import {logout} from "../../store/actions/auth";
 import {connect} from 'react-redux';
 
 class LogoutScreen extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     componentDidMount() {
         this.props.logout();
