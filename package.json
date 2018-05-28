@@ -6,7 +6,8 @@
   "style": "dist/styles.css",
   "files": [
     "dist",
-    "scss"
+    "scss",
+    "src"
   ],
   "scripts": {
     "clean": "rm -rf dist coverage",
