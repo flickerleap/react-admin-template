@@ -6,7 +6,7 @@
 export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/data";
 
 /** DISPLAY */
-export {Card, List, ListItem, Modal, InfoCard} from "./components/display/display";
+export {Card, List, ListItem, Modal, InfoCard, DataView} from "./components/display/display";
 
 /** FORM */
 export {Field, DynamicForm} from './components/form/form';
@@ -16,7 +16,7 @@ export {Input, DropDown, Date, DateTime, CheckboxList, Time, TextArea} from './c
 export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
 
 /** SCREENS */
-export {ViewScreen, AddScreen,EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";
+export {ViewScreen, IndexScreen, AddScreen, EditScreen, DashboardScreen, NotFoundScreen, Login as LoginScreen, Logout as LogoutScreen} from "./components/screens/screens";
 
 /** UTILITY */
 export {Loading, Error, ErrorBlock} from "./components/utility/utility";
