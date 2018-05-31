@@ -47,7 +47,9 @@ export class ViewScreen extends React.Component {
     };
 
     getAddUrl = () => {
-        return this.props.location.pathname + "/add";
+        const path = this.props.location.pathname;
+        const lastChar = path.slice(-1);
+        return lastChar === '/' ? `${path}add` : `${path}/add`;
     };
 
     onFilter = (filters) => {
