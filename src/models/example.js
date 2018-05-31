@@ -38,7 +38,11 @@ export const model = new Model({
                     allowEmpty: false,
                     message: '^Please enter a start date'
                 }
-            }
+            },
+            filter: {
+                type: 'date',
+                defaultValue: moment().format('YYYY-MM-DD')
+            },
         },
         {
             name: 'end_date',
@@ -50,7 +54,11 @@ export const model = new Model({
                     allowEmpty: false,
                     message: '^Please enter an end date'
                 }
-            }
+            },
+            filter: {
+                type: 'date',
+                defaultValue: moment().format('YYYY-MM-DD')
+            },
         },
         {
             name: 'start_time',
@@ -62,18 +70,24 @@ export const model = new Model({
                     allowEmpty: false,
                     message: '^Please enter a start time'
                 }
-            }
+            },
+            filter: {
+                type: 'time',
+                defaultValue: moment().format('YYYY-MM-DD')
+            },
         },
         {
             name: 'interests',
             label: 'Interests',
             type: 'checkboxlist',
-            filterType: 'dropdown',
             items: [
                 {value:'Pottery', label:'Pottery'},
                 {value:'Knitting', label:'Knitting'},
                 {value:'Running', label:'Running'},
             ],
+            filter: {
+                type: 'dropdown'
+            },
             value:['Pottery', 'Running']
         }
     ],
