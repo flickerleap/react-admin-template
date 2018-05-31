@@ -91,8 +91,19 @@ export class DynamicForm extends React.Component {
 
         if (!this.hasErrors()) {
             const data = this.getData();
+            this.clear();
             this.props.onSubmit(data);
         }
+    };
+
+    clear = () => {
+        this.setState((prevState)=>({
+            fields: prevState.fields.map((field)=>{
+                field.value = field.defaultValue ? field.defaultValue : '';
+
+                return field;
+            })
+        }));
     };
 
     validate = (fieldName) => {

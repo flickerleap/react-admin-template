@@ -36,10 +36,10 @@ export class ViewScreen extends React.Component {
         this.fetchItems(this.getParams());
     }
 
-    fetchItems = (params = {}) => {
-        const {fetch} = this.props;
-        const userID = this.props.user ? this.props.user.id : undefined;
-        fetch(params, userID).then((action) => {
+    fetchItems = (filters = {}) => {
+        const {fetch, params = {}, relationIds = []} = this.props;
+        params.filters = params.filters ? Object.assign(params.filters, filters) : filters;
+        fetch(params, ...relationIds).then(() => {
             this.setState(() => ({
                 loading: false
             }));
@@ -47,28 +47,29 @@ export class ViewScreen extends React.Component {
     };
 
     getAddUrl = () => {
-        return this.props.location.pathname + "/add";
+        const path = this.props.location.pathname;
+        const lastChar = path.slice(-1);
+        return lastChar === '/' ? `${path}add` : `${path}/add`;
     };
 
     onFilter = (filters) => {
-        const params = {
-            filters
-        };
         this.setState(() => ({
             loading: true
         }));
-        this.fetchItems(params);
+        this.fetchItems(filters);
     };
 
     render() {
-        const {title = 'View', fields = [], items = [], actions = [], pagination = {}} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination = {}, showAddButton = true} = this.props;
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    <AddButton link={this.getAddUrl()} type={title}/>
+                    {
+                        showAddButton && <AddButton link={this.getAddUrl()} type={title}/>
+                    }
                     <br/>
                 </div>
 
