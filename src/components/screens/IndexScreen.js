@@ -11,7 +11,7 @@ import qs from 'query-string';
  * @returns {ViewScreen}
  * @constructor
  */
-export class ViewScreen extends React.Component {
+export class IndexScreen extends React.Component {
 
     constructor(props) {
         super(props);
