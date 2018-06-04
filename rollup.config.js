@@ -6,6 +6,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
 import postcssModules from 'postcss-modules';
 import uglify from 'rollup-plugin-uglify';
+import url from "rollup-plugin-url";
 
 const cssExportMap = {};
 const isProd = process.env.NODE_ENV === 'production';
@@ -26,6 +27,10 @@ export default {
     plugins: [
         resolve({
             preferBuiltins: true
+        }),
+        url({
+            include: ["images/*"], // defaults to .svg, .png, .jpg and .gif files
+            emitFiles: true // defaults to true
         }),
         postcss({
             plugins: [

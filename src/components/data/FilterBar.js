@@ -16,6 +16,10 @@ export class FilterBar extends React.Component {
                 field.filter.enabled = this.getCanFilter(field);
                 if (data && data[field.name]) {
                     field.value = data[field.name];
+                } else {
+                    field.value = field.filter.defaultValue
+                        ? field.filter.defaultValue : field.defaultValue
+                        ? field.defaultValue : '';
                 }
 
                 return field;
