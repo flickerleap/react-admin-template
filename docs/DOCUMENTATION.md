@@ -1,0 +1,411 @@
+Components
+----------
+
+**src/Root.js**
+
+### 1. Root
+
+
+
+
+-----
+**src/components/data/ActionColumn.js**
+
+### 1. ActionColumn
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+actions||no|&lt;See the source code&gt;|
+-----
+**src/components/data/AddButton.js**
+
+### 1. AddButton
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+className||no|&lt;See the source code&gt;|
+-----
+**src/components/data/DataTable.js**
+
+### 1. DataTable
+
+Component to display rows of data in a table
+
+@param props
+@returns {DataTable}
+@constructor   
+
+
+
+
+-----
+**src/components/data/FilterBar.js**
+
+### 1. FilterBar
+
+
+
+
+-----
+**src/components/data/Pagination.js**
+
+### 1. Pagination
+
+Component to add Pagination to a table or list
+
+@param link
+@param total
+@param perPage
+@param current
+@returns {*}
+@constructor   
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+total||no|1|
+perPage||no|1|
+current||no|1|
+-----
+**src/components/display/Card.js**
+
+### 1. Card
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+title||no|&lt;See the source code&gt;|
+text||no|&lt;See the source code&gt;|
+image||no|&lt;See the source code&gt;|
+button||no|&lt;See the source code&gt;|
+footer||no|&lt;See the source code&gt;|
+-----
+**src/components/display/InfoCard.js**
+
+### 1. InfoCard
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+icon||no|&lt;See the source code&gt;|
+classes||no|&lt;See the source code&gt;|
+value||no|&lt;See the source code&gt;|
+title||no|&lt;See the source code&gt;|
+button||no|&lt;See the source code&gt;|
+-----
+**src/components/display/List.js**
+
+### 1. List
+
+
+
+
+-----
+**src/components/display/ListItem.js**
+
+### 1. ListItem
+
+
+
+
+-----
+**src/components/display/Modal.js**
+
+### 1. Modal
+
+
+
+
+-----
+**src/components/form/DynamicForm.js**
+
+### 1. DynamicForm
+
+
+
+
+-----
+**src/components/form/Field.js**
+
+### 1. Field
+
+
+
+
+-----
+**src/components/form/inputs/Checkbox.js**
+
+### 1. Checkbox
+
+
+
+
+-----
+**src/components/form/inputs/CheckboxList.js**
+
+### 1. CheckboxList
+
+
+
+
+-----
+**src/components/form/inputs/Date.js**
+
+### 1. Date
+
+
+
+
+-----
+**src/components/form/inputs/DateTime.js**
+
+### 1. DateTime
+
+
+
+
+-----
+**src/components/form/inputs/DropDown.js**
+
+### 1. DropDown
+
+
+
+
+-----
+**src/components/form/inputs/Input.js**
+
+### 1. Input
+
+
+
+
+-----
+**src/components/form/inputs/TextArea.js**
+
+### 1. TextArea
+
+
+
+
+-----
+**src/components/form/inputs/Time.js**
+
+### 1. Time
+
+
+
+
+-----
+**src/components/layout/Aside.js**
+
+### 1. Aside
+
+
+
+
+-----
+**src/components/layout/Footer.js**
+
+### 1. Footer
+
+
+
+
+-----
+**src/components/layout/Header.js**
+
+### 1. Header
+
+
+
+
+-----
+**src/components/layout/HeaderDropdown.js**
+
+### 1. HeaderDropdown
+
+
+
+
+-----
+**src/components/layout/Navbar.js**
+
+### 1. Navbar
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+className||no|&lt;See the source code&gt;|
+-----
+**src/components/layout/Sidebar.js**
+
+### 1. Sidebar
+
+Generate a side navigation view with the given links.
+
+@param {string} className
+@param {Object[]} links
+@param {string} links[].path URL to set as the NavLink's "to" prop
+@param {string} links[].label Name of the link
+@returns {*}
+@constructor   
+
+
+
+
+-----
+**src/components/screens/AddScreen.js**
+
+### 1. AddScreen
+
+
+
+
+-----
+**src/components/screens/DashboardScreen.js**
+
+### 1. DashboardScreen
+
+
+
+
+-----
+**src/components/screens/EditScreen.js**
+
+### 1. EditScreen
+
+
+
+
+-----
+**src/components/screens/LoginScreen.js**
+
+### 1. LoginScreen
+
+
+
+
+-----
+**src/components/screens/LogoutScreen.js**
+
+### 1. LogoutScreen
+
+
+
+
+-----
+**src/components/screens/NotFoundScreen.js**
+
+### 1. NotFoundScreen
+
+
+
+
+-----
+**src/components/screens/ViewScreen.js**
+
+### 1. ViewScreen
+
+Component to display data screen for model
+
+@param props
+@returns {ViewScreen}
+@constructor   
+
+
+
+
+-----
+**src/components/utility/Error.js**
+
+### 1. Error
+
+@param errors
+@returns {*}
+@constructor   
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+errors||no|&lt;See the source code&gt;|
+-----
+**src/components/utility/ErrorBlock.js**
+
+### 1. ErrorBlock
+
+
+
+
+-----
+**src/components/utility/Loading.js**
+
+### 1. Loading
+
+@param active
+@param loadingImage
+@returns {*}
+@constructor   
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+active||no|false|
+-----
+**src/layouts/AdminLayout.js**
+
+### 1. AdminLayout
+
+
+
+
+Property | Type | Required | Default value | Description
+:--- | :--- | :--- | :--- | :---
+routes||no|&lt;See the source code&gt;|
+links||no|&lt;See the source code&gt;|
+dropDownMenus||no|&lt;See the source code&gt;|
+-----
+**src/layouts/PublicLayout.js**
+
+### 1. PublicLayout
+
+
+
+
+-----
+**src/screens/Example/AddExampleScreen.js**
+
+### 1. 
+
+
+
+
+-----
+**src/screens/Example/ExampleScreen.js**
+
+### 1. 
+
+
+
+
+-----
+
+<sub>This document was generated by the <a href="https://github.com/marborkowski/react-doc-generator" target="_blank">**React DOC Generator v1.2.5**</a>.</sub>

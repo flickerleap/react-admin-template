@@ -15,7 +15,8 @@
     "start": "webpack-dev-server --open --config webpack.config.js",
     "watch": "webpack-dev-server --config ./webpack.config.js",
     "build": "NODE_ENV=production rollup -c",
-    "build:staging": "NODE_ENV=staging rollup -c"
+    "build:staging": "NODE_ENV=staging rollup -c",
+    "docs": "react-doc-generator ./src -o ./docs/DOCUMENTATION.md"
   },
   "repository": {
     "type": "git",
@@ -73,6 +74,7 @@
     "node-sass": "^4.9.0",
     "npm": "^5.8.0",
     "postcss-modules": "^1.1.0",
+    "react-doc-generator": "^1.2.5",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
