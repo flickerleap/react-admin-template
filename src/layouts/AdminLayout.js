@@ -2,12 +2,10 @@ import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {Footer, Header, Sidebar} from "../components/layout/layout";
 import {Container} from 'reactstrap';
-import Popup from 'react-popup';
 
 export const AdminLayout = ({routes = [], links = [], dropDownMenus = [], getComponent, appConfig, ...rest}) => (
     <div className="app">
         <Header {...appConfig} dropDownMenus={dropDownMenus}/>
-        <Popup />
         <div className='app-body'>
             <Sidebar links={links} {...rest}/>
             <main className="main">

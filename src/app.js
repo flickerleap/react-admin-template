@@ -3,10 +3,10 @@
 
 
 /** DATA */
-export {ActionColumn, DataTable, Pagination, AddButton} from "./components/data/data";
+export {ActionColumn, DataTable, Pagination, AddButton, DeleteButton} from "./components/data/data";
 
 /** DISPLAY */
-export {Card, List, ListItem, Modal, InfoCard, PopupBuilder, DataView} from "./components/display/display";
+export {Card, List, ListItem, InfoCard, DataView} from "./components/display/display";
 
 /** FORM */
 export {Field, DynamicForm} from './components/form/form';
