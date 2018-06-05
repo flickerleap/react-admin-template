@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from "moment/moment";
 import {Model} from "../data/Model";
-import {DeleteButton} from "../components/data/DeleteButton";
 
 export const model = new Model({
     type: 'Example',

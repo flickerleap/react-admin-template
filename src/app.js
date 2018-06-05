@@ -45,7 +45,7 @@ export {getSelectors, updateParams} from './helpers/selectors';
 export {addEmptyItem} from './helpers/list';
 
 /** LAYOUTS */
-export {AdminLayout} from "./layouts/layouts";
+export {AdminLayout, PublicLayout} from "./layouts/layouts";
 
 /** MIDDLEWARE */
 export {apiMiddleware} from "./middleware/api";
