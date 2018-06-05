@@ -30,7 +30,6 @@ export class ActionColumn extends React.Component {
             case 'delete':
                 return <DeleteButton
                     key={index}
-                    type={'Example'}
                     trigger={{
                         className: action.classes,
                         label: action.label

@@ -6,8 +6,8 @@ export class DeleteButton extends React.Component {
     }
 
     onClick = () => {
-        const {type, action} = this.props;
-        if (window.confirm(`Are you sure you wish to delete this ${type}?`)) {
+        const {action} = this.props;
+        if (window.confirm(`Are you sure you wish to delete this item?`)) {
             action();
         }
     };
