@@ -6,7 +6,10 @@ import {FilterBar} from "./FilterBar";
 /**
  * Component to display rows of data in a table
  *
- * @param props
+ * @param {Object} props
+ * @param {Array} props.items
+ * @param {Array} props.fields
+ * @param {Object} props.pagination
  * @returns {DataTable}
  * @constructor
  */
@@ -35,10 +38,16 @@ export class DataTable extends React.Component {
         this.setHeaders();
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.items = nextProps.items !== undefined ? nextProps.items : [];
+
+        return state;
+    }
+
     setData() {
-        this.setState(() => ({
-            items: this.props.items !== undefined ? this.props.items : [],
-            first: this.props.items.length > 0 ? this.props.items[0] : undefined,
+        this.setState((prevState) => ({
+            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
         }));
     }
 
@@ -82,27 +91,9 @@ export class DataTable extends React.Component {
         return item[name];
     };
 
-    getRows() {
-        const {actions = []} = this.props;
-        return this.state.items.map((item, index) => {
-            return <tr key={index}>
-                {Object.keys(item).map((name) => {
-                    return this.includeField(name) && <td key={name}>{this.getValue(item, name)}</td>;
-                })}
-                <ActionColumn item={item} actions={actions}/>
-            </tr>;
-        });
-    }
-
-    getHeaders() {
-        return this.state.headers.map((name, index) => (
-            name !== undefined && <th key={index}>{name}</th>
-        ));
-    }
-
     render() {
-        const {title = '', onFilter} = this.props;
-        const {pagination, items} = this.state;
+        const {title = '', actions = [], onFilter} = this.props;
+        const {pagination, items, headers, fields} = this.state;
         return (
             <div className="card">
                 <div className="card-header">
@@ -115,13 +106,28 @@ export class DataTable extends React.Component {
                             <table className="table-outline table table-hover">
                                 <thead className="thead-light">
                                 <tr>
-                                    {this.getHeaders()}
+                                    {
+                                        headers.map((name, index) => (
+                                            name !== undefined && <th key={index}>{name}</th>
+                                        ))
+                                    }
                                     <th>Actions</th>
                                 </tr>
-                                <FilterBar fields={this.state.fields} onFilter={onFilter} />
+                                <FilterBar fields={fields} onFilter={onFilter} />
                                 </thead>
                                 <tbody>
-                                {this.getRows()}
+                                {
+                                    items.map((item, index) => (
+                                        <tr key={index}>
+                                            {
+                                                Object.keys(item).map((name) => {
+                                                    return this.includeField(name) && <td key={name}>{this.getValue(item, name)}</td>;
+                                                })
+                                            }
+                                            <ActionColumn item={item} actions={actions}/>
+                                        </tr>
+                                    ))
+                                }
                                 </tbody>
                             </table>
                             <Pagination {...pagination}/>
