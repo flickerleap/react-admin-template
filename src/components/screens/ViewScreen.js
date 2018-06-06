@@ -38,8 +38,7 @@ export class ViewScreen extends React.Component {
 
     fetchItems = (params = {}) => {
         const {fetch} = this.props;
-        const userID = this.props.user ? this.props.user.id : undefined;
-        fetch(params, userID).then((action) => {
+        fetch(params).then((action) => {
             this.setState(() => ({
                 loading: false
             }));
