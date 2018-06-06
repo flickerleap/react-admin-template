@@ -35,10 +35,16 @@ export class DataTable extends React.Component {
         this.setHeaders();
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.items = nextProps.items !== undefined ? nextProps.items : [];
+
+        return state;
+    }
+
     setData() {
-        this.setState(() => ({
-            items: this.props.items !== undefined ? this.props.items : [],
-            first: this.props.items.length > 0 ? this.props.items[0] : undefined,
+        this.setState((prevState) => ({
+            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
         }));
     }
 
