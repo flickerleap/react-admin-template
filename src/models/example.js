@@ -81,14 +81,14 @@ export const model = new Model({
             label: 'Interests',
             type: 'checkboxlist',
             items: [
-                {value:'Pottery', label:'Pottery'},
-                {value:'Knitting', label:'Knitting'},
-                {value:'Running', label:'Running'},
+                {value: 'Pottery', label: 'Pottery'},
+                {value: 'Knitting', label: 'Knitting'},
+                {value: 'Running', label: 'Running'},
             ],
             filter: {
                 type: 'dropdown'
             },
-            value:['Pottery', 'Running']
+            value: ['Pottery', 'Running']
         }
     ],
     links: [
@@ -110,7 +110,12 @@ export const model = new Model({
     ],
     actions: ({remove}) => {
         return [
-
+            {
+                type: 'delete',
+                label: <i className="fa fa-trash-alt"></i>,
+                classes: 'btn btn-danger',
+                to: ({id}) => remove(id),
+            }
         ];
     }
 });

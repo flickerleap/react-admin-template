@@ -45,7 +45,7 @@ export default {
             getExport(id) {
                 return cssExportMap[id];
             },
-            extract: 'dist/styles.css'
+            extract: 'dist/bundle.css'
         }),
         babel({
             exclude: 'node_modules/**',
