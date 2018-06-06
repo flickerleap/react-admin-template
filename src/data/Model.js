@@ -1,20 +1,20 @@
 export class Model {
-    constructor({type = '', plural = '', fields = [], links = [], actions = []}) {
+    constructor({type = '', plural = '', fields = [], links = [], actions = [], baseUrl = undefined}) {
         this.type = type;
         this.plural = plural;
         this.fields = fields;
         this.links = links;
         this.actions = actions;
+        this.baseUrl = baseUrl ? baseUrl : this.getBaseUrl();
     }
 
     getLinks() {
-        const baseUrl = this.getBaseUrl();
         return this.links.map((link) => ({
-            url: `${baseUrl}/${link.url}`,
+            url: `${this.baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
             icon: link.icon,
             children: link.children !== undefined ? link.children.map((item) => ({
-                url: `${baseUrl}${item.url}`,
+                url: `${this.baseUrl}${item.url}`,
                 name: item.name,
                 icon: item.icon
             })) : []
