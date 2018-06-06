@@ -14,10 +14,21 @@ export class ActionColumn extends React.Component {
         super(props);
 
         this.state = {
-            actions: this.props.actions.map((action, index) => {
-                return this.getButton(action, index);
-            })
+            actions: this.getActions(this.props.actions)
         };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.actions = this.getActions(nextProps.actions);
+
+        return state;
+    }
+
+    getActions(actions = []) {
+        return actions.map((action, index) => {
+            return this.getButton(action, index);
+        });
     }
 
     getButton(action, index) {
@@ -47,9 +58,7 @@ export class ActionColumn extends React.Component {
             <td className="action-column">
                 <div className="action-container">
                     {
-                        this.state.actions.map((action) => {
-                            return action;
-                        })
+                        this.state.actions.map((action) => action)
                     }
                 </div>
             </td>
