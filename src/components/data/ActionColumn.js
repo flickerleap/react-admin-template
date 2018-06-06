@@ -14,25 +14,24 @@ export class ActionColumn extends React.Component {
         super(props);
 
         this.state = {
-            actions: this.getActions(this.props.actions)
+            actions: ActionColumn.getActions(this.props.item, this.props.actions)
         };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         let state = prevState;
-        state.actions = this.getActions(nextProps.actions);
+        state.actions = ActionColumn.getActions(nextProps.item, nextProps.actions);
 
         return state;
     }
 
-    getActions(actions = []) {
+    static getActions(item, actions = []) {
         return actions.map((action, index) => {
-            return this.getButton(action, index);
+            return ActionColumn.getButton({action, index, item});
         });
     }
 
-    getButton(action, index) {
-        const {item} = this.props;
+    static getButton({action, index, item}) {
         switch (action.type) {
             case 'button':
                 return <button className={action.classes} key={index} onClick={() => {
