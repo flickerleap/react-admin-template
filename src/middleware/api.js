@@ -13,7 +13,7 @@ export const apiMiddleware = store =>
                 return next(action);
             }
 
-            let {endpoint, method, body, headers = {}} = callAPI;
+            let {endpoint, method, body, headers = {}, meta = {}} = callAPI;
             const {types} = callAPI;
 
             headers["Content-Type"] = "application/json";
@@ -46,7 +46,7 @@ export const apiMiddleware = store =>
                     credentials: "same-origin"
                 })
                 // Reads the body stream into Flux Standard Action
-                    .then(createFSAConverter(successType, failureType))
+                    .then(createFSAConverter(successType, failureType, meta))
                     .then(
                         attemptRefresh({
                             action,
