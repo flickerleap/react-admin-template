@@ -1,4 +1,4 @@
-export const createFSAConverter = (successType, failureType) => {
+export const createFSAConverter = (successType, failureType, meta = {}) => {
     return (response) => {
         if (!response.ok) {
             return response.json().then((payload) => ({
@@ -7,7 +7,8 @@ export const createFSAConverter = (successType, failureType) => {
                     status: response.status,
                     response: payload
                 },
-                type: failureType
+                type: failureType,
+                meta: meta
             }));
         }
 
@@ -17,7 +18,8 @@ export const createFSAConverter = (successType, failureType) => {
         const createSuccessType = (payload) => {
             return {
                 payload: payload,
-                type: successType
+                type: successType,
+                meta: meta
             };
         };
 
