@@ -49,3 +49,19 @@ export const getUser = () => ({
         method: 'GET'
     }
 });
+
+export const forgotPassword = (email) => ({
+    [CALL_API]: {
+        types: [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE],
+        endpoint: `${prefix}/user`,
+        method: 'GET'
+    }
+});
+
+export const resetPassword = (id, password) => ({
+    [CALL_API]: {
+        types: [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE],
+        endpoint: `${prefix}/user`,
+        method: 'GET'
+    }
+});
