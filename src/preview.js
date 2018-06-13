@@ -13,5 +13,7 @@ import '../scss/app.scss';
 
 export const {store, persistor} = configureStore();
 
-ReactDOM.render(<Root store={store} persistor={persistor} routes={routes} links={links}
+const roles = ['admin'];
+
+ReactDOM.render(<Root store={store} roles={roles} persistor={persistor} routes={routes} links={links}
                       appConfig={defaultAppConfig}/>, document.getElementById('app'));
