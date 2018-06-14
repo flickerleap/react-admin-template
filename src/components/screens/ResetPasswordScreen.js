@@ -11,11 +11,10 @@ class Reset extends React.Component {
         super(props);
 
         const params = qs.parse(this.props.history.location.search);
-        console.log(params);
 
         this.state = {
             errors: [],
-            token: params.token,
+            token: Object.keys(params).length > 0 ? Object.keys(params)[0] : undefined,
             fields: [
                 {
                     name: 'email',

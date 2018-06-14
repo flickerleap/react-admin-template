@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field} from "./Field";
-import {validateField} from "../../helpers/validate";
+import {validateField, validateFields} from "../../helpers/validate";
 
 export class DynamicForm extends React.Component {
     constructor(props) {
@@ -24,7 +24,7 @@ export class DynamicForm extends React.Component {
         this.setState((prevState) => ({
             fields: prevState.fields.map((field) => {
                 field.show = this.showField(field);
-                if(prevState.data && prevState.data[field.name]){
+                if (prevState.data && prevState.data[field.name]) {
                     field.value = prevState.data[field.name];
                 }
 
@@ -95,24 +95,33 @@ export class DynamicForm extends React.Component {
     };
 
     validate = (fieldName) => {
-        this.setState((prevState) => ({
-            fields: prevState.fields.map((field) => {
-                if (field.name === fieldName)
-                    field.error = validateField(field.name, field.value, field.validation);
+        const errors = validateFields(this.state.fields);
+        if (errors) {
+            this.setState((prevState) => ({
+                fields: prevState.fields.map((field) => {
+                    if (field.name === fieldName) {
+                        field.error = errors[field] ? errors[field.name][0] : undefined;
+                        console.log(field.error);
+                    }
 
-                return field;
-            })
-        }));
+                    return field;
+                })
+            }));
+        }
     };
 
     validateForm = () => {
-        this.setState((prevState) => ({
-            fields: prevState.fields.map((field) => {
-                field.error = validateField(field.name, field.value, field.validation);
+        const errors = validateFields(this.state.fields);
+        if (errors) {
+            this.setState((prevState) => ({
+                fields: prevState.fields.map((field) => {
+                    field.error = errors[field] ? errors[field.name][0] : undefined;
+                    console.log(field.error);
 
-                return field;
-            })
-        }));
+                    return field;
+                })
+            }));
+        }
     };
 
     getColumnClass = (columns) => {
