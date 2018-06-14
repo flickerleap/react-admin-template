@@ -24,7 +24,6 @@ export class Sidebar extends React.Component {
     };
 
     activeRoute = (routeName, props) => {
-        // return this.props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
         return props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
 
     };
@@ -130,7 +129,21 @@ export class Sidebar extends React.Component {
     };
 
     getNavList(links) {
-        return links.map((link, index) => this.getNavType(link, index));
+        return links.map((link, index) => {
+            if(this.hasAccess(link)) {
+                return this.getNavType(link, index)
+            }
+        });
+    }
+
+    hasAccess({access = []}) {
+        const {roles = []} = this.props;
+        let status = false;
+        access.forEach((role)=> {
+            status = roles.indexOf(role) > -1 || status;
+        });
+
+        return status;
     }
 
     render() {

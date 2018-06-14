@@ -99,13 +99,16 @@ export const model = new Model({
             children: [
                 {
                     url: '/',
-                    name: 'View'
+                    name: 'View',
+                    access: ['admin']
                 },
                 {
                     url: '/add',
-                    name: 'Add'
+                    name: 'Add',
+                    access: ['admin']
                 },
-            ]
+            ],
+            access: ['admin']
         }
     ],
     actions: ({remove}) => {
