@@ -40,9 +40,8 @@ class Forgot extends React.Component {
                 this.setState(() => ({
                     loading: false
                 }));
-                if (!hasErrors(action)) {
-                    this.props.history.push("/login");
-                }
+
+                this.props.history.push("/login");
             }
             else {
                 this.setState(() => ({

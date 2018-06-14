@@ -74,9 +74,8 @@ class Reset extends React.Component {
                 this.setState(() => ({
                     loading: false
                 }));
-                if (!this.hasErrors(action)) {
-                    this.props.history.push("/login");
-                }
+
+                this.props.history.push("/login");
             }
             else {
                 this.setState(() => ({

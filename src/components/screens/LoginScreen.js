@@ -52,13 +52,13 @@ class LoginScreen extends React.Component {
         this.setState(() => ({
             loading: true
         }));
-        this.props.login(email, password).then((action) => {
-            if (!this.resultHasErrors(action)) {
-                this.props.getUser().then((action) => {
+        this.props.login(email, password).then((loginAction) => {
+            if (!this.resultHasErrors(loginAction)) {
+                this.props.getUser().then((getUserAction) => {
                     this.setState(() => ({
                         loading: false
                     }));
-                    if (!this.hasErrors(action)) {
+                    if (!this.resultHasErrors(getUserAction)) {
                         this.props.history.push("/");
                     }
                 }).catch((error) => {
