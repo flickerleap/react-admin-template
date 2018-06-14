@@ -25,7 +25,11 @@ export class DynamicForm extends React.Component {
             fields: prevState.fields.map((field) => {
                 field.show = this.showField(field);
                 if (prevState.data && prevState.data[field.name]) {
-                    field.value = prevState.data[field.name];
+                    if(field.form.valueFn) {
+                        field.value = field.form.valueFn(prevState.data);
+                    } else {
+                        field.value = prevState.data[field.name];
+                    }
                 }
 
                 return field;
