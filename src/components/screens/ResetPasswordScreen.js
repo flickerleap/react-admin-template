@@ -1,28 +1,63 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {forgotPassword, getUser, login, resetPassword} from "../../store/actions/auth";
+import {resetPassword} from "../../store/actions/auth";
 import {DynamicForm} from "../form/DynamicForm";
 import {hasErrors} from "../../helpers/validate";
+import qs from "query-string";
+import {Loading} from "../utility/Loading";
 
-class ResetPasswordScreen extends React.Component {
+class Reset extends React.Component {
     constructor(props) {
         super(props);
 
+        const params = qs.parse(this.props.history.location.search);
+        console.log(params);
+
         this.state = {
             errors: [],
+            token: params.token,
             fields: [
                 {
+                    name: 'email',
+                    value: '',
+                    label: 'Email',
+                    type: 'email',
+                    validation: {
+                        presence: {
+                            allowEmpty: false,
+                            message: '^Please enter an email'
+                        },
+                        email: {
+                            message: '^Please enter a valid email'
+                        }
+                    },
+                },{
                     name: 'password',
                     value: '',
                     label: 'Password',
                     type: 'password',
                     validation: {
+                        length: {
+                            minimum: 6
+                        },
                         presence: {
                             allowEmpty: false,
                             message: '^Please enter a password'
+                        }
+                    },
+                }, {
+                    name: 'password_confirmation',
+                    value: '',
+                    label: 'Confirm Password',
+                    type: 'password',
+                    validation: {
+                        length: {
+                            minimum: 6
                         },
-                        password: {
-                            message: '^Please enter a valid password'
+                        equality: "password",
+                        presence: {
+                            allowEmpty: false,
+                            message: '^Please confirm your password'
                         }
                     }
                 }
@@ -30,25 +65,19 @@ class ResetPasswordScreen extends React.Component {
         };
     }
 
-    onLogin = ({email, password}) => {
+    onSubmit = (data) => {
         this.setState(() => ({
             loading: true
         }));
-        this.props.login(email, password).then((action) => {
+        data.token = this.state.token;
+        this.props.resetPassword(data).then((action) => {
             if (!this.resultHasErrors(action)) {
-                this.props.getUser().then((action) => {
-                    this.setState(() => ({
-                        loading: false
-                    }));
-                    if (!this.hasErrors(action)) {
-                        this.props.history.push("/");
-                    }
-                }).catch((error) => {
-                    this.setState(() => ({
-                        loading: false,
-                        errors: error.payload.response.errors
-                    }));
-                });
+                this.setState(() => ({
+                    loading: false
+                }));
+                if (!this.hasErrors(action)) {
+                    this.props.history.push("/login");
+                }
             }
             else {
                 this.setState(() => ({
@@ -79,13 +108,17 @@ class ResetPasswordScreen extends React.Component {
             <div className="row">
                 <div className="col-md-12">
                     <h1>Reset Password</h1>
-                    <DynamicForm
-                        errors={this.state.errors}
-                        fields={this.state.fields}
-                        columns={2}
-                        onSubmit={this.onLogin}
-                        submitLabel='Login'
-                    />
+                    {
+                        this.state.loading ? <Loading active={this.state.loading}/>
+                            :
+                            <DynamicForm
+                                errors={this.state.errors}
+                                fields={this.state.fields}
+                                columns={2}
+                                onSubmit={this.onSubmit}
+                                submitLabel='Login'
+                            />
+                    }
                 </div>
             </div>
         );
@@ -96,4 +129,4 @@ const mapDispatchToProps = (dispatch) => ({
     resetPassword: (id, password) => dispatch(resetPassword(id, password))
 });
 
-export const Login = connect(undefined, mapDispatchToProps)(ResetPasswordScreen);
+export const ResetPasswordScreen = connect(undefined, mapDispatchToProps)(Reset);

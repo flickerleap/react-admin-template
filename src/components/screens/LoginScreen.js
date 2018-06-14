@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {getUser, login} from "../../store/actions/auth";
 import {DynamicForm} from "../form/DynamicForm";
 import {hasErrors} from "../../helpers/validate";
+import {Link} from "react-router-dom";
 
 
 class LoginScreen extends React.Component {
@@ -104,6 +105,9 @@ class LoginScreen extends React.Component {
                         onSubmit={this.onLogin}
                         submitLabel='Login'
                     />
+                </div>
+                <div className="col-md-12">
+                    <Link className="btn btn-primary" to="/forgot/password">Forgot Password?</Link>
                 </div>
             </div>
         );

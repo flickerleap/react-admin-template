@@ -3,7 +3,6 @@ import {Field} from "./Field";
 import {validateField} from "../../helpers/validate";
 
 export class DynamicForm extends React.Component {
-
     constructor(props) {
         super(props);
         const {

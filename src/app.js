@@ -24,7 +24,9 @@ export {
     DashboardScreen,
     NotFoundScreen,
     Login as LoginScreen,
-    Logout as LogoutScreen
+    Logout as LogoutScreen,
+    ForgotPasswordScreen,
+    ResetPasswordScreen
 } from "./components/screens/screens";
 
 /** UTILITY */
@@ -62,6 +64,8 @@ export {
 
 export {defaultAppConfig} from './config/config';
 export {defaultPagination} from './config/defaultPagination';
+
+export {auth as authRoutes} from './routes/auth';
 
 /** ROOT */
 export {Root} from './Root';

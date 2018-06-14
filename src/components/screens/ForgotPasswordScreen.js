@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {forgotPassword, getUser, login} from "../../store/actions/auth";
+import {forgotPassword} from "../../store/actions/auth";
 import {DynamicForm} from "../form/DynamicForm";
 import {hasErrors} from "../../helpers/validate";
+import {Loading} from "../utility/Loading";
 
-class ForgotPasswordScreen extends React.Component {
+class Forgot extends React.Component {
     constructor(props) {
         super(props);
 
@@ -30,25 +31,18 @@ class ForgotPasswordScreen extends React.Component {
         };
     }
 
-    onLogin = ({email, password}) => {
+    onSubmit = ({email}) => {
         this.setState(() => ({
             loading: true
         }));
-        this.props.login(email, password).then((action) => {
+        this.props.forgotPassword(email).then((action) => {
             if (!this.resultHasErrors(action)) {
-                this.props.getUser().then((action) => {
-                    this.setState(() => ({
-                        loading: false
-                    }));
-                    if (!this.hasErrors(action)) {
-                        this.props.history.push("/");
-                    }
-                }).catch((error) => {
-                    this.setState(() => ({
-                        loading: false,
-                        errors: error.payload.response.errors
-                    }));
-                });
+                this.setState(() => ({
+                    loading: false
+                }));
+                if (!hasErrors(action)) {
+                    this.props.history.push("/login");
+                }
             }
             else {
                 this.setState(() => ({
@@ -79,13 +73,17 @@ class ForgotPasswordScreen extends React.Component {
             <div className="row">
                 <div className="col-md-12">
                     <h1>Forgot Password</h1>
-                    <DynamicForm
-                        errors={this.state.errors}
-                        fields={this.state.fields}
-                        columns={2}
-                        onSubmit={this.onLogin}
-                        submitLabel='Login'
-                    />
+                    {
+                        this.state.loading ? <Loading active={this.state.loading}/>
+                            :
+                            <DynamicForm
+                                errors={this.state.errors}
+                                fields={this.state.fields}
+                                columns={2}
+                                onSubmit={this.onSubmit}
+                                submitLabel='Send Email'
+                            />
+                    }
                 </div>
             </div>
         );
@@ -96,4 +94,4 @@ const mapDispatchToProps = (dispatch) => ({
     forgotPassword: (email) => dispatch(forgotPassword(email))
 });
 
-export const Login = connect(undefined, mapDispatchToProps)(ForgotPasswordScreen);
+export const ForgotPasswordScreen = connect(undefined, mapDispatchToProps)(Forgot);
