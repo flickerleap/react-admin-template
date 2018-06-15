@@ -2,7 +2,9 @@ export {
     login,
     logout,
     attemptTokenRefresh,
-    getUser
+    getUser,
+    forgotPassword,
+    resetPassword
 } from './auth';
 
 export {
@@ -11,3 +13,4 @@ export {
     fetch as fetchExamples,
     remove as removeExample
 } from './examples';
+
