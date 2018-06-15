@@ -23,6 +23,7 @@ export {
     EditScreen,
     DashboardScreen,
     NotFoundScreen,
+    AccessDeniedScreen,
     Login as LoginScreen,
     Logout as LogoutScreen,
     ForgotPasswordScreen,
