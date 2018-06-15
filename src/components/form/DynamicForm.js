@@ -25,7 +25,7 @@ export class DynamicForm extends React.Component {
             fields: prevState.fields.map((field) => {
                 field.show = this.showField(field);
                 if (prevState.data && prevState.data[field.name]) {
-                    if(field.form.valueFn) {
+                    if(field.form && field.form.valueFn) {
                         field.value = field.form.valueFn(prevState.data);
                     } else {
                         field.value = prevState.data[field.name];
@@ -104,7 +104,8 @@ export class DynamicForm extends React.Component {
             this.setState((prevState) => ({
                 fields: prevState.fields.map((field) => {
                     if (field.name === fieldName) {
-                        field.error = errors[field] ? errors[field.name][0] : undefined;
+                        field.error = validateField(field.name, field.value, field.validation);
+                        //field.error = errors[field] ? errors[field.name][0] : undefined;
                         console.log(field.error);
                     }
 
