@@ -1,6 +1,6 @@
 /** COMPONENTS */
 /** AUTH */
-
+export {Authorization} from  './components/auth/auth';
 
 /** DATA */
 export {ActionColumn, DataTable, Pagination, AddButton, DeleteButton} from "./components/data/data";

@@ -1,1 +1,1 @@
-export {LoginForm} from './LoginForm';
+export {Authorization} from 'Authorization';
