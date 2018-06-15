@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field} from "./Field";
-import {validateField, validateFields} from "../../helpers/validate";
+import {validateFields} from "../../helpers/validate";
 
 export class DynamicForm extends React.Component {
     constructor(props) {
@@ -65,17 +65,25 @@ export class DynamicForm extends React.Component {
         const key = e.target.name;
         const value = e.target.value;
         this.setState((prevState) => {
+            const fields = prevState.fields.map((field) => {
+                if (field.name === key) {
+                    field.value = value;
+                }
+
+                return field;
+            });
+            const errors = validateFields(fields);
+
             return {
-                fields: prevState.fields.map((field) => {
+                fields: fields.map((field) => {
                     if (field.name === key) {
-                        field.value = value;
+                        field.error = (errors && errors[field.name]) ? errors[field.name][0] : null;
                     }
 
                     return field;
                 })
             };
         });
-        this.validate(key);
     };
 
     getData() {
@@ -98,30 +106,12 @@ export class DynamicForm extends React.Component {
         }
     };
 
-    validate = (fieldName) => {
-        const errors = validateFields(this.state.fields);
-        if (errors) {
-            this.setState((prevState) => ({
-                fields: prevState.fields.map((field) => {
-                    if (field.name === fieldName) {
-                        field.error = validateField(field.name, field.value, field.validation);
-                        //field.error = errors[field] ? errors[field.name][0] : undefined;
-                        console.log(field.error);
-                    }
-
-                    return field;
-                })
-            }));
-        }
-    };
-
     validateForm = () => {
         const errors = validateFields(this.state.fields);
         if (errors) {
             this.setState((prevState) => ({
                 fields: prevState.fields.map((field) => {
-                    field.error = errors[field] ? errors[field.name][0] : undefined;
-                    console.log(field.error);
+                    field.error = errors[field.name] ? errors[field.name][0] : null;
 
                     return field;
                 })

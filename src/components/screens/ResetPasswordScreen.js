@@ -93,8 +93,9 @@ class Reset extends React.Component {
     resultHasErrors = (action) => {
         if (hasErrors(action)) {
             this.setState(() => ({
-                errors: action.payload.response.errors
+                errors: {password: action.payload.response.message}
             }));
+
             return true;
         }
 
@@ -114,7 +115,7 @@ class Reset extends React.Component {
                                 fields={this.state.fields}
                                 columns={2}
                                 onSubmit={this.onSubmit}
-                                submitLabel='Login'
+                                submitLabel='Reset Password'
                             />
                     }
                 </div>

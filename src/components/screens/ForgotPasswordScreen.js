@@ -59,8 +59,9 @@ class Forgot extends React.Component {
     resultHasErrors = (action) => {
         if (hasErrors(action)) {
             this.setState(() => ({
-                errors: action.payload.response.errors
+                errors: {password: action.payload.response.message}
             }));
+
             return true;
         }
 
