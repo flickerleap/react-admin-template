@@ -1,10 +1,12 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {Badge, Nav, NavItem, NavLink as RsNavLink} from 'reactstrap';
+import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, NavItem, NavLink as RsNavLink} from 'reactstrap';
 import classNames from 'classnames';
+import {connect} from "react-redux";
+import {HeaderDropdown} from "./HeaderDropdown";
 
 /**
- * Generate a side navigation view with the given links.
+ * Generate a menu from the given links
  *
  * @param {string} className
  * @param {Object[]} links
@@ -14,18 +16,38 @@ import classNames from 'classnames';
  * @returns {Menu}
  * @constructor
  */
-export class Menu extends React.Component {
+class MenuComponent extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            type: this.props.type ? this.props.type : 'sidebar'
+        };
     }
 
-    handleClick = (e) => {
+    onClick = (e) => {
         e.preventDefault();
-        e.target.parentElement.classList.toggle('open');
+        switch (this.state.type) {
+            // case 'header':
+            //     e.target.parentElement.parentElement.classList.toggle('show');
+            //     const expanded = e.target.getAttribute('aria-expanded');
+            //     console.log((!expanded).toString());
+            //     e.target.setAttribute('aria-expanded', (!expanded).toString());
+            //     break;
+            default:
+                e.target.parentElement.classList.toggle('open');
+                break;
+        }
     };
 
-    activeRoute = (routeName, props) => {
-        return props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
+    activeRoute = (routeName) => {
+        switch (this.state.type) {
+            case 'header':
+                return window.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
+            default:
+                return window.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
+        }
+
     };
 
     hasItems = (items) => {
@@ -42,9 +64,11 @@ export class Menu extends React.Component {
 
     getDivider = (divider, key) => {
         const classes = classNames('divider', divider.class);
-        return (<li key={key} className={classes}>
 
-        </li>);
+        return (
+            <li key={key} className={classes}>
+            </li>
+        );
     };
 
     getNavLabel = (item, key) => {
@@ -57,13 +81,27 @@ export class Menu extends React.Component {
                 item.label.class ? item.label.class : ''
             )
         };
-        return (
-            this.getNavLink(item, key, classes)
-        );
+
+        return this.getNavLink(item, key, classes);
+    };
+
+    getTitle = (item, key) => {
+        const classes = {
+            item: classNames('hidden-cn', item.class),
+            link: classNames('nav-label', item.class ? item.class : ''),
+            icon: classNames(
+                !item.icon ? 'fas fa-circle' : item.icon,
+                item.label.variant ? `text-${item.label.variant}` : '',
+                item.label.class ? item.label.class : ''
+            )
+        };
+
+        return this.getNavLink(item, key, classes);
     };
 
     getNavLink = (item, key, classes) => {
         const url = item.url ? item.url : '';
+
         return (
             <NavItem key={key} className={classes.item}>
                 {
@@ -77,19 +115,37 @@ export class Menu extends React.Component {
                         </NavLink>
                 }
             </NavItem>
-        )
+        );
     };
 
     getNavDropdown = (item, key) => {
+        switch (this.state.type) {
+            case 'header':
+                return this.getHeaderDropdown(item, key);
+            default:
+                return this.getSidebarDropdown(item, key);
+        }
+    };
+
+    getSidebarDropdown(item, key) {
         return (
-            <li key={key} className={this.activeRoute(item.url, this.props)}>
-                <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick}>
-                    <i className={item.icon}></i> {item.name}
+            <li key={key} className={this.activeRoute(item.url)}>
+                <a
+                    className="nav-link nav-dropdown-toggle"
+                    href="#"
+                    onClick={this.onClick}
+                >
+                    {item.icon && <i className={item.icon}></i>} {item.name}
                 </a>
                 <ul className="nav-dropdown-items">
                     {this.getNavList(item.children)}
                 </ul>
-            </li>)
+            </li>
+        );
+    }
+
+    getHeaderDropdown = (item, key) => {
+        return <HeaderDropdown key={key} item={item}/>;
     };
 
     getNavItem = (item, key) => {
@@ -98,13 +154,16 @@ export class Menu extends React.Component {
             link: classNames('nav-link', item.variant ? `nav-link-${item.variant}` : ''),
             icon: classNames(item.icon)
         };
-        return (
-            this.getNavLink(item, key, classes)
-        )
+
+        return this.getNavLink(item, key, classes);
     };
 
     wrapper = (item) => {
-        return (item.wrapper && item.wrapper.element ? (React.createElement(item.wrapper.element, item.wrapper.attributes, item.name)) : item.name);
+        return (
+            item.wrapper && item.wrapper.element ?
+                (React.createElement(item.wrapper.element, item.wrapper.attributes, item.name))
+                : item.name
+        );
     };
 
     getBadge = (badge) => {
@@ -121,16 +180,16 @@ export class Menu extends React.Component {
 
     getNavList(links) {
         return links.map((link, index) => {
-            if(this.hasAccess(link)) {
-                return this.getNavType(link, index)
+            if (this.hasAccess(link)) {
+                return this.getNavType(link, index);
             }
         });
     }
 
-    hasAccess({access = []}) {
-        const {roles = []} = this.props;
+    hasAccess() {
+        const {roles = [], abilities = []} = this.props;
         let status = !(roles.length > 0);
-        access.forEach((role)=> {
+        abilities.forEach((role) => {
             status = roles.indexOf(role) > -1 || status;
         });
 
@@ -138,11 +197,14 @@ export class Menu extends React.Component {
     }
 
     render() {
-        const {links = []} = this.props;
-        return (
-            <Nav>
-                {this.getNavList(links)}
-            </Nav>
-        );
+        const {items = []} = this.props;
+        return this.getNavList(items);
     }
 }
+
+const mapStateToProps = (state) => ({
+    roles: state.user ? state.user.roles : [],
+    abilities: state.user ? state.user.abilities : []
+});
+
+export const Menu = connect(mapStateToProps)(MenuComponent);

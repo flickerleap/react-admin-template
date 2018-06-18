@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/configureStore';
 import {Root} from './Root';
-import {routes, links} from "./routes/routes";
+import {links, routes} from "./routes/routes";
 import {defaultAppConfig} from "./config/config";
-
 // Styles
 // Import Font Awesome Icons Set
 import 'font-awesome/css/font-awesome.min.css';
@@ -18,9 +17,27 @@ const roles = [];//['admin'];
 const headerMenuItems = [
     {
         name: 'Home',
-        url: '/'
+        url: '/',
+        icon: 'fas fa-house'
+    },
+    {
+        name: <i className="fa fa-user"></i>,
+        url: '#',
+        children: [
+            {
+                name: 'Edit profile',
+                url: '/profile/1',
+                icon: 'fa fa-user-edit'
+            },
+            {
+                name: 'Logout',
+                url: '/logout',
+                icon: 'fa fa-sign-out-alt'
+            },
+        ]
     }
 ];
 
-ReactDOM.render(<Root store={store} roles={roles} persistor={persistor} routes={routes} headerMenuItems={headerMenuItems} links={links}
+ReactDOM.render(<Root store={store} roles={roles} persistor={persistor} routes={routes}
+                      headerMenuItems={headerMenuItems} links={links}
                       appConfig={defaultAppConfig}/>, document.getElementById('app'));
