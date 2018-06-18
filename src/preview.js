@@ -13,7 +13,14 @@ import '../scss/app.scss';
 
 export const {store, persistor} = configureStore();
 
-const roles = ['admin'];
+const roles = [];//['admin'];
 
-ReactDOM.render(<Root store={store} roles={roles} persistor={persistor} routes={routes} links={links}
+const headerMenuItems = [
+    {
+        name: 'Home',
+        url: '/'
+    }
+];
+
+ReactDOM.render(<Root store={store} roles={roles} persistor={persistor} routes={routes} headerMenuItems={headerMenuItems} links={links}
                       appConfig={defaultAppConfig}/>, document.getElementById('app'));
