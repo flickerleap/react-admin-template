@@ -8,7 +8,6 @@ export class Header extends React.Component {
 
     sidebarToggle = (e) => {
         e.preventDefault();
-        console.log(e);
         document.body.classList.toggle('sidebar-hidden');
     };
 
@@ -29,7 +28,7 @@ export class Header extends React.Component {
     };
 
     render() {
-        const {rootUrl = '/', title, logo = undefined, dropDownMenus = []} = this.props;
+        const {rootUrl = '/', title, logo = undefined, dropDownMenus = [], items = []} = this.props;
         return (
             <header className="app-header navbar">
                 <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>

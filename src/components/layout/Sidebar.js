@@ -138,12 +138,12 @@ export class Sidebar extends React.Component {
 
     hasAccess({access = []}) {
         const {roles = []} = this.props;
-        let status = true;
-        /*access.forEach((role)=> {
+        let status = !(roles.length > 0);
+        access.forEach((role)=> {
             status = roles.indexOf(role) > -1 || status;
-        });*/
+        });
 
-        return true;
+        return status;
     }
 
     render() {
