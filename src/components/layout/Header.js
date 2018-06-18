@@ -38,11 +38,10 @@ export class Header extends React.Component {
                 <NavbarBrand href={rootUrl}>
                     {logo !== undefined ? <img src={logo} alt="Logo"/> : <span>{title}</span>}
                 </NavbarBrand>
-                <NavbarToggler className="d-md-down-none mr-auto" onClick={this.sidebarToggle}>
+                <NavbarToggler className="d-md-down-none" onClick={this.sidebarToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
-                <Nav className="ml-auto" navbar>
-                    <ul className="navbar-nav mr-auto">
+                <Nav className="pull-left" navbar>
                     {
                         menuItems.map((item, index) => (
                             <li key={index} className="nav-item active">
@@ -50,7 +49,6 @@ export class Header extends React.Component {
                             </li>
                         ))
                     }
-                    </ul>
                 </Nav>
                 <Nav className="ml-auto" navbar>
                     {
