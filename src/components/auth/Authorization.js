@@ -1,6 +1,7 @@
 import React from 'react';
 import {AccessDeniedScreen} from "../screens/AccessDeniedScreen";
 import {connect} from "react-redux";
+import {getUser} from "../../store/actions/auth";
 
 export const Authorization = (allowedRoles) =>
     (WrappedComponent) => {
@@ -9,9 +10,18 @@ export const Authorization = (allowedRoles) =>
                 super(props);
             }
 
+            componentDidMount() {
+                const {getUser} = this.props;
+
+                getUser().then((action) => {
+                    this.setState(()=>({
+                        loading: false
+                    }));
+                });
+            }
+
             render() {
                 const {roles = []} = this.props.user;
-                console.log(roles);
                 let status = false;
 
                 roles.forEach((role) => {
@@ -26,9 +36,9 @@ export const Authorization = (allowedRoles) =>
             }
         }
 
-        return connect(state => {
-            return {
-                user: state.auth.user
-            };
-        })(WithAuthorization);
+        return connect(state => ({
+            user: state.auth.user
+        }), dispatch => ({
+            getUser: () => dispatch(getUser())
+        }))(WithAuthorization);
     };

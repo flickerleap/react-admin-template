@@ -4,6 +4,7 @@ import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, NavItem, Na
 import classNames from 'classnames';
 import {connect} from "react-redux";
 import {HeaderDropdown} from "./HeaderDropdown";
+import {getUser} from "../../store/actions/auth";
 
 /**
  * Generate a menu from the given links
@@ -21,8 +22,19 @@ class MenuComponent extends React.Component {
         super(props);
 
         this.state = {
+            loading: true,
             type: this.props.type ? this.props.type : 'sidebar'
         };
+    }
+
+    componentDidMount() {
+        const {getUser} = this.props;
+
+        getUser().then((action) => {
+            this.setState(()=>({
+                loading: false
+            }));
+        });
     }
 
     onClick = (e) => {
@@ -187,7 +199,8 @@ class MenuComponent extends React.Component {
     }
 
     hasAccess() {
-        const {roles = [], abilities = []} = this.props;
+        const {roles = [], abilities = []} = this.props.user;
+        console.log(roles, abilities);
         let status = !(roles.length > 0);
         abilities.forEach((role) => {
             status = roles.indexOf(role) > -1 || status;
@@ -203,8 +216,11 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    roles: state.user ? state.user.roles : [],
-    abilities: state.user ? state.user.abilities : []
+    user: state.auth ? state.auth.user : {}
 });
 
-export const Menu = connect(mapStateToProps)(MenuComponent);
+const mapDispatchToProps = (dispatch) => ({
+    getUser: () => dispatch(getUser())
+});
+
+export const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
