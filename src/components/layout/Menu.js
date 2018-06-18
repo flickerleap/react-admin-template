@@ -2,7 +2,6 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {Badge, Nav, NavItem, NavLink as RsNavLink} from 'reactstrap';
 import classNames from 'classnames';
-import {Menu} from "./Menu";
 
 /**
  * Generate a side navigation view with the given links.
@@ -11,10 +10,11 @@ import {Menu} from "./Menu";
  * @param {Object[]} links
  * @param {string} links[].path URL to set as the NavLink's "to" prop
  * @param {string} links[].label Name of the link
- * @returns {*}
+ * @param {string} links[].icon Icon to use
+ * @returns {Menu}
  * @constructor
  */
-export class Sidebar extends React.Component {
+export class Menu extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -26,13 +26,6 @@ export class Sidebar extends React.Component {
 
     activeRoute = (routeName, props) => {
         return props.location.pathname.indexOf(routeName) > -1 ? 'nav-item nav-dropdown open' : 'nav-item nav-dropdown';
-
-    };
-
-    hideMobile = () => {
-        if (document.body.classList.contains('sidebar-mobile-show')) {
-            document.body.classList.toggle('sidebar-mobile-show')
-        }
     };
 
     hasItems = (items) => {
@@ -45,10 +38,6 @@ export class Sidebar extends React.Component {
                 item.label ? this.getNavLabel(item, idx) :
                     item.children ? this.getNavDropdown(item, idx)
                         : this.getNavItem(item, idx);
-    };
-
-    getTitle = (title, key) => {
-        const classes = classNames('nav-title', title.class);
     };
 
     getDivider = (divider, key) => {
@@ -77,14 +66,15 @@ export class Sidebar extends React.Component {
         const url = item.url ? item.url : '';
         return (
             <NavItem key={key} className={classes.item}>
-                {this.isExternal(url) ?
-                    <RsNavLink href={url} className={classes.link} active>
-                        <i className={classes.icon}></i> {item.name} {this.getBadge(item.badge)}
-                    </RsNavLink>
-                    :
-                    <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile}>
-                        <i className={classes.icon}></i> {item.name} {this.getBadge(item.badge)}
-                    </NavLink>
+                {
+                    this.isExternal(url) ?
+                        <RsNavLink href={url} className={classes.link} active>
+                            <i className={classes.icon}></i> {item.name} {this.getBadge(item.badge)}
+                        </RsNavLink>
+                        :
+                        <NavLink to={url} className={classes.link} activeClassName="active" onClick={this.hideMobile}>
+                            <i className={classes.icon}></i> {item.name} {this.getBadge(item.badge)}
+                        </NavLink>
                 }
             </NavItem>
         )
@@ -150,11 +140,9 @@ export class Sidebar extends React.Component {
     render() {
         const {links = []} = this.props;
         return (
-            <div className="sidebar">
-                <nav className="sidebar-nav">
-                    <Menu links={links} />
-                </nav>
-            </div>
+            <Nav>
+                {this.getNavList(links)}
+            </Nav>
         );
     }
 }
