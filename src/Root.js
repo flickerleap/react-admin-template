@@ -30,7 +30,7 @@ export class Root extends React.Component {
     };
 
     render() {
-        const {store, persistor, roles = [], routes = [], links = [], headerMenuItems = [], appConfig = {title: 'Admin'}} = this.props;
+        const {store, persistor, routes = [], links = [], headerMenuItems = [], appConfig = {title: 'Admin'}} = this.props;
 
         return (
             <Provider store={store}>
@@ -40,7 +40,6 @@ export class Root extends React.Component {
                             <Route path='/' render={(props) => {
                                 return this.setComponentProps(AdminLayout, props, {
                                     routes,
-                                    roles,
                                     appConfig,
                                     links,
                                     headerMenuItems,

@@ -12,8 +12,6 @@ import '../scss/app.scss';
 
 export const {store, persistor} = configureStore();
 
-const roles = [];//['admin'];
-
 const headerMenuItems = [
     {
         name: 'Home',
@@ -38,6 +36,6 @@ const headerMenuItems = [
     }
 ];
 
-ReactDOM.render(<Root store={store} roles={roles} persistor={persistor} routes={routes}
+ReactDOM.render(<Root store={store} persistor={persistor} routes={routes}
                       headerMenuItems={headerMenuItems} links={links}
                       appConfig={defaultAppConfig}/>, document.getElementById('app'));
