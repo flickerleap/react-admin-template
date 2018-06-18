@@ -1,15 +1,17 @@
 import React from 'react';
 import {AccessDeniedScreen} from "../screens/AccessDeniedScreen";
+import {connect} from "react-redux";
 
 export const Authorization = (allowedRoles) =>
     (WrappedComponent) => {
-        return class WithAuthorization extends React.Component {
+        class WithAuthorization extends React.Component {
             constructor(props) {
                 super(props);
             }
 
             render() {
-                const {roles} = this.props.user;
+                const {roles = []} = this.props.user;
+                console.log(roles);
                 let status = false;
 
                 roles.forEach((role) => {
@@ -23,4 +25,10 @@ export const Authorization = (allowedRoles) =>
                 }
             }
         }
+
+        return connect(state => {
+            return {
+                user: state.auth.user
+            };
+        })(WithAuthorization);
     };
