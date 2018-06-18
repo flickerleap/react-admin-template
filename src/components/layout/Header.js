@@ -1,5 +1,6 @@
 import React from 'react';
 import {Nav, NavbarBrand, NavbarToggler} from 'reactstrap';
+import {Link} from "react-router-dom";
 
 export class Header extends React.Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export class Header extends React.Component {
     };
 
     render() {
-        const {rootUrl = '/', title, logo = undefined, dropDownMenus = [], items = []} = this.props;
+        const {rootUrl = '/', title, logo = undefined, dropDownMenus = [], menuItems = []} = this.props;
         return (
             <header className="app-header navbar">
                 <NavbarToggler className="d-lg-none" onClick={this.mobileSidebarToggle}>
@@ -40,6 +41,17 @@ export class Header extends React.Component {
                 <NavbarToggler className="d-md-down-none mr-auto" onClick={this.sidebarToggle}>
                     <span className="navbar-toggler-icon"></span>
                 </NavbarToggler>
+                <Nav className="ml-auto" navbar>
+                    <ul className="navbar-nav mr-auto">
+                    {
+                        menuItems.map((item, index) => (
+                            <li key={index} className="nav-item active">
+                                <Link className="nav-link" to={item.url}>{item.name}</Link>
+                            </li>
+                        ))
+                    }
+                    </ul>
+                </Nav>
                 <Nav className="ml-auto" navbar>
                     {
                         dropDownMenus.map((menu, index) => (
