@@ -199,7 +199,7 @@ class MenuComponent extends React.Component {
             status = roles.indexOf(role) > -1 || status;
         });
 
-        return status;
+        return true;
     }
 
     render() {
