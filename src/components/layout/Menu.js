@@ -40,12 +40,6 @@ class MenuComponent extends React.Component {
     onClick = (e) => {
         e.preventDefault();
         switch (this.state.type) {
-            // case 'header':
-            //     e.target.parentElement.parentElement.classList.toggle('show');
-            //     const expanded = e.target.getAttribute('aria-expanded');
-            //     console.log((!expanded).toString());
-            //     e.target.setAttribute('aria-expanded', (!expanded).toString());
-            //     break;
             default:
                 e.target.parentElement.classList.toggle('open');
                 break;
@@ -181,7 +175,7 @@ class MenuComponent extends React.Component {
     getBadge = (badge) => {
         if (badge) {
             const classes = classNames(badge.class);
-            return (<Badge className={classes} color={badge.variant}>{badge.text}</Badge>)
+            return (<Badge className={classes} color={badge.variant}>{badge.text}</Badge>);
         }
     };
 
@@ -200,7 +194,6 @@ class MenuComponent extends React.Component {
 
     hasAccess() {
         const {roles = [], abilities = []} = this.props.user;
-        console.log(roles, abilities);
         let status = !(roles.length > 0);
         abilities.forEach((role) => {
             status = roles.indexOf(role) > -1 || status;
