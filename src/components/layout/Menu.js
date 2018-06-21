@@ -209,7 +209,7 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth ? state.auth.user : {}
+    user: state.auth.user ? state.auth.user : {}
 });
 
 const mapDispatchToProps = (dispatch) => ({
