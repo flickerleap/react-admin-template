@@ -1,5 +1,6 @@
 /** COMPONENTS */
 /** AUTH */
+export {Authorization} from  './components/auth/auth';
 
 /** DATA */
 export {ActionColumn, DataTable, Pagination, AddButton, DeleteButton} from "./components/data/data";
@@ -25,7 +26,8 @@ export {
     Login as LoginScreen,
     Logout as LogoutScreen,
     ForgotPasswordScreen,
-    ResetPasswordScreen
+    ResetPasswordScreen,
+    AccessDeniedScreen
 } from "./components/screens/screens";
 
 /** UTILITY */
