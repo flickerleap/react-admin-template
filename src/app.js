@@ -1,7 +1,6 @@
 /** COMPONENTS */
 /** AUTH */
 
-
 /** DATA */
 export {ActionColumn, DataTable, Pagination, AddButton, DeleteButton} from "./components/data/data";
 
@@ -13,7 +12,7 @@ export {Field, DynamicForm} from './components/form/form';
 export {Input, DropDown, Date, DateTime, CheckboxList, Time, TextArea} from './components/form/inputs/inputs';
 
 /** LAYOUT */
-export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
+export {Header, Sidebar, HeaderDropdown, Menu} from "./components/layout/layout";
 
 /** SCREENS */
 export {
