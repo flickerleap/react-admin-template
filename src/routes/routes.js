@@ -9,7 +9,7 @@ export const routes = [
     {
         path: '/',
         component: DashboardScreen,
-        isPublic: false,
+        isPublic: true,
         exact: true
     }
 ];

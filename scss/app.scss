@@ -15,9 +15,10 @@
 // Components
 @import 'components/main';
 @import 'components/filters';
+@import 'components/loading';
 
 // Overrides
 @import 'overrides';
 
 // Libraries
-@import "~react-datepicker/dist/react-datepicker";
+@import "~react-datepicker/src/stylesheets/datepicker";

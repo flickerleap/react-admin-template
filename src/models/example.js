@@ -38,7 +38,11 @@ export const model = new Model({
                     allowEmpty: false,
                     message: '^Please enter a start date'
                 }
-            }
+            },
+            filter: {
+                type: 'date',
+                defaultValue: moment().format('YYYY-MM-DD')
+            },
         },
         {
             name: 'end_date',
@@ -50,7 +54,11 @@ export const model = new Model({
                     allowEmpty: false,
                     message: '^Please enter an end date'
                 }
-            }
+            },
+            filter: {
+                type: 'date',
+                defaultValue: moment().format('YYYY-MM-DD')
+            },
         },
         {
             name: 'start_time',
@@ -62,19 +70,25 @@ export const model = new Model({
                     allowEmpty: false,
                     message: '^Please enter a start time'
                 }
-            }
+            },
+            filter: {
+                type: 'time',
+                defaultValue: moment().format('YYYY-MM-DD')
+            },
         },
         {
             name: 'interests',
             label: 'Interests',
             type: 'checkboxlist',
-            filterType: 'dropdown',
             items: [
-                {value:'Pottery', label:'Pottery'},
-                {value:'Knitting', label:'Knitting'},
-                {value:'Running', label:'Running'},
+                {value: 'Pottery', label: 'Pottery'},
+                {value: 'Knitting', label: 'Knitting'},
+                {value: 'Running', label: 'Running'},
             ],
-            value:['Pottery', 'Running']
+            filter: {
+                type: 'dropdown'
+            },
+            value: ['Pottery', 'Running']
         }
     ],
     links: [
@@ -85,18 +99,26 @@ export const model = new Model({
             children: [
                 {
                     url: '/',
-                    name: 'View'
+                    name: 'View',
+                    access: ['admin']
                 },
                 {
                     url: '/add',
-                    name: 'Add'
+                    name: 'Add',
+                    access: ['admin']
                 },
-            ]
+            ],
+            access: ['admin']
         }
     ],
     actions: ({remove}) => {
         return [
-
+            {
+                type: 'delete',
+                label: <i className="fa fa-trash-alt"></i>,
+                classes: 'btn btn-danger',
+                to: ({id}) => remove(id),
+            }
         ];
     }
 });

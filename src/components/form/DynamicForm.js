@@ -1,9 +1,8 @@
 import React from 'react';
 import {Field} from "./Field";
-import {validateField} from "../../helpers/validate";
+import {validateFields} from "../../helpers/validate";
 
 export class DynamicForm extends React.Component {
-
     constructor(props) {
         super(props);
         const {
@@ -25,8 +24,12 @@ export class DynamicForm extends React.Component {
         this.setState((prevState) => ({
             fields: prevState.fields.map((field) => {
                 field.show = this.showField(field);
-                if(prevState.data && prevState.data[field.name]){
-                    field.value = prevState.data[field.name];
+                if (prevState.data && prevState.data[field.name]) {
+                    if(field.form && field.form.valueFn) {
+                        field.value = field.form.valueFn(prevState.data);
+                    } else {
+                        field.value = prevState.data[field.name];
+                    }
                 }
 
                 return field;
@@ -62,17 +65,25 @@ export class DynamicForm extends React.Component {
         const key = e.target.name;
         const value = e.target.value;
         this.setState((prevState) => {
+            const fields = prevState.fields.map((field) => {
+                if (field.name === key) {
+                    field.value = value;
+                }
+
+                return field;
+            });
+            const errors = validateFields(fields);
+
             return {
-                fields: prevState.fields.map((field) => {
+                fields: fields.map((field) => {
                     if (field.name === key) {
-                        field.value = value;
+                        field.error = (errors && errors[field.name]) ? errors[field.name][0] : null;
                     }
 
                     return field;
                 })
             };
         });
-        this.validate(key);
     };
 
     getData() {
@@ -118,13 +129,16 @@ export class DynamicForm extends React.Component {
     };
 
     validateForm = () => {
-        this.setState((prevState) => ({
-            fields: prevState.fields.map((field) => {
-                field.error = validateField(field.name, field.value, field.validation);
+        const errors = validateFields(this.state.fields);
+        if (errors) {
+            this.setState((prevState) => ({
+                fields: prevState.fields.map((field) => {
+                    field.error = errors[field.name] ? errors[field.name][0] : null;
 
-                return field;
-            })
-        }));
+                    return field;
+                })
+            }));
+        }
     };
 
     getColumnClass = (columns) => {

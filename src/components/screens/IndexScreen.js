@@ -11,7 +11,7 @@ import qs from 'query-string';
  * @returns {ViewScreen}
  * @constructor
  */
-export class ViewScreen extends React.Component {
+export class IndexScreen extends React.Component {
 
     constructor(props) {
         super(props);
@@ -36,10 +36,10 @@ export class ViewScreen extends React.Component {
         this.fetchItems(this.getParams());
     }
 
-    fetchItems = (filters = {}) => {
-        const {fetch, params = {}} = this.props;
-        params.filters = params.filters ? Object.assign(params.filters, filters) : filters;
-        fetch(params).then((action) => {
+    fetchItems = (params = {}) => {
+        const {fetch} = this.props;
+        const userID = this.props.user ? this.props.user.id : undefined;
+        fetch(params, userID).then((action) => {
             this.setState(() => ({
                 loading: false
             }));
@@ -53,23 +53,24 @@ export class ViewScreen extends React.Component {
     };
 
     onFilter = (filters) => {
+        const params = {
+            filters
+        };
         this.setState(() => ({
             loading: true
         }));
-        this.fetchItems(filters);
+        this.fetchItems(params);
     };
 
     render() {
-        const {title = 'View', fields = [], items = [], actions = [], pagination = {}, showAddButton = true} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination = {}} = this.props;
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    {
-                        showAddButton && <AddButton link={this.getAddUrl()} type={title}/>
-                    }
+                    <AddButton link={this.getAddUrl()} type={title}/>
                     <br/>
                 </div>
 
