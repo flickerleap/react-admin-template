@@ -24,8 +24,16 @@ const headerMenuItems = [
         children: [
             {
                 name: 'Edit profile',
-                url: '/profile/1',
-                icon: 'fa fa-user-edit'
+                url: '/profile/:id',
+                icon: 'fa fa-user-edit',
+                toBind: [
+                    {
+                        key: ':id',
+                        valueFn: ({user}) => {
+                            return user.id;
+                        }
+                    }
+                ]
             },
             {
                 name: 'Logout',
