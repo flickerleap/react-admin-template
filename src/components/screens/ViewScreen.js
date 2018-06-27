@@ -36,8 +36,9 @@ export class ViewScreen extends React.Component {
         this.fetchItems(this.getParams());
     }
 
-    fetchItems = (params = {}) => {
-        const {fetch} = this.props;
+    fetchItems = (filters = {}) => {
+        const {fetch, params = {}} = this.props;
+        params.filters = params.filters ? Object.assign(params.filters, filters) : filters;
         fetch(params).then((action) => {
             this.setState(() => ({
                 loading: false
@@ -52,24 +53,23 @@ export class ViewScreen extends React.Component {
     };
 
     onFilter = (filters) => {
-        const params = {
-            filters
-        };
         this.setState(() => ({
             loading: true
         }));
-        this.fetchItems(params);
+        this.fetchItems(filters);
     };
 
     render() {
-        const {title = 'View', fields = [], items = [], actions = [], pagination = {}} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination = {}, showAddButton = true} = this.props;
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    <AddButton link={this.getAddUrl()} type={title}/>
+                    {
+                        showAddButton && <AddButton link={this.getAddUrl()} type={title}/>
+                    }
                     <br/>
                 </div>
 
