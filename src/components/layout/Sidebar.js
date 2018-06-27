@@ -20,6 +20,11 @@ export class Sidebar extends React.Component {
 
     handleClick = (e) => {
         e.preventDefault();
+        const menuItems = document.querySelectorAll('.nav-dropdown.open');
+        menuItems.forEach((item)=>{
+            item.classList.remove('open');
+        });
+
         e.target.parentElement.classList.toggle('open');
     };
 
@@ -135,6 +140,7 @@ export class Sidebar extends React.Component {
 
     render() {
         const {className, links = []} = this.props;
+        
         return (
             <div className="sidebar">
                 <nav className="sidebar-nav">
