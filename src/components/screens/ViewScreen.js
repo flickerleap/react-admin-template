@@ -19,8 +19,8 @@ export class ViewScreen extends React.Component {
         const params = qs.parse(this.props.history.location.search);
 
         this.state = {
-            params,
-            currentPage: params.page,
+            params: params || {},
+            currentPage: params.page ? params.page : 1,
             loading: true
         };
     }
