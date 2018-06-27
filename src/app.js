@@ -1,7 +1,6 @@
 /** COMPONENTS */
 /** AUTH */
 
-
 /** DATA */
 export {ActionColumn, DataTable, Pagination, AddButton, DeleteButton} from "./components/data/data";
 
@@ -13,7 +12,7 @@ export {Field, DynamicForm} from './components/form/form';
 export {Input, DropDown, Date, DateTime, CheckboxList, Time, TextArea} from './components/form/inputs/inputs';
 
 /** LAYOUT */
-export {Header, Sidebar, HeaderDropdown} from "./components/layout/layout";
+export {Header, Sidebar, HeaderDropdown, Menu} from "./components/layout/layout";
 
 /** SCREENS */
 export {
@@ -24,7 +23,9 @@ export {
     DashboardScreen,
     NotFoundScreen,
     Login as LoginScreen,
-    Logout as LogoutScreen
+    Logout as LogoutScreen,
+    ForgotPasswordScreen,
+    ResetPasswordScreen
 } from "./components/screens/screens";
 
 /** UTILITY */
@@ -62,6 +63,8 @@ export {
 
 export {defaultAppConfig} from './config/config';
 export {defaultPagination} from './config/defaultPagination';
+
+export {auth as authRoutes} from './routes/auth';
 
 /** ROOT */
 export {Root} from './Root';

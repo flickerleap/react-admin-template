@@ -41,6 +41,26 @@ export const validateField = (field, value, validationRules = {}) => {
     return null;
 };
 
+export const validateFields = (fields = []) => {
+    let formFields = {};
+    let formValues = {};
+    fields.forEach((field)=>{
+        formFields[field.name] = field.validation;
+        formValues[field.name] = field.value;
+    });
+
+    // The formValues and validated against the formFields
+    // the variable result hold the error messages of the field
+    const result = validate(formValues, formFields);
+
+    // If there is an error message, return it!
+    if (result) {
+        return result;
+    }
+
+    return null;
+};
+
 /**
  *
  * @param action

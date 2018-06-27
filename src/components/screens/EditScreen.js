@@ -47,8 +47,8 @@ export class EditScreen extends React.Component {
     };
 
     componentDidMount() {
-        const userID = this.props.user ? this.props.user.id : undefined;
-        this.props.fetch(undefined, userID).then(() => {
+        const {fetch, params = {}} = this.props;
+        fetch(params).then(() => {
             this.setState(() => ({
                 item: this.props.items.find((item) => parseInt(item.id) === parseInt(this.props.match.params.id)),
                 loading: false,

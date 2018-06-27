@@ -3,9 +3,9 @@ import {Route, Switch} from 'react-router-dom';
 import {Footer, Header, Sidebar} from "../components/layout/layout";
 import {Container} from 'reactstrap';
 
-export const AdminLayout = ({routes = [], links = [], dropDownMenus = [], getComponent, appConfig, ...rest}) => (
+export const AdminLayout = ({routes = [], links = [], headerMenuItems = [], getComponent, appConfig, ...rest}) => (
     <div className="app">
-        <Header {...appConfig} dropDownMenus={dropDownMenus}/>
+        <Header {...appConfig} menuItems={headerMenuItems}/>
         <div className='app-body'>
             <Sidebar links={links} {...rest}/>
             <main className="main">

@@ -29,6 +29,21 @@ export const model = new Model({
             }
         },
         {
+            name: 'number',
+            label: 'Number',
+            type: 'number',
+            extra: {
+                max: 10,
+                min: 0
+            },
+            validation: {
+                presence: {
+                    allowEmpty: false,
+                    message: '^Please enter a number'
+                }
+            }
+        },
+        {
             name: 'start_date',
             label: 'Start Date',
             defaultValue: moment(),
@@ -99,13 +114,16 @@ export const model = new Model({
             children: [
                 {
                     url: '/',
-                    name: 'View'
+                    name: 'View',
+                    access: ['admin']
                 },
                 {
                     url: '/add',
-                    name: 'Add'
+                    name: 'Add',
+                    access: ['admin']
                 },
-            ]
+            ],
+            access: ['admin']
         }
     ],
     actions: ({remove}) => {

@@ -2,34 +2,34 @@ import React from 'react';
 import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 
 export class HeaderDropdown extends React.Component {
-    toggle = () => {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    };
-
     constructor(props) {
         super(props);
 
         this.state = {
-            dropdownOpen: false
+            open: false
         };
     }
 
+    toggle = () => {
+        this.setState({
+            open: !this.state.open
+        });
+    };
+
     getDropDownMenu() {
-        const {items, toggle} = this.props;
+        const {item} = this.props;
         return (
-            <Dropdown nav isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+            <Dropdown nav isOpen={this.state.open} toggle={this.toggle}>
                 <DropdownToggle nav>
-                    {toggle}
+                    {item.icon && <i className={item.icon}></i>} {item.name}
                 </DropdownToggle>
                 <DropdownMenu right>
                     {
-                        items.map((item, index) => (
-                            <DropdownItem key={index} href={item.url}>
-                                {item.icon && <i className={item.icon}></i>}
-                                {item.name}
-                                {item.badge && <Badge color={item.badge.variant}>{item.badge.text}</Badge>}
+                        item.children.map((child, index) => (
+                            <DropdownItem key={index} href={child.url}>
+                                {child.icon && <i className={child.icon}></i>}
+                                {child.name}
+                                {child.badge && <Badge color={child.badge.variant}>{child.badge.text}</Badge>}
                             </DropdownItem>
                         ))
                     }
@@ -39,8 +39,6 @@ export class HeaderDropdown extends React.Component {
     }
 
     render() {
-        return (
-            this.getDropDownMenu()
-        );
+        return this.getDropDownMenu();
     }
 }
