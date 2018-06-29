@@ -19,25 +19,24 @@ export class ViewScreen extends React.Component {
         const params = qs.parse(this.props.history.location.search);
 
         this.state = {
-            params,
-            currentPage: params.page,
+            params: params || {},
+            currentPage: params.page ? params.page : 1,
             loading: true
         };
     }
 
-    getParams = () => {
-        return {
-            ...this.state.params,
-            page: this.state.currentPage
-        };
-    };
+    getParams = () => ({
+        ...this.state.params,
+        page: this.state.currentPage
+    });
 
     componentDidMount() {
         this.fetchItems(this.getParams());
     }
 
-    fetchItems = (filters = {}) => {
+    fetchItems = ({page = 1, filters = {}}) => {
         const {fetch, params = {}} = this.props;
+        params.page = params.page || page;
         params.filters = params.filters ? Object.assign(params.filters, filters) : filters;
         fetch(params).then((action) => {
             this.setState(() => ({
@@ -56,7 +55,7 @@ export class ViewScreen extends React.Component {
         this.setState(() => ({
             loading: true
         }));
-        this.fetchItems(filters);
+        this.fetchItems({filters});
     };
 
     render() {
