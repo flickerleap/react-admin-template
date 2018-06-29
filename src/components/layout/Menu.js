@@ -41,6 +41,11 @@ class MenuComponent extends React.Component {
 
     onClick = (e) => {
         e.preventDefault();
+        const menuItems = document.querySelectorAll('.nav-dropdown.open');
+        menuItems.forEach((item)=>{
+            item.classList.remove('open');
+        });
+
         switch (this.state.type) {
             default:
                 e.target.parentElement.classList.toggle('open');
