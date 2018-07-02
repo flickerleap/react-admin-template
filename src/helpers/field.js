@@ -1,4 +1,4 @@
-const getValue = (data, fields = []) => {
+const getValueRecursive = (data, fields = []) => {
     const field = fields.length > 0 ? fields[0] : undefined;
     const item = field && data[field] ? data[field] : undefined;
 

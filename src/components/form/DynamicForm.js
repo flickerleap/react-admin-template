@@ -1,5 +1,6 @@
 import React from 'react';
 import {Field} from "./Field";
+import {Model} from "../../data/Model";
 import {validateFields} from "../../helpers/validate";
 
 export class DynamicForm extends React.Component {
@@ -24,11 +25,11 @@ export class DynamicForm extends React.Component {
         this.setState((prevState) => ({
             fields: prevState.fields.map((field) => {
                 field.show = this.showField(field);
-                if (prevState.data && prevState.data[field.name]) {
+                if (prevState.data) {
                     if(field.form && field.form.valueFn) {
                         field.value = field.form.valueFn(prevState.data);
                     } else {
-                        field.value = prevState.data[field.name];
+                        field.value = Model.getValue(prevState.data, field.name);
                     }
                 }
 

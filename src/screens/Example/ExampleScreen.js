@@ -12,7 +12,12 @@ const items = [
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
         start_time: moment().format('hh:mm'),
-        interests: 'Pottery'
+        interests: 'Pottery',
+        user: {
+            profile: {
+                mobile_number: '0111234567'
+            }
+        }
     }
 ];
 

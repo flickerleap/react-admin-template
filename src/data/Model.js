@@ -60,6 +60,11 @@ export class Model {
         return field.excludeFromForm !== undefined && field.excludeFromForm === true;
     }
 
+    static getValue = (data, fieldName) => {
+        const fields = fieldName.split('.');
+        return getValueRecursive(data, fields);
+    };
+
     getBaseUrl() {
         const url = this.plural.toLowerCase().replace(/ /g, "-");
         return `/${url}`;

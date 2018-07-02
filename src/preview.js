@@ -7,7 +7,6 @@ import {defaultAppConfig} from "./config/config";
 // Styles
 // Import Font Awesome Icons Set
 import 'font-awesome/css/font-awesome.min.css';
-
 import '../scss/app.scss';
 
 export const {store, persistor} = configureStore();

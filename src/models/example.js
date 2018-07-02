@@ -104,6 +104,10 @@ export const model = new Model({
                 type: 'dropdown'
             },
             value: ['Pottery', 'Running']
+        }, {
+            name: 'user.profile.mobile_number',
+            label: 'Mobile Number',
+            type: 'text',
         }
     ],
     links: [
