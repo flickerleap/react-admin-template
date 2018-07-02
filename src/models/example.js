@@ -140,6 +140,12 @@ export const model = new Model({
                 to: ({id}) => `/examples/${id}/edit`,
             },
             {
+                type: 'link',
+                label: 'View',
+                classes: 'btn btn-warning',
+                to: ({id}) => `#`,
+            },
+            {
                 type: 'delete',
                 label: <i className="fa fa-trash-alt"></i>,
                 classes: 'btn btn-danger',

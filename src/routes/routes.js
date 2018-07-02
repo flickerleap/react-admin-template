@@ -9,13 +9,17 @@ export const routes = [
     {
         path: '/',
         component: DashboardScreen,
-        isPublic: true,
+        isPublic: false,
         exact: true
+    },
+    ...auth, ...examples,
+    {
+        component: NotFoundScreen
     }
 ];
 
-routes.push(...auth, ...examples);
-routes.push({component: NotFoundScreen});
+/*routes.push(...auth, ...examples);
+routes.push({component: NotFoundScreen});*/
 
 export const links = [
     {

@@ -42,8 +42,14 @@ export class DataTable extends React.Component {
      * Run this function when this component has been mounted
      */
     componentDidMount() {
-        this.setData();
-        this.setHeaders();
+        this.setState((prevState) => ({
+            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
+            headers: prevState.fields.map((field) => {
+                if (!this.hideField(field)) {
+                    return this.getHeaderName(field);
+                }
+            })
+        }));
     }
 
     /**
@@ -57,30 +63,6 @@ export class DataTable extends React.Component {
         state.items = nextProps.items !== undefined ? nextProps.items : [];
 
         return state;
-    }
-
-    /**
-     *
-     */
-    setData() {
-        this.setState((prevState) => ({
-            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
-        }));
-    }
-
-    /**
-     *
-     */
-    setHeaders() {
-        if (this.state.first) {
-            this.setState((prevState) => ({
-                headers: prevState.fields.map((field) => {
-                    if (!this.hideField(field)) {
-                        return this.getHeaderName(field);
-                    }
-                })
-            }));
-        }
     }
 
     /**

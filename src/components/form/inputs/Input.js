@@ -6,7 +6,7 @@ export class Input extends React.Component {
     }
 
     render() {
-        const {value, name, label, type, onChange, className="form-control"} = this.props;
+        const {value, name, label, type, onChange, className="form-control", attributes = {}} = this.props;
 
         return (
             <div>
@@ -17,6 +17,7 @@ export class Input extends React.Component {
                     type={type}
                     value={value}
                     onChange={onChange}
+                    {...attributes}
                 />
             </div>
         );

@@ -8,27 +8,24 @@ export const auth = [
         path: '/login',
         component: LoginScreen,
         exact: true,
-        isPublic: true,
-        excludeFromNav: true
+        isPublic: true
     },
     {
         path: '/logout',
         component: LogoutScreen,
         exact: true,
-        isPublic: false,
-        excludeFromNav: true
+        isPublic: false
     },
     {
         path: '/forgot/password',
         component: ForgotPasswordScreen,
         exact: true,
-        isPublic: true,
-        excludeFromNav: true
+        isPublic: true
     },
     {
         path: '/password/reset',
         component: ResetPasswordScreen,
         isPublic: true,
-        excludeFromNav: true
+        exact: true
     }
 ];

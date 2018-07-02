@@ -153,6 +153,7 @@ export class DynamicForm extends React.Component {
     render() {
         const {columns = 2, submitLabel = this.getDefaultSubmitLabel()} = this.props;
         const columnClass = this.getColumnClass(columns);
+
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
@@ -161,6 +162,7 @@ export class DynamicForm extends React.Component {
                             this.state.fields.map((field, index) => {
                                 field.onChange = field.onChange === undefined
                                     ? this.onFieldChange : field.onChange;
+
                                 return field.show &&
                                     (
                                         <div key={index} className={columnClass}>

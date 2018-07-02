@@ -25,7 +25,7 @@ export class Root extends React.Component {
         if (!isPublic) {
             return userNeedsAuthentication(component);
         } else {
-            return userDoesNotNeedAuthentication(component);
+            return component;
         }
     };
 

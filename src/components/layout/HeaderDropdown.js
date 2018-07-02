@@ -11,9 +11,9 @@ export class HeaderDropdown extends React.Component {
     }
 
     toggle = () => {
-        this.setState({
+        this.setState(() => ({
             open: !this.state.open
-        });
+        }));
     };
 
     getDropDownMenu() {
