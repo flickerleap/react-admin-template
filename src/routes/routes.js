@@ -18,9 +18,6 @@ export const routes = [
     }
 ];
 
-/*routes.push(...auth, ...examples);
-routes.push({component: NotFoundScreen});*/
-
 export const links = [
     {
         name: 'Dashboard',
