@@ -21,7 +21,7 @@ export const links = [
     {
         name: 'Dashboard',
         url: '/',
-        icon: 'fa fa-tachometer',
+        icon: 'fas fa-tachometer-alt',
         badge: {
             variant: 'info',
             text: 'NEW'

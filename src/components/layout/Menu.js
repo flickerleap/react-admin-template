@@ -227,7 +227,7 @@ class MenuComponent extends React.Component {
         abilities.forEach((role) => {
             status = roles.indexOf(role) > -1 || status;
         });
-        
+
         return true;
     }
 

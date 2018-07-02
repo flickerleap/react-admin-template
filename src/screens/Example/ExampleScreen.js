@@ -2,28 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {exampleModel as model} from "../../models/models";
 import {ViewScreen} from "../../components/screens/ViewScreen";
-import moment from "moment/moment";
 import {fetchExamples, removeExample} from "../../store/actions/actions";
-
-const items = [
-    {
-        name: 'Example',
-        description: 'Example',
-        start_date: moment().format('YYYY-MM-DD'),
-        end_date: moment().format('YYYY-MM-DD'),
-        start_time: moment().format('hh:mm'),
-        interests: 'Pottery',
-        user: {
-            profile: {
-                mobile_number: '0111234567'
-            }
-        }
-    }
-];
+import {exampleItems} from "../../models/example";
 
 const mapStateToProps = (state) => {
     return {
-        items: items,
+        items: exampleItems,
         loading: false,
         pagination: {
             total: 1,

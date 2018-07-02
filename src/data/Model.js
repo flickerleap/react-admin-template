@@ -62,7 +62,19 @@ export class Model {
 
     static getValue = (data, fieldName) => {
         const fields = fieldName.split('.');
-        return getValueRecursive(data, fields);
+        return Model.getValueRecursive(data, fields);
+    };
+
+    static getValueRecursive = (data, fields = []) => {
+        const field = fields.length > 0 ? fields[0] : undefined;
+        const item = field && data[field] ? data[field] : undefined;
+
+        if(item && typeof(item) === 'object' && !Array.isArray(item)) {
+            const newFields = [...fields.splice(1)];
+            return Model.getValueRecursive(item, newFields);
+        } else {
+            return item;
+        }
     };
 
     getBaseUrl() {
