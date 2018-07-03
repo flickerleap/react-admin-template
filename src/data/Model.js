@@ -61,44 +61,25 @@ export class Model {
     }
 
     static getValue = (data, fieldName) => {
-        const fields = fieldName.split('.');
-        return Model.getValueRecursive(data, fields);
-    };
-
-    static getValueRecursive = (data, fields = []) => {
-        const field = fields.length > 0 ? fields[0] : undefined;
-        const item = field && data[field] ? data[field] : undefined;
-
-        if(item && typeof(item) === 'object' && !Array.isArray(item)) {
-            const newFields = [...fields.splice(1)];
-            return Model.getValueRecursive(item, newFields);
-        } else {
-            return item;
-        }
+        return fieldName.split('.').reduce((o, i) => {
+            return o[i];
+        }, data);
     };
 
     static getData = (data) => {
-        const processed = {};
+        let processed = data;
         Object.keys(data).forEach((name) => {
-            const fields = name.split('.');
-            processed[name] = Model.getDataRecursive(data, fields);
+            if (name.includes('.')) {
+                let ref = processed;
+                const fields = name.split('.').splice(1);
+                fields.forEach((field, index) => {
+                    ref[field] = index < fields.length -1 ? {} : data[name];
+                    ref = ref[field];
+                });
+            }
         });
 
         return processed;
-    };
-
-    static getDataRecursive = (data, fields = []) => {
-        const object = {};
-        if(fields.length > 1) {
-            const newFields = [...fields.splice(1)];
-            object[fields[0]] = {};
-            return Model.getValueRecursive(object, newFields);
-        } else {
-            const field = fields[0];
-            object[field] = data[field];
-
-            return object;
-        }
     };
 
     getBaseUrl() {
