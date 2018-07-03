@@ -44,18 +44,14 @@ class MenuComponent extends React.Component {
         }));
     }
 
-    onClick = (e) => {
-        e.preventDefault();
+    onClick = (event) => {
+        event.preventDefault();
         const menuItems = document.querySelectorAll('.nav-dropdown.open');
-        menuItems.forEach((item)=>{
+        menuItems.forEach((item) => {
             item.classList.remove('open');
         });
 
-        switch (this.state.type) {
-            default:
-                e.target.parentElement.classList.toggle('open');
-                break;
-        }
+        event.target.parentElement.classList.add('open');
     };
 
     activeRoute = (routeName) => {
