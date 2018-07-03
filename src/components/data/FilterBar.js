@@ -6,30 +6,36 @@ export class FilterBar extends React.Component {
         super(props);
         const {
             data = undefined,
-            fields = [],
         } = this.props;
 
         this.state = {
             data,
-            fields: fields.map((field) => {
+            fields: []
+        };
+    }
+
+    componentDidMount() {
+        this.setState((prevState) => ({
+            fields: this.props.fields.map((field) => {
                 field.filter = field.filter || {};
                 field.filter.enabled = this.getCanFilter(field);
+                const data = prevState.data;
                 if (data && data[field.name]) {
                     field.value = data[field.name];
                 } else {
                     field.value = field.filter.defaultValue
                         ? field.filter.defaultValue : field.defaultValue
-                        ? field.defaultValue : '';
+                            ? field.defaultValue : '';
                 }
 
                 return field;
             })
-        };
+        }));
     }
 
-    onFieldChange = (e) => {
-        const key = e.target.name;
-        const value = e.target.value;
+    onFieldChange = (event) => {
+        const key = event.target.name;
+        const value = event.target.value;
         this.setState((prevState) => ({
             fields: prevState.fields.map((field) => {
                 if (field.name === key) {

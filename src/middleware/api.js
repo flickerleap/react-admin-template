@@ -20,7 +20,7 @@ export const apiMiddleware = store =>
                 headers["Content-Type"] = "application/json";    
             }
 
-            var fileUpload = false;
+            let fileUpload = false;
             if (headers["Content-Type"] === "multipart/form-data") {
                 delete headers["Content-Type"];    
                 fileUpload = true;

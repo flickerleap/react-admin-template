@@ -29,14 +29,19 @@ class MenuComponent extends React.Component {
     }
 
     componentDidMount() {
-        const {getUser, items = []} = this.props;
+        const {items = []} = this.props;
 
-        getUser().then((action) => {
-            this.setState(() => ({
-                loading: false,
-                list: this.getNavList(items)
-            }));
-        });
+        this.setState(() => ({
+            loading: false,
+            list: this.getNavList(items)
+        }));
+    }
+
+    componentWillUnmount() {
+        this.setState(() => ({
+            loading: false,
+            list: []
+        }));
     }
 
     onClick = (e) => {
@@ -240,8 +245,4 @@ const mapStateToProps = (state) => ({
     user: state.auth.user ? state.auth.user : {}
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    getUser: () => dispatch(getUser())
-});
-
-export const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
+export const Menu = connect(mapStateToProps)(MenuComponent);

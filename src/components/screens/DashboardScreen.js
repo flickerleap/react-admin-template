@@ -1,7 +1,9 @@
 import React from 'react';
 
-export const DashboardScreen = ({content}) => (
+export const DashboardScreen = () => (
     <div className='row'>
-        {content}
+        <div className="col-md-12">
+            <h1>Dashboard</h1>
+        </div>
     </div>
 );

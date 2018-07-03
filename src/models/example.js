@@ -36,6 +36,7 @@ export const model = new Model({
                 max: 10,
                 min: 0
             },
+            hide:true,
             validation: {
                 presence: {
                     allowEmpty: false,
@@ -104,13 +105,17 @@ export const model = new Model({
                 type: 'dropdown'
             },
             value: ['Pottery', 'Running']
+        }, {
+            name: 'user.profile.mobile_number',
+            label: 'Mobile Number',
+            type: 'text',
         }
     ],
     links: [
         {
             url: '#',
             name: 'Examples',
-            icon: 'fas fa-calendar-alt',
+            icon: 'fas fa-question',
             children: [
                 {
                     url: '/',
@@ -129,6 +134,18 @@ export const model = new Model({
     actions: ({remove}) => {
         return [
             {
+                type: 'link',
+                label: <i className="fas fa-edit"></i>,
+                classes: 'btn btn-primary',
+                to: ({id}) => `/examples/${id}/edit`,
+            },
+            {
+                type: 'link',
+                label: 'View',
+                classes: 'btn btn-warning',
+                to: ({id}) => `#`,
+            },
+            {
                 type: 'delete',
                 label: <i className="fa fa-trash-alt"></i>,
                 classes: 'btn btn-danger',
@@ -137,3 +154,20 @@ export const model = new Model({
         ];
     }
 });
+
+export const exampleItems = [
+    {
+        id: 1,
+        name: 'Example',
+        description: 'Example',
+        start_date: moment().format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD'),
+        start_time: moment().format('hh:mm'),
+        interests: ['Pottery'],
+        user: {
+            profile: {
+                mobile_number: '0111234567'
+            }
+        }
+    }
+];

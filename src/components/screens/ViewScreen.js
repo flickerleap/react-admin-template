@@ -60,6 +60,7 @@ export class ViewScreen extends React.Component {
 
     render() {
         const {title = 'View', fields = [], items = [], actions = [], pagination = {}, showAddButton = true} = this.props;
+
         return (
             <div className='row'>
                 <div className='col-md-12'>

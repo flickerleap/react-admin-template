@@ -2,6 +2,7 @@ import React from 'react';
 import {ActionColumn} from "./ActionColumn";
 import {Pagination} from "./Pagination";
 import {FilterBar} from "./FilterBar";
+import {Model} from "../../data/Model";
 
 /**
  * Component to display rows of data in a table
@@ -14,6 +15,10 @@ import {FilterBar} from "./FilterBar";
  * @constructor
  */
 export class DataTable extends React.Component {
+    /**
+     *
+     * @param {Object} props
+     */
     constructor(props) {
         super(props);
 
@@ -21,7 +26,7 @@ export class DataTable extends React.Component {
             items: props.items !== undefined ? props.items : [],
             first: props.items.length > 0 ? props.items[0] : undefined,
             fields: props.fields !== undefined ? props.fields : [],
-            pagination: props.pagination !== undefined ? props.pagination : {
+            pagination: props.pagination ? props.pagination : {
                 total: 1,
                 current: 1,
                 perPage: 1,
@@ -33,11 +38,26 @@ export class DataTable extends React.Component {
         };
     }
 
+    /**
+     * Run this function when this component has been mounted
+     */
     componentDidMount() {
-        this.setData();
-        this.setHeaders();
+        this.setState((prevState) => ({
+            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
+            headers: prevState.fields.map((field) => {
+                if (!this.hideField(field)) {
+                    return this.getHeaderName(field);
+                }
+            })
+        }));
     }
 
+    /**
+     *
+     * @param {Object} nextProps
+     * @param {Object} prevState
+     * @returns {*}
+     */
     static getDerivedStateFromProps(nextProps, prevState) {
         let state = prevState;
         state.items = nextProps.items !== undefined ? nextProps.items : [];
@@ -45,52 +65,57 @@ export class DataTable extends React.Component {
         return state;
     }
 
-    setData() {
-        this.setState((prevState) => ({
-            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
-        }));
-    }
+    /**
+     *
+     * @param {Object} field
+     * @returns {boolean}
+     */
+    hideField = (field) => {
+        return field.hide !== undefined ? field.hide : false;
+    };
 
-    setHeaders() {
-        if (this.state.first) {
-            this.setState(() => ({
-                headers: Object.keys(this.state.first).map((name) => {
-                    if (this.includeField(name)) {
-                        return this.getHeaderName(name);
-                    }
-                })
-            }));
-        }
-    }
-
-    includeField(name) {
-        const result = this.getField(name);
-        return result !== undefined;
-    }
-
+    /**
+     *
+     * @param {string} name
+     * @returns {T | undefined}
+     */
     getField = (name) => {
         return this.state.fields.find((field) => field.name === name);
     };
 
-    getHeaderName = (name) => {
-        const field = this.getField(name);
-        if(field.label === undefined) {
-            const header = name.charAt(0).toUpperCase() + name.slice(1);
+    /**
+     *
+     * @param {Object} field
+     * @returns {string}
+     */
+    getHeaderName = (field) => {
+        if (field.label === undefined) {
+            const header = field.name.charAt(0).toUpperCase() + field.name.slice(1);
             return header.replace(/_/g, " ");
         }
 
         return field.label;
     };
 
+    /**
+     *
+     * @param {Object} item
+     * @param {string} name
+     * @returns {*}
+     */
     getValue = (item, name) => {
         const field = this.getField(name);
-        if(field.valueFn !== undefined)
-        {
+        if (field.valueFn) {
             return field.valueFn(item);
+        } else {
+            return Model.getValue(item, name);
         }
-        return item[name];
     };
 
+    /**
+     *
+     * @returns {*}
+     */
     render() {
         const {title = '', actions = [], onFilter} = this.props;
         const {pagination, items, headers, fields} = this.state;
@@ -100,40 +125,41 @@ export class DataTable extends React.Component {
                     <span>{title}</span>
                 </div>
                 <div className="card-body">
-                {
-                    items.length > 0 ?
-                        <div className="table-responsive">
-                            <table className="table-outline table table-hover">
-                                <thead className="thead-light">
-                                <tr>
+                    {
+                        items.length > 0 ?
+                            <div className="table-responsive">
+                                <table className="table-outline table table-hover">
+                                    <thead className="thead-light">
+                                    <tr>
+                                        {
+                                            headers.map((name, index) => (
+                                                name !== undefined && <th key={index}>{name}</th>
+                                            ))
+                                        }
+                                        <th>Actions</th>
+                                    </tr>
+                                    <FilterBar fields={fields} onFilter={onFilter}/>
+                                    </thead>
+                                    <tbody>
                                     {
-                                        headers.map((name, index) => (
-                                            name !== undefined && <th key={index}>{name}</th>
+                                        items.map((item, index) => (
+                                            <tr key={index}>
+                                                {
+                                                    this.state.fields.map((field) => {
+                                                        return !this.hideField(field) &&
+                                                            <td key={field.name}>{this.getValue(item, field.name)}</td>;
+                                                    })
+                                                }
+                                                <ActionColumn item={item} actions={actions}/>
+                                            </tr>
                                         ))
                                     }
-                                    <th>Actions</th>
-                                </tr>
-                                <FilterBar fields={fields} onFilter={onFilter} />
-                                </thead>
-                                <tbody>
-                                {
-                                    items.map((item, index) => (
-                                        <tr key={index}>
-                                            {
-                                                Object.keys(item).map((name) => {
-                                                    return this.includeField(name) && <td key={name}>{this.getValue(item, name)}</td>;
-                                                })
-                                            }
-                                            <ActionColumn item={item} actions={actions}/>
-                                        </tr>
-                                    ))
-                                }
-                                </tbody>
-                            </table>
-                            <Pagination {...pagination}/>
-                        </div> :
-                        <p>No records found.</p>
-                }
+                                    </tbody>
+                                </table>
+                                <Pagination {...pagination}/>
+                            </div> :
+                            <p>No records found.</p>
+                    }
                 </div>
             </div>
         );
