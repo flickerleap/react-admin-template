@@ -104,7 +104,7 @@ export class FilterBar extends React.Component {
                     })
                 }
                 <td className="filter-cell">
-                    <div>
+                    <div className="action-container">
                         <a href="#" className="btn btn-primary" onClick={this.onFilter}>Filter</a>
                         <a href="#" className="btn btn-danger" onClick={this.onReset}>Reset</a>
                     </div>
