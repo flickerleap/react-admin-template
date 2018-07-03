@@ -10,10 +10,6 @@ export class CheckboxList extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.props.onChange(this.getEventObject(this.state.values));
-    }
-
     static getDerivedStateFromProps(nextProps, prevState) {
         const state = prevState;
         state.values = CheckboxList.setValues(nextProps.items, state.values, nextProps.value);

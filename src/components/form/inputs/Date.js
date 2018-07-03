@@ -20,10 +20,6 @@ export class Date extends React.Component {
         return state;
     }
 
-    componentDidMount() {
-        this.onChange(this.state.date);
-    }
-
     onFocusChanged = ({focused}) => {
         this.setState(() => ({focused: focused}));
     };

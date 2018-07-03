@@ -1,7 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import {timestamp} from '../../../helpers/time';
 
 export class Time extends React.Component {
     constructor(props) {
@@ -18,10 +17,6 @@ export class Time extends React.Component {
         state.time = moment(nextProps.value);
 
         return state;
-    }
-
-    componentDidMount() {
-        this.onChange(this.state.time);
     }
 
     onFocusChanged = ({focused}) => {
