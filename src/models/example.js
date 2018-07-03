@@ -142,7 +142,7 @@ export const model = new Model({
             {
                 type: 'link',
                 label: 'View',
-                classes: 'btn btn-warning',
+                classes: 'btn btn-success',
                 to: ({id}) => `#`,
             },
             {
