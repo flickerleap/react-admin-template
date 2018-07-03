@@ -36,7 +36,8 @@ export const model = new Model({
                 max: 10,
                 min: 0
             },
-            hide:true,
+            hide: true,
+            defaultValue: 100,
             validation: {
                 presence: {
                     allowEmpty: false,
@@ -79,7 +80,7 @@ export const model = new Model({
         {
             name: 'start_time',
             label: 'Start Time',
-            defaultValue: moment(),
+            defaultValue: moment().format('HH:mm'),
             type: 'time',
             validation: {
                 presence: {
@@ -89,7 +90,7 @@ export const model = new Model({
             },
             filter: {
                 type: 'time',
-                defaultValue: moment().format('YYYY-MM-DD')
+                defaultValue: moment().format('HH:mm')
             },
         },
         {
@@ -162,8 +163,8 @@ export const exampleItems = [
         description: 'Example',
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
-        start_time: moment().format('hh:mm'),
-        interests: ['Pottery'],
+        start_time: moment().format('LT'),
+        interests: ['Pottery', 'Running'],
         user: {
             profile: {
                 mobile_number: '0111234567'

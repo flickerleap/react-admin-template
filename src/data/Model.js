@@ -61,20 +61,25 @@ export class Model {
     }
 
     static getValue = (data, fieldName) => {
-        const fields = fieldName.split('.');
-        return Model.getValueRecursive(data, fields);
+        return fieldName.split('.').reduce((o, i) => {
+            return o[i];
+        }, data);
     };
 
-    static getValueRecursive = (data, fields = []) => {
-        const field = fields.length > 0 ? fields[0] : undefined;
-        const item = field && data[field] ? data[field] : undefined;
+    static getData = (data) => {
+        let processed = data;
+        Object.keys(data).forEach((name) => {
+            if (name.includes('.')) {
+                let ref = processed;
+                const fields = name.split('.').splice(1);
+                fields.forEach((field, index) => {
+                    ref[field] = index < fields.length -1 ? {} : data[name];
+                    ref = ref[field];
+                });
+            }
+        });
 
-        if(item && typeof(item) === 'object' && !Array.isArray(item)) {
-            const newFields = [...fields.splice(1)];
-            return Model.getValueRecursive(item, newFields);
-        } else {
-            return item;
-        }
+        return processed;
     };
 
     getBaseUrl() {

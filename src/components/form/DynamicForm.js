@@ -62,9 +62,9 @@ export class DynamicForm extends React.Component {
         });
     }
 
-    onFieldChange = (e) => {
-        const key = e.target.name;
-        const value = e.target.value;
+    onFieldChange = (event) => {
+        const key = event.target.name;
+        const value = event.target.value;
         this.setState((prevState) => {
             const fields = prevState.fields.map((field) => {
                 if (field.name === key) {
@@ -96,13 +96,13 @@ export class DynamicForm extends React.Component {
         return data;
     }
 
-    onSubmit = (e) => {
-        e.preventDefault();
+    onSubmit = (event) => {
+        event.preventDefault();
 
         this.validateForm();
 
         if (!this.hasErrors()) {
-            const data = this.getData();
+            const data = Model.getData(this.getData());
             this.props.onSubmit(data);
         }
     };
