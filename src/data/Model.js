@@ -77,6 +77,30 @@ export class Model {
         }
     };
 
+    static getData = (data) => {
+        const processed = {};
+        Object.keys(data).forEach((name) => {
+            const fields = name.split('.');
+            processed[name] = Model.getDataRecursive(data, fields);
+        });
+
+        return processed;
+    };
+
+    static getDataRecursive = (data, fields = []) => {
+        const object = {};
+        if(fields.length > 1) {
+            const newFields = [...fields.splice(1)];
+            object[fields[0]] = {};
+            return Model.getValueRecursive(object, newFields);
+        } else {
+            const field = fields[0];
+            object[field] = data[field];
+
+            return object;
+        }
+    };
+
     getBaseUrl() {
         const url = this.plural.toLowerCase().replace(/ /g, "-");
         return `/${url}`;
