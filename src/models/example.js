@@ -107,8 +107,20 @@ export const model = new Model({
             },
             value: ['Pottery', 'Running']
         }, {
+            name: 'user.profile.first_name',
+            label: 'First Name',
+            type: 'text',
+        }, {
+            name: 'user.profile.last_name',
+            label: 'Last Name',
+            type: 'text',
+        }, {
             name: 'user.profile.mobile_number',
             label: 'Mobile Number',
+            type: 'text',
+        }, {
+            name: 'user.image.src',
+            label: 'Image Src',
             type: 'text',
         }
     ],
@@ -167,7 +179,12 @@ export const exampleItems = [
         interests: ['Pottery', 'Running'],
         user: {
             profile: {
+                first_name: 'First Name',
+                last_name: 'Last Name',
                 mobile_number: '0111234567'
+            },
+            image: {
+                src: '#'
             }
         }
     }

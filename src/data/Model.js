@@ -71,13 +71,23 @@ export class Model {
         Object.keys(data).forEach((name) => {
             if (name.includes('.')) {
                 let ref = processed;
-                const fields = name.split('.').splice(1);
+                const fields = name.split('.');
                 fields.forEach((field, index) => {
-                    ref[field] = index < fields.length -1 ? {} : data[name];
+                    let value = undefined;
+                    if(index < fields.length -1) {
+                        value = ref[field] || {};
+                    } else {
+                        value = data[name];
+                    }
+                    ref[field] = value;
                     ref = ref[field];
                 });
+
+                delete processed[name];
             }
         });
+
+        console.log(processed);
 
         return processed;
     };
