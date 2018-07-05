@@ -5,6 +5,16 @@ import {ErrorBlock} from "../utility/ErrorBlock";
 export class Field extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            element: false
+        };
+    }
+
+    componentDidMount() {
+        this.setState(() => ({
+            element: this.getElement()
+        }));
     }
 
     getElement() {
@@ -49,7 +59,7 @@ export class Field extends React.Component {
     render() {
         return (
             <div>
-                {this.getElement()}
+                {this.state.element}
                 {this.props.error && <ErrorBlock error={this.props.error}/>}
             </div>
         );

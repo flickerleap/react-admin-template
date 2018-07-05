@@ -105,6 +105,15 @@ export const model = new Model({
             filter: {
                 type: 'dropdown'
             },
+            valueFn: (item) => {
+                let value = "";
+                item.interests.forEach((interest, index) => {
+                    value += interest;
+                    value += index < item.interests.length - 1 ? ', ' : ''
+                });
+
+                return value;
+            },
             value: ['Pottery', 'Running']
         }, {
             name: 'user.profile.mobile_number',
