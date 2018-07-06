@@ -12,7 +12,7 @@ export class CheckboxList extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const state = prevState;
-        state.values = CheckboxList.setValues(nextProps.items, state.values, nextProps.value);
+        state.values = CheckboxList.setValues(nextProps.items, state.values, [nextProps.value]);
 
         return state;
     }
@@ -70,22 +70,19 @@ export class CheckboxList extends React.Component {
                 <label htmlFor={name}>{label}</label>
                 <div className="row">
                     {
-                        items.map((item, index) => {
-                            console.log(this.isSelected(index));
-                            return (
-                                <div key={index} className={className}>
-                                    <input
-                                        onChange={this.onChange}
-                                        id={name + index}
-                                        name={name}
-                                        type="checkbox"
-                                        value={item.value}
-                                        defaultChecked={this.isSelected(index)}
-                                    />
-                                    <span> {item.label}</span>
-                                </div>
-                            );
-                        })
+                        items.map((item, index) => (
+                            <div key={index} className={className}>
+                                <input
+                                    onChange={this.onChange}
+                                    id={name + index}
+                                    name={name}
+                                    type="checkbox"
+                                    value={item.value}
+                                    defaultChecked={this.isSelected(index)}
+                                />
+                                <span> {item.label}</span>
+                            </div>
+                        ))
                     }
                 </div>
             </div>

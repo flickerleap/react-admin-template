@@ -184,7 +184,7 @@ export const exampleItems = [
         description: 'Example',
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
-        start_time: moment().format('LT'),
+        start_time: moment().format('HH:mm'),
         interests: ['Pottery', 'Running'],
         user: {
             profile: {

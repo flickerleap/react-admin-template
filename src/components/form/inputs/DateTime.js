@@ -8,51 +8,43 @@ export class DateTime extends React.Component {
         super(props);
 
         this.state = {
-            focused: false,
-            datetime: moment(this.props.value)
+            value: moment(this.props.value)
         };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         let state = prevState;
-        state.datetime = moment(nextProps.value);
+        state.value = moment(nextProps.value);
 
         return state;
     }
-
-    componentDidMount() {
-        this.onChange(this.state.datetime);
-    }
-
-    onFocusChanged = ({focused}) => {
-        this.setState(() => ({focused: focused}));
-    };
 
     onChange = (datetime) => {
         const event = {
             target: {
                 name: this.props.name,
-                value: timestamp(datetime)
+                value: datetime ? timestamp(datetime) : undefined
             }
         };
 
         this.setState(() => ({
-            datetime
+            value: datetime
         }));
 
         this.props.onChange(event);
     };
 
     render() {
-        const {name, label, format="YYYY-MM-DD", interval=15} = this.props;
+        const {name, label, isClearable = false, format="YYYY-MM-DD", interval=15} = this.props;
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
                 <div className="form-control">
                     <DatePicker
-                        selected={this.state.datetime}
+                        selected={this.state.value}
                         onChange={this.onChange}
                         dateFormat={format}
+                        isClearable={isClearable}
                         showTimeSelect
                         timeFormat="HH:mm"
                         timeIntervals={interval}

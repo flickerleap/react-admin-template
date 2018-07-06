@@ -87,8 +87,6 @@ export class Model {
             }
         });
 
-        console.log(processed);
-
         return processed;
     };
 
