@@ -8,51 +8,44 @@ export class Date extends React.Component {
         super(props);
 
         this.state = {
-            focused: false,
-            date: moment(this.props.value)
+            value: moment(this.props.value)
         };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         let state = prevState;
-        state.date = moment(nextProps.value);
+        state.value = moment(nextProps.value);
 
         return state;
     }
-
-    componentDidMount() {
-        this.onChange(this.state.date);
-    }
-
-    onFocusChanged = ({focused}) => {
-        this.setState(() => ({focused: focused}));
-    };
 
     onChange = (date) => {
         const event = {
             target: {
                 name: this.props.name,
-                value: timestamp(date)
+                value: date ? date.format('YYYY-MM-DD') : undefined
             }
         };
 
         this.setState(() => ({
-            date
+            value: date
         }));
 
         this.props.onChange(event);
     };
 
     render() {
-        const {name, label, format="YYYY-MM-DD"} = this.props;
+        const {name, label, isClearable = false, format="YYYY-MM-DD"} = this.props;
         return (
             <div>
                 <label htmlFor={name}>{label}</label>
                 <div className="form-control">
                     <DatePicker
-                        selected={this.state.date}
+                        selected={this.state.value}
                         onChange={this.onChange}
                         dateFormat={format}
+                        isClearable={isClearable}
+                        placeholderText="None"
                         withPortal
                     />
                 </div>

@@ -17,15 +17,6 @@ export class DropDown extends React.Component {
         return state;
     }
 
-    componentDidMount() {
-        this.props.onChange({
-            target:{
-                name: this.props.name,
-                value: this.state.value
-            }
-        });
-    }
-
     onChange = (event) => {
         const value = event.target.value;
         this.setState(()=>({

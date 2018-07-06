@@ -27,8 +27,8 @@ export class AddScreen extends React.Component {
         this.setState(() => ({
             loading: true
         }));
-        const {redirectPath, add, relationIds = []} = this.props;
-        add(item, ...relationIds).then((action) => {
+        const {redirectPath, add} = this.props;
+        add(item).then((action) => {
             this.setState(() => ({
                 loading: false
             }));

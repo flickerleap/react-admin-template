@@ -9,10 +9,6 @@ export class Checkbox extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.props.onChange(this.getEventObject(this.props.value));
-    }
-
     static getDerivedStateFromProps(nextProps, prevState) {
         let state = prevState;
         state.value = nextProps.value;
@@ -56,7 +52,7 @@ export class Checkbox extends React.Component {
                             name={name}
                             type="checkbox"
                             value={value}
-                            checked={value}
+                            defaultChecked={value}
                         />
                         <span> {label}</span>
                     </div>

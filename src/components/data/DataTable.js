@@ -23,10 +23,9 @@ export class DataTable extends React.Component {
         super(props);
 
         this.state = {
-            items: props.items !== undefined ? props.items : [],
-            first: props.items.length > 0 ? props.items[0] : undefined,
-            fields: props.fields !== undefined ? props.fields : [],
-            pagination: props.pagination ? props.pagination : {
+            items: props.items || [],
+            fields: props.fields || [],
+            pagination: props.pagination || {
                 total: 1,
                 current: 1,
                 perPage: 1,
@@ -60,7 +59,7 @@ export class DataTable extends React.Component {
      */
     static getDerivedStateFromProps(nextProps, prevState) {
         let state = prevState;
-        state.items = nextProps.items !== undefined ? nextProps.items : [];
+        state.items = nextProps.items ? nextProps.items : [];
 
         return state;
     }

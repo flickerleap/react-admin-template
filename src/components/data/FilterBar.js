@@ -90,7 +90,6 @@ export class FilterBar extends React.Component {
                                 <td className="filter-cell" key={index}>
                                     <Field
                                         {...field}
-                                        value={field.value}
                                         type={field.filter.type ? field.filter.type : 'text'}
                                         onChange={this.onFieldChange}
                                         label={false}

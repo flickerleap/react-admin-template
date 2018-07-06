@@ -105,6 +105,15 @@ export const model = new Model({
             filter: {
                 type: 'dropdown'
             },
+            valueFn: (item) => {
+                let value = "";
+                item.interests.forEach((interest, index) => {
+                    value += interest;
+                    value += index < item.interests.length - 1 ? ', ' : ''
+                });
+
+                return value;
+            },
             value: ['Pottery', 'Running']
         }, {
             name: 'user.profile.first_name',
@@ -175,7 +184,7 @@ export const exampleItems = [
         description: 'Example',
         start_date: moment().format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
-        start_time: moment().format('LT'),
+        start_time: moment().format('HH:mm'),
         interests: ['Pottery', 'Running'],
         user: {
             profile: {

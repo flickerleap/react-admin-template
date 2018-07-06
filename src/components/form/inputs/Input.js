@@ -3,10 +3,21 @@ import React from 'react';
 export class Input extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            value: props.value || undefined
+        };
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let state = prevState;
+        state.value = nextProps.value;
+
+        return state;
     }
 
     render() {
-        const {value, name, label, type, onChange, className="form-control", attributes = {}} = this.props;
+        const {name, label, type, onChange, className="form-control", attributes = {}} = this.props;
 
         return (
             <div>
@@ -15,7 +26,7 @@ export class Input extends React.Component {
                     name={name}
                     className={className}
                     type={type}
-                    value={value}
+                    value={this.state.value}
                     onChange={onChange}
                     {...attributes}
                 />

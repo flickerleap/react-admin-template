@@ -10,30 +10,29 @@ export class CheckboxList extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.props.onChange(this.getEventObject(this.state.values));
-    }
-
     static getDerivedStateFromProps(nextProps, prevState) {
         const state = prevState;
-        state.values = CheckboxList.setValues(nextProps.items, state.values, nextProps.value);
+        state.values = CheckboxList.setValues(nextProps.items, state.values, [nextProps.value]);
 
         return state;
     }
 
-    static setValues(items, values, value) {
-        if (Array.isArray(value)) {
-            values = value;
-        }
-        else {
-            const index = CheckboxList.getIndexOfValue(items, value);
-            if (index < 0 && values[index] === undefined) {
-                values[index] = value;
-            }
-        }
+    static setValues(items, currentValues = [], newValues = []) {
+        let valueList = currentValues;
 
-        return values;
+        newValues.map((value) => {
+            const index = CheckboxList.getIndexOfValue(items, value);
+            valueList[index] = value;
+        });
+
+        return valueList;
     }
+
+    static getIndexOfValue = (items, value) => {
+        return items.findIndex((item) => {
+            return item.value === value;
+        });
+    };
 
     getEventObject = (value) => {
         return {
@@ -44,28 +43,17 @@ export class CheckboxList extends React.Component {
         };
     };
 
-    static getIndexOfValue = (items, value) => {
-        return items.findIndex((item) => {
-            return item.value === value;
-        });
-    };
-
     onChange = (event) => {
         const value = event.target.value;
-        const index = CheckboxList.getIndexOfValue(this.props.items, value);
+        const index = CheckboxList.getIndexOfValue(this.props.items, event.target.value);
         const values = this.state.values;
-
-        if (values.includes(value)) {
-            values[index] = undefined;
-        } else {
-            values[index] = value;
-        }
-
-        this.props.onChange(this.getEventObject(values));
+        values[index] = values.includes(value) ? undefined : value;
 
         this.setState(() => ({
             values
         }));
+
+        this.props.onChange(this.getEventObject(values));
     };
 
     isSelected = (index) => {
@@ -86,9 +74,12 @@ export class CheckboxList extends React.Component {
                             <div key={index} className={className}>
                                 <input
                                     onChange={this.onChange}
-                                    id={name + index} name={name}
-                                    type="checkbox" value={item.value}
-                                    checked={this.isSelected(index)}/>
+                                    id={name + index}
+                                    name={name}
+                                    type="checkbox"
+                                    value={item.value}
+                                    defaultChecked={this.isSelected(index)}
+                                />
                                 <span> {item.label}</span>
                             </div>
                         ))
