@@ -94,7 +94,6 @@ export class DynamicForm extends React.Component {
                     <div className="row">
                         {
                             this.state.model.fields.map((field, index) => {
-
                                 const onChange = field.onChange === undefined
                                     ? this.onFieldChange : field.onChange;
 
