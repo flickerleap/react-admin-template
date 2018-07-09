@@ -1,34 +1,18 @@
 import React from 'react';
 
 export class CheckboxList extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            values: props.value ? CheckboxList.setValues(this.props.items, [], props.value)
-                : this.props.items.map(() => undefined)
-        };
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const state = prevState;
-        state.values = CheckboxList.setValues(nextProps.items, state.values, [nextProps.value]);
-
-        return state;
-    }
-
-    static setValues(items, currentValues = [], newValues = []) {
+    getValues(currentValues = [], newValues = []) {
         let valueList = currentValues;
 
         newValues.map((value) => {
-            const index = CheckboxList.getIndexOfValue(items, value);
+            const index = this.getIndexOfValue(this.props.items, value);
             valueList[index] = value;
         });
 
         return valueList;
     }
 
-    static getIndexOfValue = (items, value) => {
+    getIndexOfValue = (items, value) => {
         return items.findIndex((item) => {
             return item.value === value;
         });
@@ -45,20 +29,21 @@ export class CheckboxList extends React.Component {
 
     onChange = (event) => {
         const value = event.target.value;
-        const index = CheckboxList.getIndexOfValue(this.props.items, event.target.value);
-        const values = this.state.values;
+        const index = this.getIndexOfValue(this.props.items, event.target.value);
+        const values = this.props.value || [];
         values[index] = values.includes(value) ? undefined : value;
-
-        this.setState(() => ({
-            values
-        }));
 
         this.props.onChange(this.getEventObject(values));
     };
 
     isSelected = (index) => {
-        return this.state.values[index] !== undefined;
+        const values = this.getValues([], this.getValuesArray());
+        return values[index] !== undefined;
     };
+
+    getValuesArray() {
+        return Array.isArray(this.props.value) ? this.props.value : [this.props.value];
+    }
 
     render() {
         const {

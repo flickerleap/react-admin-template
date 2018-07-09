@@ -58,7 +58,7 @@ export const validateFields = (fields = []) => {
         return result;
     }
 
-    return null;
+    return undefined;
 };
 
 /**

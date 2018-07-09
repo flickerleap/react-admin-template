@@ -9,8 +9,22 @@ export class ErrorBlock extends React.Component {
         super(props);
 
         this.state = {
-            open: true
+            open: false
         };
+    }
+
+    componentDidMount() {
+        this.setState(() => ({
+            open: this.props.error !== undefined
+        }));
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.error !== prevProps.error) {
+            this.setState(() => ({
+                open: this.props.error !== undefined
+            }));
+        }
     }
 
     onDismiss = () => {

@@ -1,34 +1,12 @@
 import React from 'react';
 
 export class DropDown extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: props.value || (props.items.length > 0 ? props.items[0].value : '')
-        };
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.value = nextProps.value;
-
-        return state;
-    }
-
-    onChange = (event) => {
-        const value = event.target.value;
-        this.setState(()=>({
-            value
-        }));
-        this.props.onChange(event);
-    };
-
     render() {
         const {
             name, label, className="form-control", items = []
         } = this.props;
+
+        const value = this.props.value || (items.length > 0 ? items[0].value : '');
 
         return (
             <div>
@@ -36,8 +14,8 @@ export class DropDown extends React.Component {
                 <select
                     name={name}
                     className={className}
-                    value={this.state.value}
-                    onChange={this.onChange}
+                    value={value}
+                    onChange={this.props.onChange}
                 >
                     {
                         items.map((item, index) => (

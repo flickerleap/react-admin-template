@@ -62,15 +62,15 @@ export class EditScreen extends React.Component {
             <div>
                 <h3>{title}</h3>
                 {
-                    this.state.loading ? <Loading active={this.state.loading}/>
-                        : <DynamicForm
-                            newRecord={false}
-                            fields={fields}
-                            errors={this.state.errors}
-                            onSubmit={this.onSubmit}
-                            data={this.state.item}
-                        />
+                    this.state.loading && <Loading active={this.state.loading}/>
                 }
+                <DynamicForm
+                    newRecord={false}
+                    fields={fields}
+                    errors={this.state.errors}
+                    onSubmit={this.onSubmit}
+                    data={this.state.item}
+                />
             </div>
         );
     }

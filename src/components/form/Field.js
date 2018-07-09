@@ -3,10 +3,6 @@ import {CheckboxList, Date, DateTime, DropDown, Input, TextArea, Time, Checkbox}
 import {ErrorBlock} from "../utility/ErrorBlock";
 
 export class Field extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     getElement() {
         const {
             custom = (props) => {},

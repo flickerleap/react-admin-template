@@ -1,21 +1,7 @@
 import React from 'react';
+import {getEventObject} from "../../../helpers/form";
 
 export class Checkbox extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: props.value || false
-        };
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.value = nextProps.value;
-
-        return state;
-    }
-
     getEventObject = (value) => {
         return {
             target: {
@@ -26,19 +12,13 @@ export class Checkbox extends React.Component {
     };
 
     onChange = (event) => {
-        this.setState((prevState) => {
-            const value = !prevState.value;
-            this.props.onChange(this.getEventObject(value));
-
-            return {
-                value
-            };
-        });
+        const value = !this.props.value;
+        this.props.onChange(getEventObject(this.props.name, value));
     };
 
     render() {
         const {
-            name, label, className = "form-control col-md-4", value
+            name, label, className = "form-control col-md-4", value = false
         } = this.props;
 
         return (
