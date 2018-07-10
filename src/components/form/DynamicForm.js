@@ -7,14 +7,13 @@ export class DynamicForm extends React.Component {
         super(props);
 
         this.state = {
-            model: this.getNewFormModel()
+            model: this.getModel()
         };
     }
 
     componentDidMount() {
-        this.setState(() => ({
-            model: this.getNewFormModel(this.props.fields)
-        }));
+        const model = this.getModel(this.props.fields, this.props.data);
+        this.setModel(model);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -23,21 +22,30 @@ export class DynamicForm extends React.Component {
         ) {
             const model = prevState.model;
             model.setErrors(this.props.errors);
-            this.saveFormModel(model);
+            this.setModel(model);
         }
 
-        if(this.props.fields !== prevProps.fields) {
-            this.setState(() => ({
-                model: this.getNewFormModel(this.props.fields)
-            }));
+        if (this.props.fields !== prevProps.fields) {
+            this.setModel(this.getModel(this.props.fields, this.props.data));
+        }
+
+        if (this.props.data !== prevProps.data) {
+            const model = prevState.model;
+            model.load(this.props.data);
+            this.setModel(model);
         }
     }
 
-    getNewFormModel = (fields = []) => {
-        return new FormModel({fields});
+    getModel = (fields = [], data = undefined) => {
+        const model = new FormModel({fields});
+        if (data) {
+            model.load(data);
+        }
+
+        return model;
     };
 
-    saveFormModel(model) {
+    setModel(model) {
         this.setState(() => ({
             model
         }));
@@ -49,7 +57,7 @@ export class DynamicForm extends React.Component {
         const model = this.state.model;
         model.set(name, value);
         model.validate();
-        this.saveFormModel(model);
+        this.setModel(model);
     };
 
     onSubmit = (event) => {
@@ -66,7 +74,7 @@ export class DynamicForm extends React.Component {
     validateForm = () => {
         const model = this.state.model;
         model.validate();
-        this.saveFormModel(model);
+        this.setModel(model);
     };
 
     getColumnClass = (columns) => {

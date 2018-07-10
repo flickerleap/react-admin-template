@@ -1,5 +1,6 @@
 import React from 'react';
 import {getEventObject} from "../../../helpers/form";
+import {Label} from "../Label";
 
 export class Checkbox extends React.Component {
     getEventObject = (value) => {
@@ -23,7 +24,7 @@ export class Checkbox extends React.Component {
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="row">
                     <div className={className}>
                         <input

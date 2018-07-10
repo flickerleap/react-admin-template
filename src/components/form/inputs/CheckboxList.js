@@ -1,4 +1,5 @@
 import React from 'react';
+import {Label} from "../Label";
 
 export class CheckboxList extends React.Component {
     getValues(currentValues = [], newValues = []) {
@@ -47,12 +48,12 @@ export class CheckboxList extends React.Component {
 
     render() {
         const {
-            name, label, className = "form-control col-md-4", items = []
+            name, className = "form-control col-md-4", items = []
         } = this.props;
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="row">
                     {
                         items.map((item, index) => (

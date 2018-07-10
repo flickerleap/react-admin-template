@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {timestamp} from '../../../helpers/time';
 import {getEventObject} from "../../../helpers/form";
+import {Label} from "../Label";
 
 export class DateTime extends React.Component {
     onChange = (datetime) => {
@@ -17,7 +18,7 @@ export class DateTime extends React.Component {
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="form-control">
                     <DatePicker
                         selected={value}

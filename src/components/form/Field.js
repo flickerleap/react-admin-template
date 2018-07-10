@@ -43,10 +43,11 @@ export class Field extends React.Component {
     }
 
     render() {
+        const {error} = this.props;
         return (
             <div>
                 {this.getElement()}
-                {this.props.error && <ErrorBlock error={this.props.error}/>}
+                {error && <ErrorBlock error={error}/>}
             </div>
         );
     }

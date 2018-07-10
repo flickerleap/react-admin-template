@@ -50,46 +50,6 @@ export class Model {
         return field.editable === undefined || field.editable !== false;
     };
 
-    exclude = (field) => {
-        return field.excludeFromForm !== undefined && field.excludeFromForm === true;
-    };
-
-    isConditional = (field, data) => {
-        if (field.conditional !== undefined) {
-            return field.conditional(data);
-        }
-    };
-
-    static getValue = (data, fieldName) => {
-        return fieldName.split('.').reduce((o, i) => {
-            return o[i];
-        }, data);
-    };
-
-    static getData = (data) => {
-        let processed = data;
-        Object.keys(data).forEach((name) => {
-            if (name.includes('.')) {
-                let ref = processed;
-                const fields = name.split('.');
-                fields.forEach((field, index) => {
-                    let value = undefined;
-                    if(index < fields.length -1) {
-                        value = ref[field] || {};
-                    } else {
-                        value = data[name];
-                    }
-                    ref[field] = value;
-                    ref = ref[field];
-                });
-
-                delete processed[name];
-            }
-        });
-
-        return processed;
-    };
-
     getBaseUrl() {
         const url = this.plural.toLowerCase().replace(/ /g, "-");
         return `/${url}`;

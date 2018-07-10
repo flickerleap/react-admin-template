@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {getTimeFormatForMoment} from "../../../helpers/time";
 import {getEventObject} from "../../../helpers/form";
+import {Label} from "../Label";
 
 export class Time extends React.Component {
     onChange = (time) => {
@@ -12,13 +13,13 @@ export class Time extends React.Component {
     };
 
     render() {
-        const {name, label, isClearable = false, interval = 15, format = 'HH:mm'} = this.props;
+        const {isClearable = false, interval = 15, format = 'HH:mm'} = this.props;
 
         const value = moment(getTimeFormatForMoment(this.props.value));
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="form-control">
                     <DatePicker
                         selected={value}

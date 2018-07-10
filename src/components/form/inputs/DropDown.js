@@ -1,4 +1,5 @@
 import React from 'react';
+import {Label} from "../Label";
 
 export class DropDown extends React.Component {
     render() {
@@ -10,7 +11,7 @@ export class DropDown extends React.Component {
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <select
                     name={name}
                     className={className}
