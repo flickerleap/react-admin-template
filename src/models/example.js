@@ -103,7 +103,8 @@ export const model = new Model({
                 {value: 'Running', label: 'Running'},
             ],
             filter: {
-                type: 'dropdown'
+                type: 'dropdown',
+                value: 'Pottery'
             },
             valueFn: (item) => {
                 let value = "";
@@ -197,6 +198,7 @@ export const exampleItems = [
         end_date: moment().format('YYYY-MM-DD HH:mm'),
         start_time: moment().format('HH:mm'),
         interests: ['Pottery', 'Running'],
+        second_interests: 'Pottery',
         user: {
             profile: {
                 first_name: 'First Name',
