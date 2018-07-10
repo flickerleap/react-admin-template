@@ -13,6 +13,7 @@ export class FormModel extends BaseModel {
      */
     constructor({fields = []} = {}) {
         super({fields});
+        this.fields = this.getFields(this.fields);
     }
 
     /**

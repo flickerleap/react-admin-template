@@ -12,11 +12,13 @@ export const users = [
     {
         path:'/users/add',
         component: AddUserScreen,
+        exact: true,
         isPublic: false,
     },
     {
         path:'/users/:id/edit',
         component: EditUserScreen,
+        exact: true,
         isPublic: false,
     }
 ];

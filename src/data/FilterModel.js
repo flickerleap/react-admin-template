@@ -13,7 +13,6 @@ export class FilterModel extends BaseModel {
      */
     constructor({fields = []} = {}) {
         super({fields});
-        this.fields = fields;
         this.fields = this.getFields(this.fields);
     }
 
@@ -28,7 +27,6 @@ export class FilterModel extends BaseModel {
             if (!this.hide(field)) {
                 field.filter = field.filter || {};
                 field.filter.enabled = this.canFilter(field);
-                field.required = false;
                 field.value = field.filter.defaultValue
                     ? field.filter.defaultValue : field.defaultValue
                         ? field.defaultValue : '';

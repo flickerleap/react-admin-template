@@ -147,7 +147,7 @@ export class BaseModel {
      * @param field
      * @returns {Object}
      */
-    cloneField(field) {
+    cloneField = (field) => {
         return Object.assign(field);
-    }
+    };
 }

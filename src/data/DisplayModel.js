@@ -15,7 +15,6 @@ export class DisplayModel extends BaseModel {
      */
     constructor({fields = [], items = [], pagination = {}} = {}) {
         super({fields});
-        this.fields = fields;
         this.fields = this.getFields(this.fields);
         this.items = items;
         this.pagination = getPagination(pagination);
