@@ -6,8 +6,10 @@ export const userNeedsAuthentication = connectedRouterRedirect({
     redirectPath: '/login',
     // Determine if the user is authenticated or not
     authenticatedSelector: state => !!state.auth.accessToken,
+
+    authenticatingSelector: state => state.auth.loading,
     // A nice display name for this check
-    wrapperDisplayName: 'UserIsAuthenticated'
+    wrapperDisplayName: 'UserNeedsAuthentication'
 });
 
 const locationHelper = locationHelperBuilder({});
@@ -21,5 +23,5 @@ export const userDoesNotNeedAuthentication = connectedRouterRedirect({
     // Determine if the user is authenticated or not
     authenticatedSelector: state => !state.auth.accessToken,
     // A nice display name for this check
-    wrapperDisplayName: 'UserIsNotAuthenticated'
+    wrapperDisplayName: 'UserDoesNotNeedAuthentication'
 });

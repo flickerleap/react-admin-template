@@ -13,7 +13,7 @@ export const routes = [
         isPublic: false,
         exact: true
     },
-    ...auth, ...examples, users,
+    ...auth, ...examples, ...users,
     {
         component: NotFoundScreen
     }
