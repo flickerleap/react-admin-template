@@ -3,13 +3,14 @@
  *
  * @param {Array} items
  * @param {string} label
+ * @param {any} defaultValue
  * @returns {*[]}
  */
-export const addEmptyItem = (items, label = 'Select') => {
+export const addEmptyItem = (items, label = 'Select', defaultValue = undefined) => {
     return [
         {
             label,
-            value: null
+            value: defaultValue
         },
         ...items
     ];

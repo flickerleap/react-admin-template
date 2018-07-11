@@ -46,6 +46,19 @@ export class DataTable extends React.Component {
     }
 
     /**
+     * Run this function when this component has been updated
+     */
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            this.props.fields !== prevProps.fields ||
+            this.props.items !== prevProps.items ||
+            this.props.pagination !== prevProps.pagination
+        ) {
+            this.setModel(this.getModel(this.props));
+        }
+    }
+
+    /**
      *
      * @param {Object} item
      * @param {string} name
