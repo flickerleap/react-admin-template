@@ -130,7 +130,7 @@ export const model = new Model({
         {
             name: 'user.profile.first_name',
             label: 'First Name',
-            type: 'text',
+            type: 'text'
         }, {
             name: 'user.profile.last_name',
             label: 'Last Name',

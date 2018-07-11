@@ -55,9 +55,14 @@ export class DynamicForm extends React.Component {
         const name = event.target.name;
         const value = event.target.value;
         const model = this.state.model;
+        const field = model.get(name);
         model.set(name, value);
         model.validate();
         this.setModel(model);
+
+        if(field && field.onChange) {
+            field.onChange(event);
+        }
     };
 
     onSubmit = (event) => {
@@ -102,14 +107,11 @@ export class DynamicForm extends React.Component {
                     <div className="row">
                         {
                             this.state.model.fields.map((field, index) => {
-                                const onChange = field.onChange === undefined
-                                    ? this.onFieldChange : field.onChange;
-
                                 return field.show &&
                                     (
                                         <div key={index} className={columnClass}>
                                             <div className="form-group">
-                                                <Field {...field} onChange={onChange}/>
+                                                <Field {...field} onChange={this.onFieldChange}/>
                                             </div>
                                         </div>
                                     );
