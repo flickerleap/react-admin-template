@@ -1,8 +1,9 @@
 import React from 'react';
-import {Loading} from "../utility/Loading";
 
-export const DashboardScreen = ({content}) => (
+export const DashboardScreen = () => (
     <div className='row'>
-        {content}
+        <div className="col-md-12">
+            <h1>Dashboard</h1>
+        </div>
     </div>
 );

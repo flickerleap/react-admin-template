@@ -13,12 +13,21 @@ export const apiMiddleware = store =>
                 return next(action);
             }
 
-            let {endpoint, method, body, headers = {}} = callAPI;
+            let {endpoint, method, body, headers = {}, meta = {}} = callAPI;
             const {types} = callAPI;
+            
+            if (headers["Content-Type"] === undefined) {
+                headers["Content-Type"] = "application/json";    
+            }
 
-            headers["Content-Type"] = "application/json";
+            let fileUpload = false;
+            if (headers["Content-Type"] === "multipart/form-data") {
+                delete headers["Content-Type"];    
+                fileUpload = true;
+            }
+
             headers.Accept = "application/json";
-
+            
             const token = store.getState().auth.accessToken;
             const refreshToken = store.getState().auth.refreshToken;
             if (typeof token === "string") {
@@ -34,7 +43,7 @@ export const apiMiddleware = store =>
             const [requestType, successType, failureType] = types;
             next(actionWith({type: requestType}));
 
-            if (body) {
+            if (body && !fileUpload) {
                 body = JSON.stringify(body);
             }
 
@@ -46,7 +55,7 @@ export const apiMiddleware = store =>
                     credentials: "same-origin"
                 })
                 // Reads the body stream into Flux Standard Action
-                    .then(createFSAConverter(successType, failureType))
+                    .then(createFSAConverter(successType, failureType, meta))
                     .then(
                         attemptRefresh({
                             action,

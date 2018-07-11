@@ -22,7 +22,9 @@ export default {
         'react',
         'react-proptypes',
         'url',
-        'events'
+        'events',
+        'classnames',
+        'query-string'
     ],
     plugins: [
         resolve({
@@ -45,7 +47,7 @@ export default {
             getExport(id) {
                 return cssExportMap[id];
             },
-            extract: 'dist/styles.css'
+            extract: 'dist/bundle.css'
         }),
         babel({
             exclude: 'node_modules/**',
@@ -57,7 +59,6 @@ export default {
                 // relative to the current directory, or the name
                 // of a module in node_modules
                 'node_modules/react-dom/index.js': [ 'createPortal', 'findDOMNode' ],
-                'node_modules/react-dates/index.js': [ 'SingleDatePicker' ],
                 'node_modules/validate.js/validate.js': [ 'validate' ]
             }
         }),

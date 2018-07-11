@@ -12,6 +12,7 @@ const initialProps = {
 const mapDispatchToProps = (dispatch) => ({
     add: (item) => {
         console.log('add');
+        return new Promise(()=>{}, ()=>{});
     }
 });
 

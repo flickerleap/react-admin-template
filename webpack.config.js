@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: './src/preview.js',
@@ -48,6 +49,7 @@ module.exports = {
         compress: true
     },
     plugins: [
+        new Dotenv(),
         new HtmlWebpackPlugin({
             template: 'preview/index.html'
         })

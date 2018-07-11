@@ -1,50 +1,52 @@
 import React from 'react';
 import {Field} from "../form/Field";
+import {FormModel} from "../../data/FormModel";
+import {DisplayModel} from "../../data/DisplayModel";
+import {FilterModel} from "../../data/FilterModel";
 
 export class FilterBar extends React.Component {
     constructor(props) {
         super(props);
-        const {
-            data = undefined,
-            fields = [],
-        } = this.props;
 
         this.state = {
-            data,
-            fields: fields.map((field) => {
-                field.filter = field.filter || {};
-                field.filter.enabled = this.getCanFilter(field);
-                if (data && data[field.name]) {
-                    field.value = data[field.name];
-                } else {
-                    field.value = field.filter.defaultValue
-                        ? field.filter.defaultValue : field.defaultValue
-                        ? field.defaultValue : '';
-                }
-
-                return field;
-            })
+            model: this.getModel(this.props.fields)
         };
     }
 
-    onFieldChange = (e) => {
-        const key = e.target.name;
-        const value = e.target.value;
-        this.setState((prevState) => ({
-            fields: prevState.fields.map((field) => {
-                if (field.name === key) {
-                    field.value = value;
-                }
+    componentDidMount() {
+        const model = this.getModel(this.props.fields);
+        this.setModel(model);
+    }
 
-                return field;
-            })
+    componentDidUpdate(prevProps) {
+        if(this.props.fields !== prevProps.fields) {
+            const model = this.getModel(this.props.fields);
+            this.setModel(model);
+        }
+    }
+
+    getModel = (fields = []) => {
+        return new FilterModel({fields});
+    };
+
+    setModel(model) {
+        this.setState(() => ({
+            model
         }));
+    }
+
+    onFieldChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        const model = this.state.model;
+        model.set(name, value);
+        this.setModel(model);
     };
 
     onFilter = (event) => {
         event.preventDefault();
         const data = {};
-        this.state.fields.forEach((field) => {
+        this.state.model.fields.forEach((field) => {
             if (field.value) {
                 data[field.name] = field.value
             }
@@ -66,26 +68,19 @@ export class FilterBar extends React.Component {
         this.props.onFilter({});
     };
 
-    getCanFilter = (field) => {
-        if (field.filter !== undefined && field.filter.enabled !== undefined) {
-            return field.filter.enabled;
-        }
-
-        return true;
-    };
-
     render() {
+        const {model} = this.state;
+
         return (
             <tr>
                 {
-                    this.state.fields.map((field, index) => {
-                        return field.filter.enabled ?
+                    model.fields.map((field, index) => {
+                        return model.canFilter(field) ?
                             (
                                 <td className="filter-cell" key={index}>
                                     <Field
                                         {...field}
-                                        value={field.value}
-                                        type={field.filter.type ? field.filter.type : 'text'}
+                                        type={field.filter && field.filter.type ? field.filter.type : 'text'}
                                         onChange={this.onFieldChange}
                                         label={false}
                                     />
@@ -98,7 +93,7 @@ export class FilterBar extends React.Component {
                     })
                 }
                 <td className="filter-cell">
-                    <div>
+                    <div className="action-container">
                         <a href="#" className="btn btn-primary" onClick={this.onFilter}>Filter</a>
                         <a href="#" className="btn btn-danger" onClick={this.onReset}>Reset</a>
                     </div>

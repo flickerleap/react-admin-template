@@ -2,26 +2,28 @@ import {DashboardScreen} from "../components/screens/DashboardScreen";
 import {NotFoundScreen} from "../components/screens/NotFoundScreen";
 
 import {auth} from "./auth";
-import {exampleModel} from "../models/models";
+import {exampleModel, userModel} from "../models/models";
 import {examples} from "./examples";
+import {users} from "./users";
 
 export const routes = [
     {
         path: '/',
         component: DashboardScreen,
-        isPublic: true,
+        isPublic: false,
         exact: true
+    },
+    ...auth, ...examples, ...users,
+    {
+        component: NotFoundScreen
     }
 ];
-
-routes.push(...auth, ...examples);
-routes.push({component: NotFoundScreen});
 
 export const links = [
     {
         name: 'Dashboard',
         url: '/',
-        icon: 'fa fa-tachometer',
+        icon: 'fas fa-tachometer-alt',
         badge: {
             variant: 'info',
             text: 'NEW'
@@ -29,4 +31,4 @@ export const links = [
     }
 ];
 
-links.push(...exampleModel.getLinks());
+links.push(...exampleModel.getLinks(), ...userModel.getLinks());

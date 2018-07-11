@@ -19,27 +19,26 @@ export class ViewScreen extends React.Component {
         const params = qs.parse(this.props.history.location.search);
 
         this.state = {
-            params,
-            currentPage: params.page,
+            params: params || {},
+            currentPage: params.page ? params.page : 1,
             loading: true
         };
     }
 
-    getParams = () => {
-        return {
-            ...this.state.params,
-            page: this.state.currentPage
-        };
-    };
+    getParams = () => ({
+        ...this.state.params,
+        page: this.state.currentPage
+    });
 
     componentDidMount() {
         this.fetchItems(this.getParams());
     }
 
-    fetchItems = (params = {}) => {
-        const {fetch} = this.props;
-        const userID = this.props.user ? this.props.user.id : undefined;
-        fetch(params, userID).then((action) => {
+    fetchItems = ({page = 1, filters = {}}) => {
+        const {fetch, params = {}} = this.props;
+        params.page = params.page || page;
+        params.filters = params.filters ? Object.assign(params.filters, filters) : filters;
+        fetch(params).then((action) => {
             this.setState(() => ({
                 loading: false
             }));
@@ -53,24 +52,24 @@ export class ViewScreen extends React.Component {
     };
 
     onFilter = (filters) => {
-        const params = {
-            filters
-        };
         this.setState(() => ({
             loading: true
         }));
-        this.fetchItems(params);
+        this.fetchItems({filters});
     };
 
     render() {
-        const {title = 'View', fields = [], items = [], actions = [], pagination = {}} = this.props;
+        const {title = 'View', fields = [], items = [], actions = [], pagination = {}, showAddButton = true} = this.props;
+
         return (
             <div className='row'>
                 <div className='col-md-12'>
                     <h3>{title}</h3>
                 </div>
                 <div className='col-md-12'>
-                    <AddButton link={this.getAddUrl()} type={title}/>
+                    {
+                        showAddButton && <AddButton link={this.getAddUrl()} type={title}/>
+                    }
                     <br/>
                 </div>
 

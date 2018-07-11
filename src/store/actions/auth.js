@@ -1,7 +1,6 @@
 import {
-    GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS,
-    LOGIN_FAILURE, LOGIN_REQUEST,
-    LOGIN_SUCCESS, LOGOUT_REQUEST, LOGOUT_SUCCESS
+    GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS,
+    LOGOUT_SUCCESS
 } from "./actionTypes";
 import {CALL_API} from "../../middleware/statics";
 
@@ -47,5 +46,27 @@ export const getUser = () => ({
         types: [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE],
         endpoint: `${prefix}/user`,
         method: 'GET'
+    }
+});
+
+export const forgotPassword = (email) => ({
+    [CALL_API]: {
+        types: [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE],
+        endpoint: `${prefix}/forgot/password`,
+        method: 'POST',
+        body: {
+            email
+        }
+    }
+});
+
+export const resetPassword = (data) => ({
+    [CALL_API]: {
+        types: [GET_USER, GET_USER_SUCCESS, GET_USER_FAILURE],
+        endpoint: `${prefix}/password/reset`,
+        method: 'POST',
+        body: {
+            ...data
+        }
     }
 });

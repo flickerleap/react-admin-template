@@ -2,12 +2,10 @@ import {connectedRouterRedirect} from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 
 export const userNeedsAuthentication = connectedRouterRedirect({
-    // The url to redirect user to if they fail
     redirectPath: '/login',
-    // Determine if the user is authenticated or not
     authenticatedSelector: state => !!state.auth.accessToken,
-    // A nice display name for this check
-    wrapperDisplayName: 'UserIsAuthenticated'
+    authenticatingSelector: state => state.auth.loading,
+    wrapperDisplayName: 'UserNeedsAuthentication'
 });
 
 const locationHelper = locationHelperBuilder({});
@@ -21,5 +19,5 @@ export const userDoesNotNeedAuthentication = connectedRouterRedirect({
     // Determine if the user is authenticated or not
     authenticatedSelector: state => !state.auth.accessToken,
     // A nice display name for this check
-    wrapperDisplayName: 'UserIsNotAuthenticated'
+    wrapperDisplayName: 'UserDoesNotNeedAuthentication'
 });

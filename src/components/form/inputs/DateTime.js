@@ -2,57 +2,29 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import {timestamp} from '../../../helpers/time';
+import {getEventObject} from "../../../helpers/form";
+import {Label} from "../Label";
 
 export class DateTime extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            focused: false,
-            datetime: moment(this.props.value)
-        };
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.datetime = moment(nextProps.value);
-
-        return state;
-    }
-
-    componentDidMount() {
-        this.onChange(this.state.datetime);
-    }
-
-    onFocusChanged = ({focused}) => {
-        this.setState(() => ({focused: focused}));
-    };
-
     onChange = (datetime) => {
-        const event = {
-            target: {
-                name: this.props.name,
-                value: timestamp(datetime)
-            }
-        };
-
-        this.setState(() => ({
-            datetime
-        }));
-
-        this.props.onChange(event);
+        const value = datetime ? timestamp(datetime) : undefined;
+        this.props.onChange(getEventObject(this.props.name, value));
     };
 
     render() {
-        const {name, label, format="YYYY-MM-DD", interval=15} = this.props;
+        const {name, label, isClearable = false, format="YYYY-MM-DD", interval=15} = this.props;
+
+        const value = moment(this.props.value);
+
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="form-control">
                     <DatePicker
-                        selected={this.state.datetime}
+                        selected={value}
                         onChange={this.onChange}
                         dateFormat={format}
+                        isClearable={isClearable}
                         showTimeSelect
                         timeFormat="HH:mm"
                         timeIntervals={interval}

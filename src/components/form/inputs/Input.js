@@ -1,22 +1,20 @@
 import React from 'react';
+import {Label} from "../Label";
 
 export class Input extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const {value, name, label, type, onChange, className="form-control"} = this.props;
+        const {name, value = undefined, type, onChange, className="form-control", attributes = {}} = this.props;
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <input
                     name={name}
                     className={className}
                     type={type}
                     value={value}
                     onChange={onChange}
+                    {...attributes}
                 />
             </div>
         );

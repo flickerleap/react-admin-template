@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {getUser, login} from "../../store/actions/auth";
 import {DynamicForm} from "../form/DynamicForm";
 import {hasErrors} from "../../helpers/validate";
+import {Link} from "react-router-dom";
 
 
 class LoginScreen extends React.Component {
@@ -51,13 +52,13 @@ class LoginScreen extends React.Component {
         this.setState(() => ({
             loading: true
         }));
-        this.props.login(email, password).then((action) => {
-            if (!this.resultHasErrors(action)) {
-                this.props.getUser().then((action) => {
+        this.props.login(email, password).then((loginAction) => {
+            if (!this.resultHasErrors(loginAction)) {
+                this.props.getUser().then((getUserAction) => {
                     this.setState(() => ({
                         loading: false
                     }));
-                    if (!this.hasErrors(action)) {
+                    if (!this.resultHasErrors(getUserAction)) {
                         this.props.history.push("/");
                     }
                 }).catch((error) => {
@@ -104,6 +105,9 @@ class LoginScreen extends React.Component {
                         onSubmit={this.onLogin}
                         submitLabel='Login'
                     />
+                </div>
+                <div className="col-md-12">
+                    <Link className="btn btn-primary" to="/forgot/password">Forgot Password?</Link>
                 </div>
             </div>
         );

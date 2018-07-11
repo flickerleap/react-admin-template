@@ -1,22 +1,24 @@
 export class Model {
-    constructor({type = '', plural = '', fields = [], links = [], actions = []}) {
+    constructor({type = '', plural = '', fields = [], links = [], actions = [], baseUrl = undefined}) {
         this.type = type;
         this.plural = plural;
         this.fields = fields;
         this.links = links;
         this.actions = actions;
+        this.baseUrl = baseUrl ? baseUrl : this.getBaseUrl();
     }
 
     getLinks() {
-        const baseUrl = this.getBaseUrl();
         return this.links.map((link) => ({
-            url: `${baseUrl}/${link.url}`,
+            url: `${this.baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
             icon: link.icon,
+            access: link.access,
             children: link.children !== undefined ? link.children.map((item) => ({
-                url: `${baseUrl}${item.url}`,
+                url: `${this.baseUrl}${item.url}`,
                 name: item.name,
-                icon: item.icon
+                icon: item.icon,
+                access: link.access
             })) : []
         }));
     }
@@ -24,7 +26,7 @@ export class Model {
     getDefaultObject() {
         let object = {};
         this.fields.forEach((field) => {
-            if (Model.isEditable(field)) {
+            if (this.isEditable(field)) {
                 object[field.name] = field.defaultValue ? field.defaultValue : undefined;
             }
         });
@@ -32,13 +34,7 @@ export class Model {
     }
 
     getFormFields() {
-        return this.fields.reduce((result, field) => {
-            if (!Model.exclude(field) && Model.isEditable(field)) {
-                field.value = field.defaultValue ? field.defaultValue : '';
-                result.push(field);
-            }
-            return result;
-        }, []);
+        return this.fields;
     }
 
     getDisplayFields() {
@@ -50,13 +46,9 @@ export class Model {
         }, []);
     }
 
-    static isEditable(field) {
+    isEditable = (field) => {
         return field.editable === undefined || field.editable !== false;
-    }
-
-    static exclude(field) {
-        return field.excludeFromForm !== undefined && field.excludeFromForm === true;
-    }
+    };
 
     getBaseUrl() {
         const url = this.plural.toLowerCase().replace(/ /g, "-");

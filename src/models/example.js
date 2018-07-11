@@ -29,9 +29,26 @@ export const model = new Model({
             }
         },
         {
+            name: 'number',
+            label: 'Number',
+            type: 'number',
+            extra: {
+                max: 10,
+                min: 0
+            },
+            hide: true,
+            defaultValue: 100,
+            validation: {
+                presence: {
+                    allowEmpty: false,
+                    message: '^Please enter a number'
+                }
+            }
+        },
+        {
             name: 'start_date',
             label: 'Start Date',
-            defaultValue: moment(),
+            defaultValue: moment().format('YYYY-MM-DD'),
             type: 'date',
             validation: {
                 presence: {
@@ -47,8 +64,8 @@ export const model = new Model({
         {
             name: 'end_date',
             label: 'End Date',
-            defaultValue: moment(),
-            type: 'date',
+            defaultValue: moment().format('YYYY-MM-DD HH:mm'),
+            type: 'datetime',
             validation: {
                 presence: {
                     allowEmpty: false,
@@ -63,7 +80,7 @@ export const model = new Model({
         {
             name: 'start_time',
             label: 'Start Time',
-            defaultValue: moment(),
+            defaultValue: moment().format('HH:mm'),
             type: 'time',
             validation: {
                 presence: {
@@ -73,7 +90,7 @@ export const model = new Model({
             },
             filter: {
                 type: 'time',
-                defaultValue: moment().format('YYYY-MM-DD')
+                defaultValue: moment().format('HH:mm')
             },
         },
         {
@@ -81,36 +98,116 @@ export const model = new Model({
             label: 'Interests',
             type: 'checkboxlist',
             items: [
-                {value:'Pottery', label:'Pottery'},
-                {value:'Knitting', label:'Knitting'},
-                {value:'Running', label:'Running'},
+                {value: 'Pottery', label: 'Pottery'},
+                {value: 'Knitting', label: 'Knitting'},
+                {value: 'Running', label: 'Running'},
             ],
             filter: {
-                type: 'dropdown'
+                type: 'dropdown',
+                value: 'Pottery'
             },
-            value:['Pottery', 'Running']
+            valueFn: (item) => {
+                let value = "";
+                item.interests.forEach((interest, index) => {
+                    value += interest;
+                    value += index < item.interests.length - 1 ? ', ' : ''
+                });
+
+                return value;
+            },
+            value: ['Pottery', 'Running']
+        },
+        {
+            name: 'second_interests',
+            label: 'Second Interest',
+            type: 'dropdown',
+            items: [
+                {value: 'Pottery', label: 'Pottery'},
+                {value: 'Knitting', label: 'Knitting'},
+                {value: 'Running', label: 'Running'},
+            ]
+        },
+        {
+            name: 'user.profile.first_name',
+            label: 'First Name',
+            type: 'text',
+        }, {
+            name: 'user.profile.last_name',
+            label: 'Last Name',
+            type: 'text',
+        }, {
+            name: 'user.profile.mobile_number',
+            label: 'Mobile Number',
+            type: 'text',
+        }, {
+            name: 'user.image.src',
+            label: 'Image Src',
+            type: 'text',
         }
     ],
     links: [
         {
             url: '#',
             name: 'Examples',
-            icon: 'fas fa-calendar-alt',
+            icon: 'fas fa-question',
             children: [
                 {
                     url: '/',
-                    name: 'View'
+                    name: 'View',
+                    access: ['admin']
                 },
                 {
                     url: '/add',
-                    name: 'Add'
+                    name: 'Add',
+                    access: ['admin']
                 },
-            ]
+            ],
+            access: ['admin']
         }
     ],
     actions: ({remove}) => {
         return [
-
+            {
+                type: 'link',
+                label: <i className="fas fa-edit"></i>,
+                classes: 'btn btn-primary',
+                to: ({id}) => `/examples/${id}/edit`,
+            },
+            {
+                type: 'link',
+                label: 'View',
+                classes: 'btn btn-success',
+                to: ({id}) => `#`,
+            },
+            {
+                type: 'delete',
+                label: <i className="fa fa-trash-alt"></i>,
+                classes: 'btn btn-danger',
+                to: ({id}) => remove(id),
+            }
         ];
     }
 });
+
+export const exampleItems = [
+    {
+        id: 1,
+        name: 'Example',
+        description: 'Example',
+        start_date: moment().format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD HH:mm'),
+        start_time: moment().format('HH:mm'),
+        interests: ['Pottery', 'Running'],
+        second_interests: 'Pottery',
+        user: {
+            profile: {
+                first_name: 'First Name',
+                last_name: 'Last Name',
+                mobile_number: '0111234567'
+            },
+            image: {
+                src: '#'
+            }
+        }
+    }
+];
