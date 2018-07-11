@@ -46,6 +46,19 @@ export class DataTable extends React.Component {
     }
 
     /**
+     * Run this function when this component has been updated
+     */
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            this.props.fields !== prevProps.fields ||
+            this.props.items !== prevProps.items ||
+            this.props.pagination !== prevProps.pagination
+        ) {
+            this.setModel(this.getModel(this.props));
+        }
+    }
+
+    /**
      *
      * @param {Object} item
      * @param {string} name
@@ -73,41 +86,44 @@ export class DataTable extends React.Component {
                     <span>{title}</span>
                 </div>
                 <div className="card-body">
-                    {
-                        model.hasItems() ?
-                            <div className="table-responsive">
-                                <table className="table-outline table table-hover">
-                                    <thead className="thead-light">
-                                    <tr>
+                    <div className="table-responsive">
+                        <table className="table-outline table table-hover">
+                            <thead className="thead-light">
+                            <tr>
+                                {
+                                    model.headers.map((name, index) => (
+                                        name !== undefined && <th key={index}>{name}</th>
+                                    ))
+                                }
+                                <th>Actions</th>
+                            </tr>
+                            <FilterBar fields={fields} onFilter={onFilter}/>
+                            </thead>
+                            <tbody>
+                            {
+                                model.items.map((item, index) => (
+                                    <tr key={index}>
                                         {
-                                            model.headers.map((name, index) => (
-                                                name !== undefined && <th key={index}>{name}</th>
-                                            ))
+                                            model.fields.map((field) => {
+                                                return !field.hide &&
+                                                    <td key={field.name}>{this.getValue(item, field.name)}</td>;
+                                            })
                                         }
-                                        <th>Actions</th>
+                                        <ActionColumn item={item} actions={actions}/>
                                     </tr>
-                                    <FilterBar fields={fields} onFilter={onFilter}/>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                        model.items.map((item, index) => (
-                                            <tr key={index}>
-                                                {
-                                                    model.fields.map((field) => {
-                                                        return !field.hide &&
-                                                            <td key={field.name}>{this.getValue(item, field.name)}</td>;
-                                                    })
-                                                }
-                                                <ActionColumn item={item} actions={actions}/>
-                                            </tr>
-                                        ))
-                                    }
-                                    </tbody>
-                                </table>
-                                <Pagination {...model.pagination}/>
-                            </div> :
-                            <p>No records found.</p>
-                    }
+                                ))
+                            }
+                            </tbody>
+                        </table>
+                        {
+                            !model.hasItems() &&
+                            <p>There are no records.</p>
+                        }
+                        {
+                            model.hasItems() &&
+                            <Pagination {...model.pagination}/>
+                        }
+                    </div>
                 </div>
             </div>
         );
