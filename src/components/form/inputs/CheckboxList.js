@@ -1,39 +1,23 @@
 import React from 'react';
+import {Label} from "../Label";
 
 export class CheckboxList extends React.Component {
-    constructor(props) {
-        super(props);
+    getValues(currentValues = [], newValues = []) {
+        let valueList = currentValues;
 
-        this.state = {
-            values: props.value ? CheckboxList.setValues(this.props.items, [], props.value)
-                : this.props.items.map(() => undefined)
-        };
+        newValues.map((value) => {
+            const index = this.getIndexOfValue(this.props.items, value);
+            valueList[index] = value;
+        });
+
+        return valueList;
     }
 
-    componentDidMount() {
-        this.props.onChange(this.getEventObject(this.state.values));
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const state = prevState;
-        state.values = CheckboxList.setValues(nextProps.items, state.values, nextProps.value);
-
-        return state;
-    }
-
-    static setValues(items, values, value) {
-        if (Array.isArray(value)) {
-            values = value;
-        }
-        else {
-            const index = CheckboxList.getIndexOfValue(items, value);
-            if (index < 0 && values[index] === undefined) {
-                values[index] = value;
-            }
-        }
-
-        return values;
-    }
+    getIndexOfValue = (items, value) => {
+        return items.findIndex((item) => {
+            return item.value === value;
+        });
+    };
 
     getEventObject = (value) => {
         return {
@@ -44,51 +28,44 @@ export class CheckboxList extends React.Component {
         };
     };
 
-    static getIndexOfValue = (items, value) => {
-        return items.findIndex((item) => {
-            return item.value === value;
-        });
-    };
-
     onChange = (event) => {
         const value = event.target.value;
-        const index = CheckboxList.getIndexOfValue(this.props.items, value);
-        const values = this.state.values;
-
-        if (values.includes(value)) {
-            values[index] = undefined;
-        } else {
-            values[index] = value;
-        }
+        const index = this.getIndexOfValue(this.props.items, event.target.value);
+        const values = this.props.value || [];
+        values[index] = values.includes(value) ? undefined : value;
 
         this.props.onChange(this.getEventObject(values));
-
-        this.setState(() => ({
-            values
-        }));
     };
 
     isSelected = (index) => {
-        return this.state.values[index] !== undefined;
+        const values = this.getValues([], this.getValuesArray());
+        return values[index] !== undefined;
     };
+
+    getValuesArray() {
+        return Array.isArray(this.props.value) ? this.props.value : [this.props.value];
+    }
 
     render() {
         const {
-            name, label, className = "form-control col-md-4", items = []
+            name, className = "form-control col-md-4", items = []
         } = this.props;
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="row">
                     {
                         items.map((item, index) => (
                             <div key={index} className={className}>
                                 <input
                                     onChange={this.onChange}
-                                    id={name + index} name={name}
-                                    type="checkbox" value={item.value}
-                                    checked={this.isSelected(index)}/>
+                                    id={name + index}
+                                    name={name}
+                                    type="checkbox"
+                                    value={item.value}
+                                    defaultChecked={this.isSelected(index)}
+                                />
                                 <span> {item.label}</span>
                             </div>
                         ))

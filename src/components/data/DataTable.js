@@ -2,6 +2,7 @@ import React from 'react';
 import {ActionColumn} from "./ActionColumn";
 import {Pagination} from "./Pagination";
 import {FilterBar} from "./FilterBar";
+import {DisplayModel} from "../../data/DisplayModel";
 
 /**
  * Component to display rows of data in a table
@@ -14,126 +15,99 @@ import {FilterBar} from "./FilterBar";
  * @constructor
  */
 export class DataTable extends React.Component {
+    /**
+     *
+     * @param {Object} props
+     */
     constructor(props) {
         super(props);
 
         this.state = {
-            items: props.items !== undefined ? props.items : [],
-            first: props.items.length > 0 ? props.items[0] : undefined,
-            fields: props.fields !== undefined ? props.fields : [],
-            pagination: props.pagination !== undefined ? props.pagination : {
-                total: 1,
-                current: 1,
-                perPage: 1,
-                link: ''
-            },
-            filters: [],
-            rows: [],
-            headers: []
+            model: this.getModel(this.props)
         };
     }
 
-    componentDidMount() {
-        this.setData();
-        this.setHeaders();
-    }
+    getModel = ({fields = [], items = [], pagination = {}}) => {
+        return new DisplayModel({fields, items, pagination});
+    };
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.items = nextProps.items !== undefined ? nextProps.items : [];
-
-        return state;
-    }
-
-    setData() {
-        this.setState((prevState) => ({
-            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
+    setModel(model) {
+        this.setState(() => ({
+            model
         }));
     }
 
-    setHeaders() {
-        if (this.state.first) {
-            this.setState(() => ({
-                headers: Object.keys(this.state.first).map((name) => {
-                    if (this.includeField(name)) {
-                        return this.getHeaderName(name);
-                    }
-                })
-            }));
-        }
+    /**
+     * Run this function when this component has been mounted
+     */
+    componentDidMount() {
+        const model = this.getModel(this.props);
+        this.setModel(model);
     }
 
-    includeField(name) {
-        const result = this.getField(name);
-        return result !== undefined;
-    }
-
-    getField = (name) => {
-        return this.state.fields.find((field) => field.name === name);
-    };
-
-    getHeaderName = (name) => {
-        const field = this.getField(name);
-        if(field.label === undefined) {
-            const header = name.charAt(0).toUpperCase() + name.slice(1);
-            return header.replace(/_/g, " ");
-        }
-
-        return field.label;
-    };
-
+    /**
+     *
+     * @param {Object} item
+     * @param {string} name
+     * @returns {*}
+     */
     getValue = (item, name) => {
-        const field = this.getField(name);
-        if(field.valueFn !== undefined)
-        {
+        const field = this.state.model.get(name);
+        if (field && field.valueFn) {
             return field.valueFn(item);
+        } else {
+            return this.state.model.getValue(item, name);
         }
-        return item[name];
     };
 
+    /**
+     *
+     * @returns {*}
+     */
     render() {
-        const {title = '', actions = [], onFilter} = this.props;
-        const {pagination, items, headers, fields} = this.state;
+        const {title = '', actions = [], fields = [], onFilter} = this.props;
+        const {model} = this.state;
         return (
             <div className="card">
                 <div className="card-header">
                     <span>{title}</span>
                 </div>
                 <div className="card-body">
-                {
-                    items.length > 0 ?
-                        <div className="table-responsive">
-                            <table className="table-outline table table-hover">
-                                <thead className="thead-light">
-                                <tr>
+                    {
+                        model.hasItems() ?
+                            <div className="table-responsive">
+                                <table className="table-outline table table-hover">
+                                    <thead className="thead-light">
+                                    <tr>
+                                        {
+                                            model.headers.map((name, index) => (
+                                                name !== undefined && <th key={index}>{name}</th>
+                                            ))
+                                        }
+                                        <th>Actions</th>
+                                    </tr>
+                                    <FilterBar fields={fields} onFilter={onFilter}/>
+                                    </thead>
+                                    <tbody>
                                     {
-                                        headers.map((name, index) => (
-                                            name !== undefined && <th key={index}>{name}</th>
+                                        model.items.map((item, index) => (
+                                            <tr key={index}>
+                                                {
+                                                    model.fields.map((field) => {
+                                                        return !field.hide &&
+                                                            <td key={field.name}>{this.getValue(item, field.name)}</td>;
+                                                    })
+                                                }
+                                                <ActionColumn item={item} actions={actions}/>
+                                            </tr>
                                         ))
                                     }
-                                    <th>Actions</th>
-                                </tr>
-                                <FilterBar fields={fields} onFilter={onFilter} />
-                                </thead>
-                                <tbody>
-                                {
-                                    items.map((item, index) => (
-                                        <tr key={index}>
-                                            {
-                                                Object.keys(item).map((name) => {
-                                                    return this.includeField(name) && <td key={name}>{this.getValue(item, name)}</td>;
-                                                })
-                                            }
-                                            <ActionColumn item={item} actions={actions}/>
-                                        </tr>
-                                    ))
-                                }
-                                </tbody>
-                            </table>
-                            <Pagination {...pagination}/>
-                        </div> :
-                        <p>No records found.</p>
-                }
+                                    </tbody>
+                                </table>
+                                <Pagination {...model.pagination}/>
+                            </div> :
+                            <p>No records found.</p>
+                    }
                 </div>
             </div>
         );

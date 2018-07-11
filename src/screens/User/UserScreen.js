@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {exampleModel as model} from "../../models/models";
+import {userModel as model} from "../../models/models";
 import {ViewScreen} from "../../components/screens/ViewScreen";
 import {fetchExamples, removeExample} from "../../store/actions/actions";
-import {exampleItems} from "../../models/example";
+import {userItems} from "../../models/user";
 
 const mapStateToProps = (state) => {
     return {
-        items: exampleItems,
+        items: userItems,
         loading: false,
         pagination: {
             total: 1,

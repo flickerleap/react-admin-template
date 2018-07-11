@@ -45,7 +45,7 @@ export {contains, capitalizeFirstLetter} from './helpers/string';
 export {now, timestamp} from './helpers/time';
 export {hasErrors, getErrors} from './helpers/validate';
 export {getSelectors, updateParams} from './helpers/selectors';
-export {addEmptyItem} from './helpers/list';
+export {addEmptyItem, getPagination} from './helpers/list';
 
 /** LAYOUTS */
 export {AdminLayout, PublicLayout} from "./layouts/layouts";

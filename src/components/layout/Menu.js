@@ -23,27 +23,35 @@ class MenuComponent extends React.Component {
 
         this.state = {
             loading: true,
-            type: this.props.type ? this.props.type : 'sidebar'
+            type: this.props.type ? this.props.type : 'sidebar',
+            list: []
         };
     }
 
     componentDidMount() {
-        const {getUser} = this.props;
+        const {items = []} = this.props;
 
-        getUser().then((action) => {
-            this.setState(()=>({
-                loading: false
-            }));
-        });
+        this.setState(() => ({
+            loading: false,
+            list: this.getNavList(items)
+        }));
     }
 
-    onClick = (e) => {
-        e.preventDefault();
-        switch (this.state.type) {
-            default:
-                e.target.parentElement.classList.toggle('open');
-                break;
-        }
+    componentWillUnmount() {
+        this.setState(() => ({
+            loading: false,
+            list: []
+        }));
+    }
+
+    onClick = (event) => {
+        event.preventDefault();
+        const menuItems = document.querySelectorAll('.nav-dropdown.open');
+        menuItems.forEach((item) => {
+            item.classList.remove('open');
+        });
+
+        event.target.parentElement.classList.add('open');
     };
 
     activeRoute = (routeName) => {
@@ -106,7 +114,7 @@ class MenuComponent extends React.Component {
     };
 
     getNavLink = (item, key, classes) => {
-        const url = item.url ? item.url : '';
+        const url = this.processUrl(item);
 
         return (
             <NavItem key={key} className={classes.item}>
@@ -151,7 +159,16 @@ class MenuComponent extends React.Component {
     }
 
     getHeaderDropdown = (item, key) => {
-        return <HeaderDropdown key={key} item={item}/>;
+        const boundItem = {
+            ...item,
+            children: item.children.map((child) => ({
+                ...child,
+                url: this.processUrl(child)
+            })),
+            url: this.processUrl(item),
+        };
+
+        return <HeaderDropdown key={key} item={boundItem}/>;
     };
 
     getNavItem = (item, key) => {
@@ -184,6 +201,19 @@ class MenuComponent extends React.Component {
         return link === 'http';
     };
 
+    processUrl = (item) => {
+        if (item.toBind) {
+            let url = item.url.toString();
+            item.toBind.forEach((toBindItem) => {
+                url = url.replace(toBindItem.key, toBindItem.valueFn(this.props));
+            });
+
+            return url;
+        }
+
+        return item.url;
+    };
+
     getNavList(links) {
         return links.map((link, index) => {
             if (this.hasAccess(link)) {
@@ -203,8 +233,7 @@ class MenuComponent extends React.Component {
     }
 
     render() {
-        const {items = []} = this.props;
-        return this.getNavList(items);
+        return this.state.list;
     }
 }
 
@@ -212,8 +241,4 @@ const mapStateToProps = (state) => ({
     user: state.auth.user ? state.auth.user : {}
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    getUser: () => dispatch(getUser())
-});
-
-export const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
+export const Menu = connect(mapStateToProps)(MenuComponent);

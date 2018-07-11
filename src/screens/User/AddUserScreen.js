@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {exampleModel as model} from "../../models/models";
+import {userModel as model} from "../../models/models";
 import {AddScreen} from "../../components/screens/AddScreen";
 
 const initialProps = {

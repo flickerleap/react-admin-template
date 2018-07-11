@@ -1,25 +1,8 @@
 import React from 'react';
+import {getEventObject} from "../../../helpers/form";
+import {Label} from "../Label";
 
 export class Checkbox extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: props.value || false
-        };
-    }
-
-    componentDidMount() {
-        this.props.onChange(this.getEventObject(this.props.value));
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.value = nextProps.value;
-
-        return state;
-    }
-
     getEventObject = (value) => {
         return {
             target: {
@@ -30,24 +13,18 @@ export class Checkbox extends React.Component {
     };
 
     onChange = (event) => {
-        this.setState((prevState) => {
-            const value = !prevState.value;
-            this.props.onChange(this.getEventObject(value));
-
-            return {
-                value
-            };
-        });
+        const value = !this.props.value;
+        this.props.onChange(getEventObject(this.props.name, value));
     };
 
     render() {
         const {
-            name, label, className = "form-control col-md-4", value
+            name, label, className = "form-control col-md-4", value = false
         } = this.props;
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <div className="row">
                     <div className={className}>
                         <input
@@ -56,7 +33,7 @@ export class Checkbox extends React.Component {
                             name={name}
                             type="checkbox"
                             value={value}
-                            checked={value}
+                            defaultChecked={value}
                         />
                         <span> {label}</span>
                     </div>

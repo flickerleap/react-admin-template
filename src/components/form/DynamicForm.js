@@ -1,122 +1,80 @@
 import React from 'react';
 import {Field} from "./Field";
-import {validateFields} from "../../helpers/validate";
+import {FormModel} from "../../data/FormModel";
 
 export class DynamicForm extends React.Component {
     constructor(props) {
         super(props);
-        const {
-            data = undefined,
-            fields = [],
-            newRecord = true,
-            dataType = ''
-        } = this.props;
 
         this.state = {
-            data,
-            fields,
-            newRecord,
-            dataType
+            model: this.getModel()
         };
     }
 
     componentDidMount() {
-        this.setState((prevState) => ({
-            fields: prevState.fields.map((field) => {
-                field.show = this.showField(field);
-                if (prevState.data && prevState.data[field.name]) {
-                    if(field.form && field.form.valueFn) {
-                        field.value = field.form.valueFn(prevState.data);
-                    } else {
-                        field.value = prevState.data[field.name];
-                    }
-                }
+        const model = this.getModel(this.props.fields, this.props.data);
+        this.setModel(model);
+    }
 
-                return field;
-            })
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.errors !== prevProps.errors &&
+            (Array.isArray(this.props.errors) && this.props.errors.length > 0)
+        ) {
+            const model = prevState.model;
+            model.setErrors(this.props.errors);
+            this.setModel(model);
+        }
+
+        if (this.props.fields !== prevProps.fields) {
+            this.setModel(this.getModel(this.props.fields, this.props.data));
+        }
+
+        if (this.props.data !== prevProps.data) {
+            const model = prevState.model;
+            model.load(this.props.data);
+            this.setModel(model);
+        }
+    }
+
+    getModel = (fields = [], data = undefined) => {
+        const model = new FormModel({fields});
+        if (data) {
+            model.load(data);
+        }
+
+        return model;
+    };
+
+    setModel(model) {
+        this.setState(() => ({
+            model
         }));
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        if (nextProps.errors || (Array.isArray(nextProps.errors) && nextProps.errors.length > 0)) {
-            state = {
-                ...prevState,
-                fields: prevState.fields.map((field) => {
-                    if (nextProps.errors[field.name]) {
-                        field.error = nextProps.errors[field.name][0];
-                    }
-
-                    return field;
-                })
-            };
-        }
-
-        return state;
-    }
-
-    getCurrentField(fields, key) {
-        return fields.find((field) => {
-            return field.name === key;
-        });
-    }
-
-    onFieldChange = (e) => {
-        const key = e.target.name;
-        const value = e.target.value;
-        this.setState((prevState) => {
-            const fields = prevState.fields.map((field) => {
-                if (field.name === key) {
-                    field.value = value;
-                }
-
-                return field;
-            });
-            const errors = validateFields(fields);
-
-            return {
-                fields: fields.map((field) => {
-                    if (field.name === key) {
-                        field.error = (errors && errors[field.name]) ? errors[field.name][0] : null;
-                    }
-
-                    return field;
-                })
-            };
-        });
+    onFieldChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        const model = this.state.model;
+        model.set(name, value);
+        model.validate();
+        this.setModel(model);
     };
 
-    getData() {
-        let data = {};
-        this.state.fields.forEach((field) => {
-            data[field.name] = field.value;
-        });
-
-        return data;
-    }
-
-    onSubmit = (e) => {
-        e.preventDefault();
+    onSubmit = (event) => {
+        event.preventDefault();
 
         this.validateForm();
 
-        if (!this.hasErrors()) {
-            const data = this.getData();
+        if (!this.state.model.hasErrors()) {
+            const data = this.state.model.getReturnObject();
             this.props.onSubmit(data);
         }
     };
 
     validateForm = () => {
-        const errors = validateFields(this.state.fields);
-        if (errors) {
-            this.setState((prevState) => ({
-                fields: prevState.fields.map((field) => {
-                    field.error = errors[field.name] ? errors[field.name][0] : null;
-
-                    return field;
-                })
-            }));
-        }
+        const model = this.state.model;
+        model.validate();
+        this.setModel(model);
     };
 
     getColumnClass = (columns) => {
@@ -126,45 +84,32 @@ export class DynamicForm extends React.Component {
         return `col-md-${amount}`;
     };
 
-    showField = (field) => {
-        if (field.conditional !== undefined) {
-            return field.conditional(this.getData());
-        }
-
-        return true;
-    };
-
-    hasErrors() {
-        let errorCount = 0;
-        this.state.fields.forEach((field) => {
-            if (field.error) {
-                errorCount++;
-            }
-        });
-
-        return errorCount > 0;
-    }
-
     getDefaultSubmitLabel() {
-        return this.state.newRecord ? 'Add' : 'Update' + this.state.dataType;
+        const {newRecord = true, dataType = ""} = this.props;
+        return newRecord ? 'Add ' : 'Update ' + dataType;
     }
 
     render() {
-        const {columns = 2, submitLabel = this.getDefaultSubmitLabel()} = this.props;
+        const {
+            columns = 2,
+            submitLabel = this.getDefaultSubmitLabel()
+        } = this.props;
         const columnClass = this.getColumnClass(columns);
+
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
                     <div className="row">
                         {
-                            this.state.fields.map((field, index) => {
-                                field.onChange = field.onChange === undefined
+                            this.state.model.fields.map((field, index) => {
+                                const onChange = field.onChange === undefined
                                     ? this.onFieldChange : field.onChange;
+
                                 return field.show &&
                                     (
                                         <div key={index} className={columnClass}>
                                             <div className="form-group">
-                                                <Field {...field}/>
+                                                <Field {...field} onChange={onChange}/>
                                             </div>
                                         </div>
                                     );
@@ -174,10 +119,12 @@ export class DynamicForm extends React.Component {
                     <div className="row">
                         <div className="col pull-left">
                             <button
-                                className="btn btn-success">{submitLabel}</button>
+                                className="btn btn-success"
+                            >{submitLabel}</button>
                         </div>
                     </div>
                 </form>
+                <br/>
             </div>
         );
     };

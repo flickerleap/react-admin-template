@@ -1,6 +1,6 @@
 {
   "name": "react-admin-template",
-  "version": "1.1.30",
+  "version": "0.2.2",
   "description": "",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist coverage",
+    "init-env": "cp .env.sample .env",
     "start": "webpack-dev-server --open --config webpack.config.js",
     "watch": "webpack-dev-server --config ./webpack.config.js",
     "build": "NODE_ENV=production rollup -c",
@@ -29,6 +30,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.9",
     "bootstrap": "^4.1.1",
     "classnames": "^2.2.6",
+    "dotenv-webpack": "^1.5.7",
     "font-awesome": "^4.7.0",
     "moment": "^2.22.1",
     "query-string": "^6.1.0",
@@ -65,7 +67,7 @@
     "html-webpack-plugin": "^3.2.0",
     "install": "^0.10.4",
     "jest": "^22.4.3",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.2",
     "npm": "^5.8.0",
     "postcss-modules": "^1.1.0",
     "rollup": "^0.57.1",

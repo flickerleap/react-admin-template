@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {AdminLayout} from './layouts/layouts';
 import {PersistGate} from 'redux-persist/integration/react';
-import {userNeedsAuthentication, userDoesNotNeedAuthentication} from "./helpers/authGuard";
+import {userNeedsAuthentication} from "./helpers/authGuard";
 import {Loading} from "./components/utility/Loading";
 
 export class Root extends React.Component {
@@ -13,19 +13,14 @@ export class Root extends React.Component {
 
     setComponentProps = (component, ...rest) => {
         const finalProps = Object.assign({}, ...rest);
-        return (
-            React.createElement(component, finalProps)
-        );
+        return React.createElement(component, finalProps, []);
     };
 
-    processComponent = ({
-        component,
-        isPublic = false,
-    }) => {
+    processComponent = ({component, isPublic = false}) => {
         if (!isPublic) {
             return userNeedsAuthentication(component);
         } else {
-            return userDoesNotNeedAuthentication(component);
+            return component;
         }
     };
 

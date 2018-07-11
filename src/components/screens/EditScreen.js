@@ -8,9 +8,9 @@ export class EditScreen extends React.Component {
         super(props);
 
         this.state = {
-            loading: true,
-            item: {},
-            errors: []
+            errors: [],
+            loading: false,
+            item: undefined
         };
     }
 
@@ -30,8 +30,7 @@ export class EditScreen extends React.Component {
             loading: true
         }));
         const {redirectPath, edit} = this.props;
-        const userID = this.props.user ? this.props.user.id : undefined;
-        edit({id: this.state.item.id, ...item}, userID).then((action) => {
+        edit({id: this.state.item.id, ...item}).then((action) => {
             this.setState(() => ({
                 loading: false
             }));
@@ -47,8 +46,8 @@ export class EditScreen extends React.Component {
     };
 
     componentDidMount() {
-        const userID = this.props.user ? this.props.user.id : undefined;
-        this.props.fetch({}, userID).then(() => {
+        const {fetch, params = {}} = this.props;
+        fetch(params).then(() => {
             this.setState(() => ({
                 item: this.props.items.find((item) => parseInt(item.id) === parseInt(this.props.match.params.id)),
                 loading: false,
@@ -57,20 +56,20 @@ export class EditScreen extends React.Component {
     }
 
     render() {
-        const {title, fields} = this.props;
+        const {title, fields = []} = this.props;
         return (
             <div>
                 <h3>{title}</h3>
                 {
-                    this.state.loading ? <Loading active={this.state.loading}/>
-                        : <DynamicForm
-                            newRecord={false}
-                            fields={fields}
-                            errors={this.state.errors}
-                            onSubmit={this.onSubmit}
-                            data={this.state.item}
-                        />
+                    this.state.loading && <Loading active={this.state.loading}/>
                 }
+                <DynamicForm
+                    newRecord={false}
+                    fields={fields}
+                    errors={this.state.errors}
+                    onSubmit={this.onSubmit}
+                    data={this.state.item}
+                />
             </div>
         );
     }
