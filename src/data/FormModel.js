@@ -27,6 +27,10 @@ export class FormModel extends BaseModel {
             if (!this.exclude(field) && this.isEditable(field)) {
                 field.show = true;
                 field.value = field.defaultValue || '';
+                field.required = field.validation &&
+                    field.validation.presence &&
+                    field.validation.presence.allowEmpty !== undefined ?
+                    !field.validation.presence.allowEmpty : false;
                 result.push(field);
             }
 
@@ -48,7 +52,7 @@ export class FormModel extends BaseModel {
                     field.value = this.getValue(data, field.name);
                 }
 
-                if(field.value === undefined) {
+                if (field.value === undefined) {
                     field.value = field.defaultValue ? field.defaultValue : '';
                 }
             });

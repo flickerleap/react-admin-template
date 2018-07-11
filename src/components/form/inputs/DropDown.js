@@ -4,10 +4,13 @@ import {Label} from "../Label";
 export class DropDown extends React.Component {
     render() {
         const {
-            name, label, className="form-control", items = []
+            name, className="form-control", items = []
         } = this.props;
 
-        const value = this.props.value || (items.length > 0 ? items[0].value : '');
+        let value = this.props.value || (items.length > 0 ? items[0].value : '');
+        if(value === undefined || value === null) {
+            value = '';
+        }
 
         return (
             <div>
