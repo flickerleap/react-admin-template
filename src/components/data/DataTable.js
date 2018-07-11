@@ -113,12 +113,16 @@ export class DataTable extends React.Component {
                                     </tr>
                                 ))
                             }
-                            {
-                                !model.hasItems() && <p>There are no records.</p>
-                            }
                             </tbody>
                         </table>
-                        <Pagination {...model.pagination}/>
+                        {
+                            !model.hasItems() &&
+                            <p>There are no records.</p>
+                        }
+                        {
+                            model.hasItems() &&
+                            <Pagination {...model.pagination}/>
+                        }
                     </div>
                 </div>
             </div>
