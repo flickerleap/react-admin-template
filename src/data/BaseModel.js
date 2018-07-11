@@ -135,8 +135,17 @@ export class BaseModel {
      * @returns {any}
      */
     getValue = (item, name) => {
-        return name.split('.').reduce((o, i) => {
-            return o[i];
+        let index = 0;
+        const fields = name.split('.');
+        return fields.reduce((object, field) => {
+            let value = undefined;
+            if (index < fields.length - 1) {
+                value = object[field] || {};
+            } else {
+                value = object[field];
+            }
+            index++;
+            return value;
         }, item);
     };
 
