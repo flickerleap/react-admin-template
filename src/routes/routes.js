@@ -2,8 +2,9 @@ import {DashboardScreen} from "../components/screens/DashboardScreen";
 import {NotFoundScreen} from "../components/screens/NotFoundScreen";
 
 import {auth} from "./auth";
-import {exampleModel} from "../models/models";
+import {exampleModel, userModel} from "../models/models";
 import {examples} from "./examples";
+import {users} from "./users";
 
 export const routes = [
     {
@@ -12,7 +13,7 @@ export const routes = [
         isPublic: false,
         exact: true
     },
-    ...auth, ...examples,
+    ...auth, ...examples, ...users,
     {
         component: NotFoundScreen
     }
@@ -30,4 +31,4 @@ export const links = [
     }
 ];
 
-links.push(...exampleModel.getLinks());
+links.push(...exampleModel.getLinks(), ...userModel.getLinks());

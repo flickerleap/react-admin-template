@@ -26,7 +26,7 @@ export class Model {
     getDefaultObject() {
         let object = {};
         this.fields.forEach((field) => {
-            if (Model.isEditable(field)) {
+            if (this.isEditable(field)) {
                 object[field.name] = field.defaultValue ? field.defaultValue : undefined;
             }
         });
@@ -34,13 +34,7 @@ export class Model {
     }
 
     getFormFields() {
-        return this.fields.reduce((result, field) => {
-            if (!Model.exclude(field) && Model.isEditable(field)) {
-                field.value = field.defaultValue ? field.defaultValue : '';
-                result.push(field);
-            }
-            return result;
-        }, []);
+        return this.fields;
     }
 
     getDisplayFields() {
@@ -52,42 +46,8 @@ export class Model {
         }, []);
     }
 
-    static isEditable(field) {
+    isEditable = (field) => {
         return field.editable === undefined || field.editable !== false;
-    }
-
-    static exclude(field) {
-        return field.excludeFromForm !== undefined && field.excludeFromForm === true;
-    }
-
-    static getValue = (data, fieldName) => {
-        return fieldName.split('.').reduce((o, i) => {
-            return o[i];
-        }, data);
-    };
-
-    static getData = (data) => {
-        let processed = data;
-        Object.keys(data).forEach((name) => {
-            if (name.includes('.')) {
-                let ref = processed;
-                const fields = name.split('.');
-                fields.forEach((field, index) => {
-                    let value = undefined;
-                    if(index < fields.length -1) {
-                        value = ref[field] || {};
-                    } else {
-                        value = data[name];
-                    }
-                    ref[field] = value;
-                    ref = ref[field];
-                });
-
-                delete processed[name];
-            }
-        });
-
-        return processed;
     };
 
     getBaseUrl() {

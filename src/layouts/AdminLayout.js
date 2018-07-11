@@ -4,27 +4,8 @@ import {Footer, Header, Sidebar} from "../components/layout/layout";
 import {Container} from 'reactstrap';
 
 export class AdminLayout extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            routes: this.props.routes || []
-        };
-    }
-
-    componentDidMount() {
-        this.setState((prevState) => ({
-            routes: prevState.routes.map((route) => {
-                route.component = this.props.getComponent(route);
-                route.exact = route.exact !== undefined ? route.exact : true;
-
-                return route;
-            })
-        }));
-    }
-
     render() {
-        const {links = [], headerMenuItems = [], appConfig, ...rest} = this.props;
+        const {routes = [], links = [], headerMenuItems = [], appConfig, getComponent, ...rest} = this.props;
 
         return (
             <div className="app">
@@ -35,10 +16,12 @@ export class AdminLayout extends React.Component {
                         <Container fluid>
                             <Switch>
                                 {
-                                    this.state.routes.map((route, index) => {
+                                    routes.map((route, index) => {
+                                        const component = getComponent(route);
+                                        const exact = route.exact !== undefined ? route.exact : true;
                                         return (
-                                            <Route key={index} path={route.path} component={route.component}
-                                                   exact={route.exact}/>
+                                            <Route key={index} path={route.path} component={component}
+                                                   exact={exact}/>
                                         );
                                     })
                                 }

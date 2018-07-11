@@ -1,32 +1,18 @@
 import React from 'react';
+import {Label} from "../Label";
 
 export class Input extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            value: props.value || undefined
-        };
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.value = nextProps.value;
-
-        return state;
-    }
-
     render() {
-        const {name, label, type, onChange, className="form-control", attributes = {}} = this.props;
+        const {name, value = undefined, type, onChange, className="form-control", attributes = {}} = this.props;
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <input
                     name={name}
                     className={className}
                     type={type}
-                    value={this.state.value}
+                    value={value}
                     onChange={onChange}
                     {...attributes}
                 />

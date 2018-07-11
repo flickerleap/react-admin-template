@@ -1,16 +1,13 @@
 import React from 'react';
+import {Label} from "../Label";
 
 export class TextArea extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const {name, label, value, onChange, className = "form-control"} = this.props;
+        const {name, value, onChange, className = "form-control"} = this.props;
 
         return (
             <div>
-                <label htmlFor={name}>{label}</label>
+                <Label {...this.props} />
                 <textarea
                     name={name}
                     className={className}

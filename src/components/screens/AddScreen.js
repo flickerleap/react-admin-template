@@ -1,13 +1,16 @@
 import React from 'react';
 import {DynamicForm} from '../form/form';
 import {hasErrors} from "../../helpers/validate";
+import {Model} from "../../data/Model";
+import {Loading} from "../utility/Loading";
 
 export class AddScreen extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            errors: []
+            errors: [],
+            loading: false
         };
     }
 
@@ -44,13 +47,17 @@ export class AddScreen extends React.Component {
     };
 
     render() {
-        const {title, fields} = this.props;
+        const {title, fields = []} = this.props;
         return (
             <div>
                 <h3>{title}</h3>
+                {
+                    this.state.loading && <Loading active={this.state.loading}/>
+                }
                 <DynamicForm
                     errors={this.state.errors}
                     fields={fields}
+                    submitLabel={title}
                     onSubmit={this.onSubmit}
                 />
             </div>

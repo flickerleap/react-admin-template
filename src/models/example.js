@@ -48,7 +48,7 @@ export const model = new Model({
         {
             name: 'start_date',
             label: 'Start Date',
-            defaultValue: moment(),
+            defaultValue: moment().format('YYYY-MM-DD'),
             type: 'date',
             validation: {
                 presence: {
@@ -64,8 +64,8 @@ export const model = new Model({
         {
             name: 'end_date',
             label: 'End Date',
-            defaultValue: moment(),
-            type: 'date',
+            defaultValue: moment().format('YYYY-MM-DD HH:mm'),
+            type: 'datetime',
             validation: {
                 presence: {
                     allowEmpty: false,
@@ -103,7 +103,8 @@ export const model = new Model({
                 {value: 'Running', label: 'Running'},
             ],
             filter: {
-                type: 'dropdown'
+                type: 'dropdown',
+                value: 'Pottery'
             },
             valueFn: (item) => {
                 let value = "";
@@ -115,7 +116,18 @@ export const model = new Model({
                 return value;
             },
             value: ['Pottery', 'Running']
-        }, {
+        },
+        {
+            name: 'second_interests',
+            label: 'Second Interest',
+            type: 'dropdown',
+            items: [
+                {value: 'Pottery', label: 'Pottery'},
+                {value: 'Knitting', label: 'Knitting'},
+                {value: 'Running', label: 'Running'},
+            ]
+        },
+        {
             name: 'user.profile.first_name',
             label: 'First Name',
             type: 'text',
@@ -183,9 +195,10 @@ export const exampleItems = [
         name: 'Example',
         description: 'Example',
         start_date: moment().format('YYYY-MM-DD'),
-        end_date: moment().format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD HH:mm'),
         start_time: moment().format('HH:mm'),
         interests: ['Pottery', 'Running'],
+        second_interests: 'Pottery',
         user: {
             profile: {
                 first_name: 'First Name',

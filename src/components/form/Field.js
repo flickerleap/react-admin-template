@@ -3,10 +3,6 @@ import {CheckboxList, Date, DateTime, DropDown, Input, TextArea, Time, Checkbox}
 import {ErrorBlock} from "../utility/ErrorBlock";
 
 export class Field extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     getElement() {
         const {
             custom = (props) => {},
@@ -47,10 +43,11 @@ export class Field extends React.Component {
     }
 
     render() {
+        const {error} = this.props;
         return (
             <div>
                 {this.getElement()}
-                {this.props.error && <ErrorBlock error={this.props.error}/>}
+                {error && <ErrorBlock error={error}/>}
             </div>
         );
     }

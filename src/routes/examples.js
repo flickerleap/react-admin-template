@@ -12,13 +12,13 @@ export const examples = [
     {
         path:'/examples/add',
         component: AddExampleScreen,
+        exact: true,
         isPublic: true,
     },
     {
         path:'/examples/:id/edit',
-        label: 'Update Site',
         component: EditExampleScreen,
-        excludeFromNav: true,
+        exact: true,
         isPublic: true,
     }
 ];

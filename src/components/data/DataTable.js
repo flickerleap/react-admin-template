@@ -2,7 +2,7 @@ import React from 'react';
 import {ActionColumn} from "./ActionColumn";
 import {Pagination} from "./Pagination";
 import {FilterBar} from "./FilterBar";
-import {Model} from "../../data/Model";
+import {DisplayModel} from "../../data/DisplayModel";
 
 /**
  * Component to display rows of data in a table
@@ -23,78 +23,27 @@ export class DataTable extends React.Component {
         super(props);
 
         this.state = {
-            items: props.items || [],
-            fields: props.fields || [],
-            pagination: props.pagination || {
-                total: 1,
-                current: 1,
-                perPage: 1,
-                link: ''
-            },
-            filters: [],
-            rows: [],
-            headers: []
+            model: this.getModel(this.props)
         };
+    }
+
+    getModel = ({fields = [], items = [], pagination = {}}) => {
+        return new DisplayModel({fields, items, pagination});
+    };
+
+    setModel(model) {
+        this.setState(() => ({
+            model
+        }));
     }
 
     /**
      * Run this function when this component has been mounted
      */
     componentDidMount() {
-        this.setState((prevState) => ({
-            first: prevState.items.length > 0 ? prevState.items[0] : undefined,
-            headers: prevState.fields.map((field) => {
-                if (!this.hideField(field)) {
-                    return this.getHeaderName(field);
-                }
-            })
-        }));
+        const model = this.getModel(this.props);
+        this.setModel(model);
     }
-
-    /**
-     *
-     * @param {Object} nextProps
-     * @param {Object} prevState
-     * @returns {*}
-     */
-    static getDerivedStateFromProps(nextProps, prevState) {
-        let state = prevState;
-        state.items = nextProps.items ? nextProps.items : [];
-
-        return state;
-    }
-
-    /**
-     *
-     * @param {Object} field
-     * @returns {boolean}
-     */
-    hideField = (field) => {
-        return field.hide !== undefined ? field.hide : false;
-    };
-
-    /**
-     *
-     * @param {string} name
-     * @returns {T | undefined}
-     */
-    getField = (name) => {
-        return this.state.fields.find((field) => field.name === name);
-    };
-
-    /**
-     *
-     * @param {Object} field
-     * @returns {string}
-     */
-    getHeaderName = (field) => {
-        if (field.label === undefined) {
-            const header = field.name.charAt(0).toUpperCase() + field.name.slice(1);
-            return header.replace(/_/g, " ");
-        }
-
-        return field.label;
-    };
 
     /**
      *
@@ -103,11 +52,11 @@ export class DataTable extends React.Component {
      * @returns {*}
      */
     getValue = (item, name) => {
-        const field = this.getField(name);
-        if (field.valueFn) {
+        const field = this.state.model.get(name);
+        if (field && field.valueFn) {
             return field.valueFn(item);
         } else {
-            return Model.getValue(item, name);
+            return this.state.model.getValue(item, name);
         }
     };
 
@@ -116,8 +65,8 @@ export class DataTable extends React.Component {
      * @returns {*}
      */
     render() {
-        const {title = '', actions = [], onFilter} = this.props;
-        const {pagination, items, headers, fields} = this.state;
+        const {title = '', actions = [], fields = [], onFilter} = this.props;
+        const {model} = this.state;
         return (
             <div className="card">
                 <div className="card-header">
@@ -125,13 +74,13 @@ export class DataTable extends React.Component {
                 </div>
                 <div className="card-body">
                     {
-                        items.length > 0 ?
+                        model.hasItems() ?
                             <div className="table-responsive">
                                 <table className="table-outline table table-hover">
                                     <thead className="thead-light">
                                     <tr>
                                         {
-                                            headers.map((name, index) => (
+                                            model.headers.map((name, index) => (
                                                 name !== undefined && <th key={index}>{name}</th>
                                             ))
                                         }
@@ -141,11 +90,11 @@ export class DataTable extends React.Component {
                                     </thead>
                                     <tbody>
                                     {
-                                        items.map((item, index) => (
+                                        model.items.map((item, index) => (
                                             <tr key={index}>
                                                 {
-                                                    this.state.fields.map((field) => {
-                                                        return !this.hideField(field) &&
+                                                    model.fields.map((field) => {
+                                                        return !field.hide &&
                                                             <td key={field.name}>{this.getValue(item, field.name)}</td>;
                                                     })
                                                 }
@@ -155,7 +104,7 @@ export class DataTable extends React.Component {
                                     }
                                     </tbody>
                                 </table>
-                                <Pagination {...pagination}/>
+                                <Pagination {...model.pagination}/>
                             </div> :
                             <p>No records found.</p>
                     }
