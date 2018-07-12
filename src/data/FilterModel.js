@@ -23,7 +23,7 @@ export class FilterModel extends BaseModel {
      * @returns {Array}
      */
     getFields = (fields = []) => {
-        return super.getFields(fields).reduce((result, field) => {
+        return this.cloneFields(fields).reduce((result, field) => {
             if (!this.hide(field)) {
                 field.filter = field.filter || {};
                 field.filter.enabled = this.canFilter(field);
