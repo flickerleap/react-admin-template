@@ -26,7 +26,12 @@ export class DynamicForm extends React.Component {
         }
 
         if (this.props.fields !== prevProps.fields) {
-            this.setModel(this.getModel(this.props.fields, this.props.data));
+            const model = prevState.model;
+            model.fields = model.getFields(this.props.fields);
+            if (data) {
+                model.load(data);
+            }
+            this.setModel(model);
         }
 
         if (this.props.data !== prevProps.data) {

@@ -23,10 +23,11 @@ export class FilterModel extends BaseModel {
      * @returns {Array}
      */
     getFields = (fields = []) => {
-        return fields.reduce((result, field) => {
+        return super.getFields(fields).reduce((result, field) => {
             if (!this.hide(field)) {
                 field.filter = field.filter || {};
                 field.filter.enabled = this.canFilter(field);
+                field.error = undefined;
                 field.value = field.filter.defaultValue
                     ? field.filter.defaultValue : field.defaultValue
                         ? field.defaultValue : '';

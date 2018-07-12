@@ -28,7 +28,7 @@ export class DisplayModel extends BaseModel {
      * @returns {Array}
      */
     getFields = (fields = []) => {
-        return fields.reduce((result, field) => {
+        return super.getFields(fields).reduce((result, field) => {
             if (!this.hide(field)) {
                 result.push(field);
             }

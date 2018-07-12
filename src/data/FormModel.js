@@ -23,10 +23,11 @@ export class FormModel extends BaseModel {
      * @returns {Array}
      */
     getFields(fields = []) {
-        return fields.reduce((result, field) => {
+        return super.getFields(fields).reduce((result, field) => {
             if (!this.exclude(field) && this.isEditable(field)) {
                 field.show = true;
-                field.value = field.defaultValue || '';
+                const currentField = this.get(field.name);
+                field.value = (currentField && currentField.value) ? currentField.value : (field.defaultValue || '');
                 field.required = field.validation &&
                     field.validation.presence &&
                     field.validation.presence.allowEmpty !== undefined ?

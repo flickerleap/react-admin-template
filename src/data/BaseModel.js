@@ -153,10 +153,19 @@ export class BaseModel {
      * Clones a field object so references are not preserved
      * (this causes data problems across different views/forms)
      *
-     * @param field
+     * @param {Object} field
      * @returns {Object}
      */
     cloneField = (field) => {
         return Object.assign(field);
+    };
+
+    /**
+     * Checks if an existing field has a value or not.
+     *
+     * @param {Object} field
+     */
+    hasValue = (field) => {
+        return field.value !== undefined && field.value !== '';
     };
 }
