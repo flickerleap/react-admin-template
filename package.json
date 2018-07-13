@@ -1,15 +1,9 @@
 {
   "name": "react-admin-template",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
-  "main": "dist/bundle.js",
+  "main": "src/app.js",
   "style": "dist/styles.css",
-  "files": [
-    "dist",
-    "scss",
-    "src",
-    "images"
-  ],
   "scripts": {
     "clean": "rm -rf dist coverage",
     "init-env": "cp .env.sample .env",
