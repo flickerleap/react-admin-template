@@ -12,7 +12,7 @@ export class DateTime extends React.Component {
     };
 
     render() {
-        const {name, label, isClearable = false, format="YYYY-MM-DD", interval=15} = this.props;
+        const {isClearable = false, format = "YYYY-MM-DD", interval = 15} = this.props;
 
         const value = moment(this.props.value);
 
