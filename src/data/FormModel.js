@@ -23,13 +23,14 @@ export class FormModel extends BaseModel {
      * @returns {Array}
      */
     getFields(fields = []) {
-        return fields.reduce((result, field) => {
+        return this.cloneFields(fields).reduce((result, field) => {
             if (!this.exclude(field) && this.isEditable(field)) {
                 field.show = true;
-                field.value = field.defaultValue || '';
+                const currentField = this.get(field.name);
+                field.value = (currentField && currentField.value) ? currentField.value : (field.defaultValue || '');
                 field.required = field.validation &&
-                    field.validation.presence &&
-                    field.validation.presence.allowEmpty !== undefined ?
+                field.validation.presence &&
+                field.validation.presence.allowEmpty !== undefined ?
                     !field.validation.presence.allowEmpty : false;
                 result.push(field);
             }
@@ -70,9 +71,54 @@ export class FormModel extends BaseModel {
     /**
      * Sets the errors contained in the errors object parameter.
      *
-     * @param {Object} errors
+     * @param {Object | Array} errors
      */
     setErrors(errors = undefined) {
+        let success = false;
+        if (Array.isArray(errors)) {
+            success = this.setErrorsFromArray(errors);
+        } else {
+            success = this.setErrorsFromObject(errors);
+        }
+
+        if (!success) {
+            this.clearErrors();
+        }
+    }
+
+    /**
+     *
+     * @param {Array} errors
+     * @returns {boolean}
+     */
+    setErrorsFromArray = (errors = []) => {
+        if (errors.length > 0) {
+            this.fields.map((field) => {
+                const error = errors.find((value, index) => {
+                    const keys = Object.keys(value);
+                    return keys.length > 0 ? keys[0] === field.name : false;
+                });
+
+                if (error) {
+                    field.error = error[field.name];
+                } else {
+                    field.error = undefined;
+                }
+
+                return field;
+            });
+
+            return true;
+        }
+
+        return false;
+    };
+
+    /**
+     *
+     * @param {Object} errors
+     */
+    setErrorsFromObject(errors = undefined) {
         if (errors) {
             this.fields.map((field) => {
                 if (errors[field.name]) {
@@ -83,9 +129,11 @@ export class FormModel extends BaseModel {
 
                 return field;
             });
-        } else {
-            this.clearErrors();
+
+            return true;
         }
+
+        return false;
     }
 
     /**

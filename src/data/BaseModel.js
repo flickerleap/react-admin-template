@@ -8,7 +8,7 @@ export class BaseModel {
      * @param {Array} fields - The list of fields that represent this model
      */
     constructor({fields = []} = {}) {
-        this.fields = this.getFields(fields);
+        this.fields = this.cloneFields(fields);
     }
 
     /**
@@ -19,7 +19,7 @@ export class BaseModel {
      * @returns {Array}
      */
     getFields(fields = []) {
-        return fields.map((field) => this.cloneField(field));
+        return this.cloneFields(fields);
     }
 
     /**
@@ -150,13 +150,23 @@ export class BaseModel {
     };
 
     /**
-     * Clones a field object so references are not preserved
-     * (this causes data problems across different views/forms)
+     * Clones a fields array so references are not preserved
+     * (this prevents data problems across different views/forms)
      *
-     * @param field
-     * @returns {Object}
+     * @param {Array} fields
+     * @returns {Array}
+     *
      */
-    cloneField = (field) => {
-        return Object.assign(field);
+    cloneFields = (fields = []) => {
+        return fields.map((field) => Object.assign(field));
+    };
+
+    /**
+     * Checks if an existing field has a value or not.
+     *
+     * @param {Object} field
+     */
+    hasValue = (field) => {
+        return field.value !== undefined && field.value !== '';
     };
 }
