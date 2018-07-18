@@ -29,8 +29,8 @@ export class FormModel extends BaseModel {
                 const currentField = this.get(field.name);
                 field.value = (currentField && currentField.value) ? currentField.value : (field.defaultValue || '');
                 field.required = field.validation &&
-                field.validation.presence &&
-                field.validation.presence.allowEmpty !== undefined ?
+                    field.validation.presence &&
+                    field.validation.presence.allowEmpty !== undefined ?
                     !field.validation.presence.allowEmpty : false;
                 result.push(field);
             }
