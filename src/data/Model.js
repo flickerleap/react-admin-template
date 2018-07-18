@@ -1,11 +1,12 @@
 export class Model {
-    constructor({type = '', plural = '', fields = [], links = [], actions = [], baseUrl = undefined}) {
+    constructor({type = '', plural = '', fields = [], links = [], actions = [], baseUrl = undefined, linkAbilityMapping = undefined}) {
         this.type = type;
         this.plural = plural;
         this.fields = fields;
         this.links = links;
         this.actions = actions;
         this.baseUrl = baseUrl ? baseUrl : this.getBaseUrl();
+        this.linkAbilityMapping = linkAbilityMapping || this.getDefaultLinkAbilityMapping();
     }
 
     getLinks() {
@@ -13,12 +14,14 @@ export class Model {
             url: `${this.baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
             icon: link.icon,
-            access: link.access,
+            action: this.getLinkAbility(link.name),
+            type: this.type,
             children: link.children !== undefined ? link.children.map((item) => ({
                 url: `${this.baseUrl}${item.url}`,
                 name: item.name,
                 icon: item.icon,
-                access: link.access
+                action: this.getLinkAbility(link.name),
+                type: this.type
             })) : []
         }));
     }
@@ -45,6 +48,28 @@ export class Model {
             return result;
         }, []);
     }
+
+    getLinkAbility(name) {
+        const mapping = this.linkAbilityMapping.find((item) => item.name === name);
+        return mapping ? mapping.action : undefined;
+    }
+
+    getDefaultLinkAbilityMapping = () => {
+        return [
+            {
+                name: 'View All',
+                action: 'index'
+            },
+            {
+                name: 'Add',
+                action: 'store'
+            },
+            {
+                name: this.plural,
+                action: 'index'
+            }
+        ];
+    };
 
     isEditable = (field) => {
         return field.editable === undefined || field.editable !== false;

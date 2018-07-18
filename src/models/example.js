@@ -154,15 +154,12 @@ export const model = new Model({
                 {
                     url: '/',
                     name: 'View',
-                    access: ['admin']
                 },
                 {
                     url: '/add',
                     name: 'Add',
-                    access: ['admin']
                 },
-            ],
-            access: ['admin']
+            ]
         }
     ],
     actions: ({remove}) => {

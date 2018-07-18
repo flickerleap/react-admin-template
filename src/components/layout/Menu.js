@@ -1,9 +1,10 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, NavItem, NavLink as RsNavLink} from 'reactstrap';
+import {Badge, NavItem, NavLink as RsNavLink} from 'reactstrap';
 import classNames from 'classnames';
 import {connect} from "react-redux";
 import {HeaderDropdown} from "./HeaderDropdown";
+import {getAbilitiesFromLinks} from "../../helpers/authorization";
 import {getUser} from "../../store/actions/auth";
 
 /**
@@ -31,10 +32,19 @@ class MenuComponent extends React.Component {
     componentDidMount() {
         const {items = []} = this.props;
 
-        this.setState(() => ({
-            loading: false,
-            list: this.getNavList(items)
-        }));
+        if(this.props.user === {}){
+            this.state.getUser().then((action)=>{
+                this.setState(() => ({
+                    loading: false,
+                    list: this.getNavList(items)
+                }));
+            });
+        } else {
+            this.setState(() => ({
+                loading: false,
+                list: this.getNavList(items)
+            }));
+        }
     }
 
     componentWillUnmount() {
@@ -222,14 +232,20 @@ class MenuComponent extends React.Component {
         });
     }
 
-    hasAccess() {
-        const {roles = [], abilities = []} = this.props.user;
-        let status = !(roles.length > 0);
-        abilities.forEach((role) => {
-            status = roles.indexOf(role) > -1 || status;
+    hasAccess(link) {
+        console.log(this.props.user);
+        const {abilities = []} = this.props.user;
+        const neededAbilities = getAbilitiesFromLinks([link]);
+        let status = true;
+
+        neededAbilities.forEach((neededAbility, index) => {
+            const foundAbility = abilities.find((ability)=>{
+                return ability.name === neededAbility.name && ability.entity_type === neededAbility.entity_type;
+            });
+            status = foundAbility !== undefined && status;
         });
 
-        return true;
+        return status;
     }
 
     render() {
@@ -238,7 +254,11 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user ? state.auth.user : {}
+    user: state.auth.user ? state.auth.user.data : {}
 });
 
-export const Menu = connect(mapStateToProps)(MenuComponent);
+const mapDispatchToProps = (dispatch) => ({
+    getUser: () => dispatch(getUser())
+});
+
+export const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);

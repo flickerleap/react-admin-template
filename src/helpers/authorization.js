@@ -1,11 +1,21 @@
-export const getCapabilitiesFromLinks = (modelType, links = []) => {
-    return links.reduce((capabilities, link) => {
-        const {children = []} = link;
-        if(children.length > 0) {
-            capabilities.push(...getCapabilitiesFromLinks(modelType, children));
-        }
-        capabilities.push();
+export const getAbilitiesFromLinks = (links = []) => {
+    return links.reduce((abilities, link) => {
+        abilities.push({
+            name: link.action,
+            entity_type: link.type
+        });
 
-        return capabilities;
+        return abilities;
+    }, []);
+};
+
+export const getAbilitiesFromUser = (userAbilities = []) => {
+    return userAbilities.reduce((abilities, ability) => {
+        abilities.push({
+            name: ability.name,
+            entity_type: ability.entity_type
+        });
+
+        return abilities;
     }, []);
 };
