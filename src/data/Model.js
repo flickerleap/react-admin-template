@@ -14,14 +14,14 @@ export class Model {
             url: `${this.baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
             icon: link.icon,
-            action: this.getLinkAbility(link.name),
-            type: this.type,
+            ability: this.getLinkAbility(link.name),
+            type: link.type || this.type,
             children: link.children !== undefined ? link.children.map((item) => ({
                 url: `${this.baseUrl}${item.url}`,
                 name: item.name,
                 icon: item.icon,
-                action: this.getLinkAbility(link.name),
-                type: this.type
+                action: this.getLinkAbility(item.name),
+                type: item.type || this.type
             })) : []
         }));
     }

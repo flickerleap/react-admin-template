@@ -4,8 +4,9 @@ import {Badge, NavItem, NavLink as RsNavLink} from 'reactstrap';
 import classNames from 'classnames';
 import {connect} from "react-redux";
 import {HeaderDropdown} from "./HeaderDropdown";
-import {getAbilitiesFromLinks} from "../../helpers/authorization";
+import {canAccess, getAbilitiesFromLinks, getAbilitiesFromUser} from "../../helpers/authorization";
 import {getUser} from "../../store/actions/auth";
+import {getUserFromState} from "../../helpers/auth";
 
 /**
  * Generate a menu from the given links
@@ -32,8 +33,8 @@ class MenuComponent extends React.Component {
     componentDidMount() {
         const {items = []} = this.props;
 
-        if(this.props.user === {}){
-            this.state.getUser().then((action)=>{
+        if (this.props.user === {}) {
+            this.state.getUser().then((action) => {
                 this.setState(() => ({
                     loading: false,
                     list: this.getNavList(items)
@@ -233,19 +234,10 @@ class MenuComponent extends React.Component {
     }
 
     hasAccess(link) {
-        console.log(this.props.user);
-        const {abilities = []} = this.props.user;
+        const userAbilities = getAbilitiesFromUser(this.props.user.abilities);
         const neededAbilities = getAbilitiesFromLinks([link]);
-        let status = true;
 
-        neededAbilities.forEach((neededAbility, index) => {
-            const foundAbility = abilities.find((ability)=>{
-                return ability.name === neededAbility.name && ability.entity_type === neededAbility.entity_type;
-            });
-            status = foundAbility !== undefined && status;
-        });
-
-        return status;
+        return canAccess(userAbilities, neededAbilities);
     }
 
     render() {
@@ -254,7 +246,7 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user ? state.auth.user.data : {}
+    user: getUserFromState(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
