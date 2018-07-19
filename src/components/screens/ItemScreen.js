@@ -73,16 +73,3 @@ export class ItemScreen extends React.Component {
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        user: state.auth.user,
-        leases: state.leases
-    };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    getLease: (params) => dispatch(getLease(params))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ViewLeaseScreen);

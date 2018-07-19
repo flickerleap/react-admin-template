@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {userModel as model} from "../../models/models";
-import {ViewScreen} from "../../components/screens/ViewScreen";
+import {exampleModel as model} from "../../models/models";
+import {IndexScreen} from "../../components/screens/IndexScreen";
 import {fetchExamples, removeExample} from "../../store/actions/actions";
-import {userItems} from "../../models/user";
+import {exampleItems} from "../../models/example";
 
 const mapStateToProps = (state) => {
     return {
-        items: userItems,
+        items: exampleItems,
         loading: false,
         pagination: {
             total: 1,
@@ -31,5 +31,5 @@ const initialProps = {
 export default connect(mapStateToProps, mapDispatchToProps)((props) => {
     const actions = model.getActions(props);
     const finalProps = {...props, ...initialProps, actions};
-    return <ViewScreen {...finalProps} />;
+    return <IndexScreen {...finalProps} />;
 });
