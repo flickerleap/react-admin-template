@@ -50,23 +50,27 @@ export class Model {
     }
 
     getLinkAbility(name) {
-        const mapping = this.linkAbilityMapping.find((item) => item.name === name);
-        return mapping ? mapping.action : undefined;
+        const mapping = this.linkAbilityMapping.find((item) => name.includes(item.name));
+        return mapping ? mapping.ability : '*';
     }
 
     getDefaultLinkAbilityMapping = () => {
         return [
             {
                 name: 'View All',
-                action: 'index'
+                ability: 'index'
+            },
+            {
+                name: 'View',
+                ability: 'index'
             },
             {
                 name: 'Add',
-                action: 'store'
+                ability: 'store'
             },
             {
                 name: this.plural,
-                action: 'index'
+                ability: 'index'
             }
         ];
     };

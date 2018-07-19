@@ -4,7 +4,8 @@ export const headerMenuItems = [
     {
         name: 'Home',
         url: '/',
-        icon: 'fas fa-home'
+        icon: 'fas fa-home',
+        ability: '*'
     },
     {
         name: <i className="fas fa-user"></i>,
@@ -21,12 +22,14 @@ export const headerMenuItems = [
                             return user.id;
                         }
                     }
-                ]
+                ],
+                ability: '*'
             },
             {
                 name: 'Logout',
                 url: '/logout',
-                icon: 'fas fa-sign-out-alt'
+                icon: 'fas fa-sign-out-alt',
+                ability: '*'
             },
         ]
     }

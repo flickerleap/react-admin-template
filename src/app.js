@@ -37,7 +37,7 @@ export {Loading, Error, ErrorBlock} from "./components/utility/utility";
 export {Model} from './data/Model';
 
 /** HELPERS */
-export {getUserFromStore} from './helpers/auth';
+export {getUserFromStore, getUserFromState} from './helpers/auth';
 export {userNeedsAuthentication, userDoesNotNeedAuthentication} from './helpers/authGuard';
 export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';

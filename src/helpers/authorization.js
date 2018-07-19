@@ -1,7 +1,7 @@
 export const getAbilitiesFromLinks = (links = []) => {
     return links.reduce((abilities, link) => {
         abilities.push({
-            name: link.action,
+            name: link.ability,
             entity_type: link.type
         });
 
@@ -18,4 +18,21 @@ export const getAbilitiesFromUser = (userAbilities = []) => {
 
         return abilities;
     }, []);
+};
+
+export const canAccess = (userAbilities, neededAbilities, wildcard = '*') => {
+    let status = true;
+
+    neededAbilities.forEach((neededAbility) => {
+        if (neededAbility.name === wildcard) {
+            status = true && status;
+        } else {
+            const foundAbility = userAbilities.find((ability) => {
+                return ability.name === neededAbility.name && ability.entity_type === neededAbility.entity_type;
+            });
+            status = foundAbility !== undefined && status;
+        }
+    });
+
+    return status;
 };
