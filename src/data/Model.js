@@ -20,7 +20,7 @@ export class Model {
                 url: `${this.baseUrl}${item.url}`,
                 name: item.name,
                 icon: item.icon,
-                action: this.getLinkAbility(item.name),
+                ability: this.getLinkAbility(item.name),
                 type: item.type || this.type
             })) : []
         }));
@@ -51,6 +51,7 @@ export class Model {
 
     getLinkAbility(name) {
         const mapping = this.linkAbilityMapping.find((item) => name.includes(item.name));
+
         return mapping ? mapping.ability : '*';
     }
 

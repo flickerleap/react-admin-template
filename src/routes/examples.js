@@ -1,12 +1,11 @@
 import AddExampleScreen from "../screens/Example/AddExampleScreen";
 import ExampleScreen from "../screens/Example/ExampleScreen";
 import EditExampleScreen from "../screens/Example/EditExampleScreen";
-import {Authorization} from "../components/auth/Authorization";
 
 export const examples = [
     {
         path: '/examples/',
-        component: Authorization()(ExampleScreen),
+        component: ExampleScreen,
         exact: true,
         isPublic: true,
     },

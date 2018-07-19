@@ -16,8 +16,7 @@ import {getUserFromState} from "../../helpers/auth";
  * @param {string} links[].path URL to set as the NavLink's "to" prop
  * @param {string} links[].label Name of the link
  * @param {string} links[].icon Icon to use
- * @returns {Menu}
- * @constructor
+ * @returns {MenuComponent}
  */
 class MenuComponent extends React.Component {
     constructor(props) {
@@ -225,12 +224,16 @@ class MenuComponent extends React.Component {
         return item.url;
     };
 
-    getNavList(links) {
-        return links.map((link, index) => {
+    getNavList(links = []) {
+        let index = 0;
+        return links.reduce((list, link) => {
             if (this.hasAccess(link)) {
-                return this.getNavType(link, index);
+                list.push(this.getNavType(link, index));
+                index++;
             }
-        });
+
+            return list;
+        }, []);
     }
 
     hasAccess(link) {

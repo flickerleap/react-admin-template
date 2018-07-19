@@ -1,8 +1,10 @@
 import React from 'react';
 import {AccessDeniedScreen} from "../screens/AccessDeniedScreen";
 import {connect} from "react-redux";
+import {getUserFromState} from "../../helpers/auth";
+import {canAccess, getAbilitiesFromLinks, getAbilitiesFromUser} from "../../helpers/authorization";
 
-export const Authorization = () => {
+export const Authorization = (route) => {
      return (WrappedComponent) => {
         class WithAuthorization extends React.Component {
             constructor(props) {
@@ -10,12 +12,10 @@ export const Authorization = () => {
             }
 
             render() {
-                const {roles = []} = this.props.user;
-                let status = false;
+                const userAbilities = getAbilitiesFromUser(this.props.user.abilities);
+                const neededAbilities = getAbilitiesFromLinks([route]);
 
-                roles.forEach((role) => {
-                    //status = allowedRoles.includes(role.name) || status;
-                });
+                status = canAccess(userAbilities, neededAbilities);
 
                 if (status) {
                     return <WrappedComponent {...this.props} />;
@@ -27,7 +27,7 @@ export const Authorization = () => {
 
         return connect(state => {
             return {
-                user: state.auth.user
+                user: getUserFromState(state)
             };
         })(WithAuthorization);
     };
