@@ -50,6 +50,7 @@ export const apiMiddleware = store =>
             return (
                 fetch(`${API_ROOT}${endpoint}`, {
                     method,
+                    mode: "cors",
                     body,
                     headers,
                     credentials: "same-origin"

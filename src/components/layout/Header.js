@@ -44,7 +44,7 @@ export class Header extends React.Component {
                 </NavbarToggler>
                 <Nav className="ml-auto navbar-nav">
                     {
-                        <Menu type='header' items={menuItems} />
+                        <Menu key="header-menu" type='header' items={menuItems} />
                     }
                 </Nav>
             </header>

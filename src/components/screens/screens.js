@@ -8,3 +8,4 @@ export {Login} from "./LoginScreen";
 export {Logout} from "./LogoutScreen";
 export {ResetPasswordScreen} from "./ResetPasswordScreen";
 export {ForgotPasswordScreen} from "./ForgotPasswordScreen";
+export {AccessDeniedScreen} from "./AccessDeniedScreen";

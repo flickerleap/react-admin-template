@@ -28,7 +28,7 @@ export class Sidebar extends React.Component {
         return (
             <div className="sidebar">
                 <Nav>
-                    <Menu items={links}/>
+                    <Menu key="sidebar-menu" items={links}/>
                 </Nav>
             </div>
         );

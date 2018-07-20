@@ -1,5 +1,6 @@
 /** COMPONENTS */
 /** AUTH */
+export {Authorization} from  './components/auth/auth';
 
 /** DATA */
 export {ActionColumn, DataTable, Pagination, AddButton, DeleteButton} from "./components/data/data";
@@ -26,7 +27,8 @@ export {
     Login as LoginScreen,
     Logout as LogoutScreen,
     ForgotPasswordScreen,
-    ResetPasswordScreen
+    ResetPasswordScreen,
+    AccessDeniedScreen
 } from "./components/screens/screens";
 
 /** UTILITY */
@@ -36,7 +38,7 @@ export {Loading, Error, ErrorBlock} from "./components/utility/utility";
 export {Model} from './data/Model';
 
 /** HELPERS */
-export {getUserFromStore} from './helpers/auth';
+export {getUserFromStore, getUserFromState} from './helpers/auth';
 export {userNeedsAuthentication, userDoesNotNeedAuthentication} from './helpers/authGuard';
 export {createFSAConverter} from './helpers/createFSAConverter';
 export {get, set} from './helpers/storage';

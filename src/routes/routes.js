@@ -27,7 +27,8 @@ export const links = [
         badge: {
             variant: 'info',
             text: 'NEW'
-        }
+        },
+        ability: '*'
     }
 ];
 
