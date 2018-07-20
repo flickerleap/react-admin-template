@@ -1,11 +1,11 @@
 import AddUserScreen from "../screens/User/AddUserScreen";
-import UserScreen from "../screens/User/UserScreen";
+import IndexUserScreen from "../screens/User/IndexUserScreen";
 import EditUserScreen from "../screens/User/EditUserScreen";
 
 export const users = [
     {
         path:'/users/',
-        component: UserScreen,
+        component: IndexUserScreen,
         exact: true,
         isPublic: false,
     },

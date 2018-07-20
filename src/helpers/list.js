@@ -25,7 +25,7 @@ export const addEmptyItem = (items, label = 'Select', defaultValue = undefined) 
  * @param {string} link
  * @returns {{total: number, current: number, perPage: number, link: string}}
  */
-export const getPagination = ({total = 1, current = 1, perPage = 1, link = ''} = {}) => ({
+export const getPagination = ({total = 1, current_page: current = 1, per_page: perPage = 1, path: link = ''} = {}) => ({
     total,
     current,
     perPage,

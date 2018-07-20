@@ -1,11 +1,11 @@
 import AddExampleScreen from "../screens/Example/AddExampleScreen";
-import ExampleScreen from "../screens/Example/ExampleScreen";
+import IndexExampleScreen from "../screens/Example/IndexExampleScreen";
 import EditExampleScreen from "../screens/Example/EditExampleScreen";
 
 export const examples = [
     {
         path: '/examples/',
-        component: ExampleScreen,
+        component: IndexExampleScreen,
         exact: true,
         isPublic: true,
     },

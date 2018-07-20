@@ -17,8 +17,9 @@ export {Header, Sidebar, HeaderDropdown, Menu} from "./components/layout/layout"
 
 /** SCREENS */
 export {
-    ViewScreen,
+    ItemScreen,
     IndexScreen,
+    IndexScreen as ViewScreen,
     AddScreen,
     EditScreen,
     DashboardScreen,
