@@ -1,10 +1,12 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, NavItem, NavLink as RsNavLink} from 'reactstrap';
+import {Badge, NavItem, NavLink as RsNavLink} from 'reactstrap';
 import classNames from 'classnames';
 import {connect} from "react-redux";
 import {HeaderDropdown} from "./HeaderDropdown";
+import {canAccess, getAbilitiesFromLinks, getAbilitiesFromUser} from "../../helpers/authorization";
 import {getUser} from "../../store/actions/auth";
+import {getUserFromState} from "../../helpers/auth";
 
 /**
  * Generate a menu from the given links
@@ -14,8 +16,7 @@ import {getUser} from "../../store/actions/auth";
  * @param {string} links[].path URL to set as the NavLink's "to" prop
  * @param {string} links[].label Name of the link
  * @param {string} links[].icon Icon to use
- * @returns {Menu}
- * @constructor
+ * @returns {MenuComponent}
  */
 class MenuComponent extends React.Component {
     constructor(props) {
@@ -31,10 +32,19 @@ class MenuComponent extends React.Component {
     componentDidMount() {
         const {items = []} = this.props;
 
-        this.setState(() => ({
-            loading: false,
-            list: this.getNavList(items)
-        }));
+        if (this.props.user === {}) {
+            this.state.getUser().then((action) => {
+                this.setState(() => ({
+                    loading: false,
+                    list: this.getNavList(items)
+                }));
+            });
+        } else {
+            this.setState(() => ({
+                loading: false,
+                list: this.getNavList(items)
+            }));
+        }
     }
 
     componentWillUnmount() {
@@ -214,22 +224,23 @@ class MenuComponent extends React.Component {
         return item.url;
     };
 
-    getNavList(links) {
-        return links.map((link, index) => {
+    getNavList(links = []) {
+        let index = 0;
+        return links.reduce((list, link) => {
             if (this.hasAccess(link)) {
-                return this.getNavType(link, index);
+                list.push(this.getNavType(link, index));
+                index++;
             }
-        });
+
+            return list;
+        }, []);
     }
 
-    hasAccess() {
-        const {roles = [], abilities = []} = this.props.user;
-        let status = !(roles.length > 0);
-        abilities.forEach((role) => {
-            status = roles.indexOf(role) > -1 || status;
-        });
+    hasAccess(link) {
+        const userAbilities = getAbilitiesFromUser(this.props.user.abilities);
+        const neededAbilities = getAbilitiesFromLinks([link]);
 
-        return true;
+        return canAccess(userAbilities, neededAbilities);
     }
 
     render() {
@@ -238,7 +249,11 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.auth.user ? state.auth.user : {}
+    user: getUserFromState(state)
 });
 
-export const Menu = connect(mapStateToProps)(MenuComponent);
+const mapDispatchToProps = (dispatch) => ({
+    getUser: () => dispatch(getUser())
+});
+
+export const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);

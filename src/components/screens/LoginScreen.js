@@ -76,7 +76,9 @@ class LoginScreen extends React.Component {
         }).catch((error) => {
             this.setState(() => ({
                 loading: false,
-                errors: error.payload.response.errors
+                errors: {
+                    email: error
+                }
             }));
         });
     };
