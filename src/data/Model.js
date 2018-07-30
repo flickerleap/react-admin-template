@@ -51,8 +51,7 @@ export class Model {
 
     getLinkAbility(name) {
         const mapping = this.linkAbilityMapping.find((item) => name.includes(item.name));
-
-        return mapping ? mapping.ability : '*';
+        return mapping ? mapping.ability : undefined;
     }
 
     getDefaultLinkAbilityMapping = () => {

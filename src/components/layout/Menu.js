@@ -33,7 +33,7 @@ class MenuComponent extends React.Component {
         const {items = []} = this.props;
 
         if (this.props.user === {}) {
-            this.state.getUser().then((action) => {
+            this.props.getUser().then((action) => {
                 this.setState(() => ({
                     loading: false,
                     list: this.getNavList(items)
@@ -44,6 +44,15 @@ class MenuComponent extends React.Component {
                 loading: false,
                 list: this.getNavList(items)
             }));
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.user !== prevProps.user) {
+            this.setState(() => ({
+                loading: false,
+                list: this.getNavList(this.props.items)
+            }))
         }
     }
 
@@ -239,7 +248,7 @@ class MenuComponent extends React.Component {
     hasAccess(link) {
         const userAbilities = getAbilitiesFromUser(this.props.user.abilities);
         const neededAbilities = getAbilitiesFromLinks([link]);
-
+        
         return canAccess(userAbilities, neededAbilities);
     }
 
