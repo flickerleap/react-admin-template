@@ -11,6 +11,9 @@ export const getAbilitiesFromLinks = (links = []) => {
 
 export const getAbilitiesFromUser = (userAbilities = [], entityField = 'entity_type') => {
     return userAbilities.reduce((abilities, ability) => {
+        if(ability.name === 'index') {
+
+        }
         abilities.push({
             name: ability.name,
             type: ability[entityField]
@@ -18,6 +21,18 @@ export const getAbilitiesFromUser = (userAbilities = [], entityField = 'entity_t
 
         return abilities;
     }, []);
+};
+
+export const removeUnneededAbility = (abilities = [], abilityToHave, abilityToRemove) => {
+    const found = abilities.findIndex((ability)=>{
+        return ability.name === abilityToHave;
+    });
+
+    if(found > -1) {
+        abilities.splice()
+    }
+
+    return abilities;
 };
 
 export const canAccess = (userAbilities, neededAbilities, wildcard = '*') => {

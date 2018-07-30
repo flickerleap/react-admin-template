@@ -70,6 +70,10 @@ export class Model {
                 ability: 'store'
             },
             {
+                name: 'Show',
+                ability: 'show'
+            },
+            {
                 name: this.plural,
                 ability: 'index'
             }
