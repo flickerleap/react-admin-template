@@ -52,7 +52,7 @@ export const removeUnneededAbilities = (abilities = [], abilityToHave, abilityTo
             name: abilityToRemove
         });
 
-        if(toHaveIndex > -1 && toRemoveIndex > -1) {
+        if (toHaveIndex > -1 && toRemoveIndex > -1) {
             abilities.splice(toRemoveIndex, 1);
         }
     });
@@ -69,7 +69,7 @@ export const removeUnneededAbilities = (abilities = [], abilityToHave, abilityTo
 export const getEntityTypes = (abilities = [], entityField = 'entity_type') => {
     return abilities.reduce((types, ability) => {
         const type = ability[entityField];
-        if(!types.includes(type)) {
+        if (!types.includes(type)) {
             types.push(type);
         }
 
@@ -85,7 +85,7 @@ export const getEntityTypes = (abilities = [], entityField = 'entity_type') => {
  * @returns {number}
  */
 export const getIndex = (abilities = [], item) => {
-    return abilities.findIndex((ability)=>{
+    return abilities.findIndex((ability) => {
         return ability.name === item.name && ability.entity_type === item.entity_type;
     });
 };
@@ -101,7 +101,9 @@ export const canAccess = (userAbilities, neededAbilities, wildcard = '*') => {
     let status = true;
 
     neededAbilities.forEach((neededAbility) => {
-        if (neededAbility.name === wildcard) {
+        if (hasWildcard(neededAbility, wildcard)) {
+            status = true && status;
+        } else if (hasAdminAccess(userAbilities, wildcard)) {
             status = true && status;
         } else {
             const foundAbility = userAbilities.find((ability) => {
@@ -112,4 +114,25 @@ export const canAccess = (userAbilities, neededAbilities, wildcard = '*') => {
     });
 
     return status;
+};
+
+/**
+ *
+ *
+ * @param {Array} userAbilities
+ * @param {string} wildcard
+ * @returns {boolean}
+ */
+export const hasAdminAccess = (userAbilities = [], wildcard = '*') => {
+    return userAbilities.length === 1 && userAbilities[0].type === wildcard && userAbilities[0].name === wildcard;
+};
+
+/**
+ *
+ * @param {{name, type}} ability
+ * @param {string} wildcard
+ * @returns {boolean}
+ */
+export const hasWildcard = (ability, wildcard = '*') => {
+    return ability.name === wildcard || (ability.name === wildcard && ability.type === wildcard);
 };
