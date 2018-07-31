@@ -103,6 +103,8 @@ export const canAccess = (userAbilities, neededAbilities, wildcard = '*') => {
     neededAbilities.forEach((neededAbility) => {
         if (hasWildcard(neededAbility, wildcard)) {
             status = true && status;
+        } else if (hasAdminAccess(userAbilities, wildcard) && neededAbility.name === 'show') {
+            status = false && status;
         } else if (hasAdminAccess(userAbilities, wildcard)) {
             status = true && status;
         } else {
