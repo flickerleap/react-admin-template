@@ -63,6 +63,14 @@ class MenuComponent extends React.Component {
         }));
     }
 
+    getLinks() {
+        const {items} = this.props;
+
+
+
+        return items;
+    }
+
     onClick = (event) => {
         event.preventDefault();
         const menuItems = document.querySelectorAll('.nav-dropdown.open');
