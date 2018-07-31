@@ -246,11 +246,16 @@ class MenuComponent extends React.Component {
     }
 
     hasAccess(link) {
+        const {loggedIn = false} = this.props;
         const {abilities = []} = this.props.user;
-        const userAbilities = getAbilitiesFromUser(abilities);
-        const neededAbilities = getAbilitiesFromLinks([link]);
+        if (loggedIn) {
+            const userAbilities = getAbilitiesFromUser(abilities);
+            const neededAbilities = getAbilitiesFromLinks([link]);
 
-        return canAccess(userAbilities, neededAbilities);
+            return canAccess(userAbilities, neededAbilities);
+        } else {
+            return !!link.isPublic;
+        }
     }
 
     render() {
@@ -259,7 +264,8 @@ class MenuComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: getUserFromState(state)
+    user: getUserFromState(state),
+    loggedIn: !!state.auth.accessToken
 });
 
 const mapDispatchToProps = (dispatch) => ({
