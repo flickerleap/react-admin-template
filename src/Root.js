@@ -26,6 +26,7 @@ export class Root extends React.Component {
 
     render() {
         const {store, persistor, routes = [], links = [], headerMenuItems = [], appConfig = {title: 'Admin'}} = this.props;
+        const layout = appConfig.layouts.admin;
 
         return (
             <Provider store={store}>
@@ -33,7 +34,7 @@ export class Root extends React.Component {
                     <Router>
                         <Switch>
                             <Route path='/' render={(props) => {
-                                return this.setComponentProps(AdminLayout, props, {
+                                return this.setComponentProps(layout, props, {
                                     routes,
                                     appConfig,
                                     links,
