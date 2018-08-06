@@ -4,9 +4,14 @@ export const DataView = ({item = {}, fields = []}) => (
     <div>
         {
             fields.map((field, index) => {
-                const value = item[field.name] ? item[field.name] : '';
+                let value = item[field.name] ? item[field.name] : '';
+
+                if(field.valueFn !== undefined) {
+                    value = field.valueFn(item);
+                }
+
                 return field.hide !== true && (
-                    <p key={`field-${field.name}`}>{`${field.label}: ${value}`}</p>
+                    <p key={`field-${field.name}`}>{`${field.label}: `}{value}</p>
                 );
             })
         }
