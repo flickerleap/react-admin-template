@@ -54,19 +54,19 @@ export const model = new Model({
             url: '#',
             name: 'Users',
             icon: 'fas fa-user',
+            ability: '*',
             children: [
                 {
                     url: '/',
                     name: 'View',
-                    access: ['admin']
+                    ability: '*'
                 },
                 {
                     url: '/add',
                     name: 'Add',
-                    access: ['admin']
+                    ability: '*'
                 },
             ],
-            access: ['admin']
         }
     ],
     actions: ({remove}) => {

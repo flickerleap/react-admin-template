@@ -10,6 +10,7 @@ export const headerMenuItems = [
     {
         name: <i className="fas fa-user"></i>,
         url: '#',
+        ability: '*',
         children: [
             {
                 name: 'Edit profile',

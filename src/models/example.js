@@ -150,14 +150,17 @@ export const model = new Model({
             url: '#',
             name: 'Examples',
             icon: 'fas fa-question',
+            ability: '*',
             children: [
                 {
                     url: '/',
                     name: 'View',
+                    ability: '*',
                 },
                 {
                     url: '/add',
                     name: 'Add',
+                    ability: '*',
                 },
             ]
         }

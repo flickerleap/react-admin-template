@@ -109,7 +109,7 @@ class LoginScreen extends React.Component {
                     />
                 </div>
                 <div className="col-md-12">
-                    <Link className="btn btn-primary" to="/forgot/password">Forgot Password?</Link>
+                    <Link to="/forgot/password">Forgot Password?</Link>
                 </div>
             </div>
         );

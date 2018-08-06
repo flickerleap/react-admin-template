@@ -14,13 +14,13 @@ export class Model {
             url: `${this.baseUrl}/${link.url}`,
             name: link.name ? link.name : this.plural,
             icon: link.icon,
-            ability: this.getLinkAbility(link.name),
+            ability: link.ability || this.getLinkAbility(link.name),
             type: link.type || this.type,
             children: link.children !== undefined ? link.children.map((item) => ({
                 url: `${this.baseUrl}${item.url}`,
                 name: item.name,
                 icon: item.icon,
-                ability: this.getLinkAbility(item.name),
+                ability: item.ability || this.getLinkAbility(item.name),
                 type: item.type || this.type
             })) : []
         }));
@@ -51,8 +51,7 @@ export class Model {
 
     getLinkAbility(name) {
         const mapping = this.linkAbilityMapping.find((item) => name.includes(item.name));
-
-        return mapping ? mapping.ability : '*';
+        return mapping ? mapping.ability : undefined;
     }
 
     getDefaultLinkAbilityMapping = () => {
@@ -68,6 +67,10 @@ export class Model {
             {
                 name: 'Add',
                 ability: 'store'
+            },
+            {
+                name: 'Show',
+                ability: 'show'
             },
             {
                 name: this.plural,
