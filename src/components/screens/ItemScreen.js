@@ -18,12 +18,6 @@ export class ItemScreen extends React.Component {
         this.getItems();
     }
 
-    /*componentDidUpdate(prevProps) {
-        if (this.props.items !== prevProps.items) {
-            this.getItems();
-        }
-    }*/
-
     getItems() {
         const {getItems} = this.props;
         getItems(this.props.match.params.id).then(() => {
