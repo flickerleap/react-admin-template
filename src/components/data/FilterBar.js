@@ -57,13 +57,9 @@ export class FilterBar extends React.Component {
 
     onReset = (event) => {
         event.preventDefault();
-        this.setState((prevState) => ({
-            ...prevState,
-            fields: prevState.fields.map((field) => {
-                field.value = field.defaultValue ? undefined : '';
-                return field;
-            })
-        }));
+        const model = this.state.model;
+        model.resetFields();
+        this.setModel(model);
 
         this.props.onFilter({});
     };
