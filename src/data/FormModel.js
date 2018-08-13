@@ -56,6 +56,10 @@ export class FormModel extends BaseModel {
                 if (field.value === undefined) {
                     field.value = field.defaultValue ? field.defaultValue : '';
                 }
+
+                const conditional = this.isConditional(field, data);
+
+                field.show = conditional !== undefined ? conditional : true;
             });
         }
     }
