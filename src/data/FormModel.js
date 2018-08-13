@@ -10,10 +10,13 @@ export class FormModel extends BaseModel {
      * Creates an instance of this class
      *
      * @param {Array} fields - The list of fields that represent this model
+     * @param {{}|undefined} data
      */
-    constructor({fields = []} = {}) {
+    constructor({fields = [], data = undefined} = {}) {
         super({fields});
+        this.data = data;
         this.fields = this.getFields(this.fields);
+        this.load(data);
     }
 
     /**
@@ -25,7 +28,7 @@ export class FormModel extends BaseModel {
     getFields(fields = []) {
         return this.cloneFields(fields).reduce((result, field) => {
             if (!this.exclude(field) && this.isEditable(field)) {
-                field.show = true;
+                field.show = this.show(field, this.data);
                 const currentField = this.get(field.name);
                 field.value = (currentField && currentField.value) ? currentField.value : (field.defaultValue || '');
                 field.required = field.validation &&
@@ -56,10 +59,6 @@ export class FormModel extends BaseModel {
                 if (field.value === undefined) {
                     field.value = field.defaultValue ? field.defaultValue : '';
                 }
-
-                const conditional = this.isConditional(field, data);
-
-                field.show = conditional !== undefined ? conditional : true;
             });
         }
     }
