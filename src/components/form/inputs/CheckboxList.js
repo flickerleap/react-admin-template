@@ -2,15 +2,26 @@ import React from 'react';
 import {Label} from "../Label";
 
 export class CheckboxList extends React.Component {
-    getValues(currentValues = [], newValues = []) {
-        let valueList = currentValues;
+    constructor(props) {
+        super(props);
 
-        newValues.map((value) => {
-            const index = this.getIndexOfValue(this.props.items, value);
-            valueList[index] = value;
-        });
+        this.state = {
+            values: []
+        };
+    }
 
-        return valueList;
+    componentDidMount() {
+        this.setState(() => ({
+            values: this.getValuesArray()
+        }));
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.value !== prevProps.value) {
+            this.setState(() => ({
+                values: this.getValuesArray()
+            }));
+        }
     }
 
     getIndexOfValue = (items, value) => {
@@ -19,31 +30,49 @@ export class CheckboxList extends React.Component {
         });
     };
 
-    getEventObject = (value) => {
-        return {
-            target: {
-                name: this.props.name,
-                value: value
-            }
-        };
-    };
+    getEventObject = (values) => ({
+        target: {
+            name: this.props.name,
+            value: values.filter((value)=>value !== undefined)
+        }
+    });
 
     onChange = (event) => {
         const value = event.target.value;
-        const index = this.getIndexOfValue(this.props.items, event.target.value);
-        const values = this.props.value || [];
-        values[index] = values.includes(value) ? undefined : value;
+        const valueIndex = this.getIndexOfValue(this.props.items, event.target.value);
+        this.setState((prevState) => {
+            const data = {
+                values: this.props.items.map((item, index) => {
+                    if (index === valueIndex) {
+                        return prevState.values.includes(value) ? undefined : value;
+                    }
 
-        this.props.onChange(this.getEventObject(values));
+                    return prevState.values[index];
+                })
+            };
+
+            this.props.onChange(this.getEventObject(data.values));
+
+            return data;
+        });
     };
 
     isSelected = (index) => {
-        const values = this.getValues([], this.getValuesArray());
-        return values[index] !== undefined;
+        return this.state.values[index];
     };
 
     getValuesArray() {
-        return Array.isArray(this.props.value) ? this.props.value : [this.props.value];
+        const values = [];
+        if (Array.isArray(this.props.value)) {
+            this.props.value.forEach((value) => {
+                const index = this.getIndexOfValue(this.props.items, value.toString());
+                values[index] = value.toString();
+            });
+        } else if (this.props.value) {
+            values.push(this.props.value);
+        }
+
+        return values;
     }
 
     render() {

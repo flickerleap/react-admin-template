@@ -1,6 +1,6 @@
 {
   "name": "react-admin-template",
-  "version": "0.2.8",
+  "version": "0.2.11",
   "description": "",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",

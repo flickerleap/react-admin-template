@@ -38,6 +38,10 @@ export class FilterModel extends BaseModel {
         }, []);
     };
 
+    resetFields() {
+        this.fields = this.getFields(this.fields);
+    }
+
     /**
      * Checks whether or not a specific field can be filtered.
      * @param {Object} field

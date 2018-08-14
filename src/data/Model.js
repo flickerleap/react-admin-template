@@ -62,7 +62,7 @@ export class Model {
             },
             {
                 name: 'View',
-                ability: 'index'
+                ability: 'show'
             },
             {
                 name: 'Add',
@@ -75,6 +75,10 @@ export class Model {
             {
                 name: this.plural,
                 ability: 'index'
+            },
+            {
+                name: this.type,
+                ability: 'show'
             }
         ];
     };

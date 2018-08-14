@@ -74,14 +74,14 @@ export class BaseModel {
      *
      * @param {Object} field
      * @param {Object} item
-     * @returns {boolean}
+     * @returns {boolean|undefined}
      */
-    isConditional = (field, item) => {
-        if (field.conditional !== undefined) {
-            return field.conditional(item);
-        } else {
-            return false;
+    show = (field, item) => {
+        if (field.canShow !== undefined) {
+            return field.canShow(item);
         }
+
+        return true;
     };
 
     /**

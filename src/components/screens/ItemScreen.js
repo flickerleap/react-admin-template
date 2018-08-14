@@ -10,27 +10,19 @@ export class ItemScreen extends React.Component {
 
         this.state = {
             loading: true,
-            item: undefined,
             errors: []
         };
     }
 
     componentDidMount() {
-        this.getItem();
+        this.getItems();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.match.params.id !== prevProps.match.params.id) {
-            this.getItem();
-        }
-    }
-
-    getItem() {
-        const {getItem} = this.props;
-        getItem(this.props.match.params.id).then((action) => {
-            this.setState((prevState) => ({
-                loading: false,
-                item: action.payload.data
+    getItems() {
+        const {getItems} = this.props;
+        getItems(this.props.match.params.id).then(() => {
+            this.setState(() => ({
+                loading: false
             }));
         });
     }
@@ -47,25 +39,50 @@ export class ItemScreen extends React.Component {
         return false;
     };
 
+    getColumnClass() {
+        const {columns = 2} = this.props;
+
+        return `col-md-${12 / columns}`;
+    }
+
+    getView(item) {
+        const {fields = [], customView = undefined} = this.props;
+        const props = {fields, item};
+        if(customView === undefined) {
+            return React.createElement(DataView, props)
+        }
+
+        return React.createElement(customView, props)
+    }
+
     render() {
-        const {title = 'View Item', fields = [], extraContent = ''} = this.props;
-        const {item = {}} = this.state;
+        const {title = 'View Items', type = 'Item', extraContent = '', items = []} = this.props;
+        const {loading} = this.state;
+
         return (
-            <div className="row">
-                <h1>{title}</h1>
-                {this.state.loading && <Loading active={this.state.loading}/>}
-                <div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <Card
-                                title='Lease'
-                                text={(
-                                    item && <DataView item={item} fields={fields}/>
-                                )}
-                            />
-                        </div>
+            <div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <h1>{title}</h1>
                     </div>
-                    <div>
+                </div>
+                {loading && <Loading active={loading}/>}
+                <div className="row">
+                    {
+                        items.map((item, index) => (
+                            <div key={index} className={this.getColumnClass()}>
+                                <Card
+                                    title={`${type} ${index+1}`}
+                                    text={(
+                                        item && this.getView(item)
+                                    )}
+                                />
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className="row">
+                    <div className="col-md-12">
                         {extraContent}
                     </div>
                 </div>

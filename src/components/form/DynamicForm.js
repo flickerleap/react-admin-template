@@ -37,12 +37,7 @@ export class DynamicForm extends React.Component {
     }
 
     getModel = (fields = [], data = undefined) => {
-        const model = new FormModel({fields});
-        if (data) {
-            model.load(data);
-        }
-
-        return model;
+        return new FormModel({fields, data});
     };
 
     setModel(model) {
