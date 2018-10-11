@@ -46,6 +46,8 @@ export class ActionColumn extends React.Component {
                     }}
                     action={() => action.to(item)}
                 />;
+            case 'external':
+                return <a className={action.classes} key={index} href={action.to(item)}>{action.label}</a>;
             case 'link':
             default:
                 return <Link className={action.classes} key={index} to={action.to(item)}>{action.label}</Link>;
