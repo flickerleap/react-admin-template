@@ -9,7 +9,7 @@ export class EditScreen extends React.Component {
 
         this.state = {
             errors: [],
-            loading: false,
+            loading: true,
             item: undefined
         };
     }
