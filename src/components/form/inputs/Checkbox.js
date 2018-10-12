@@ -6,8 +6,8 @@ export class Checkbox extends React.Component {
     getEventObject = (value) => {
         return {
             target: {
-                name: this.props.name,
-                value: value
+              value,
+              name: this.props.name,
             }
         };
     };
@@ -22,6 +22,8 @@ export class Checkbox extends React.Component {
             name, label, className = "form-control col-md-4", value = false
         } = this.props;
 
+        console.log(value);
+
         return (
             <div>
                 <Label {...this.props} />
@@ -33,7 +35,7 @@ export class Checkbox extends React.Component {
                             name={name}
                             type="checkbox"
                             value={value}
-                            defaultChecked={value}
+                            checked={value}
                         />
                         <span> {label}</span>
                     </div>
