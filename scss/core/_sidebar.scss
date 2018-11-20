@@ -5,7 +5,7 @@
   padding: $sidebar-padding;
   color: $sidebar-color;
   background: $sidebar-bg;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   @include borders($sidebar-borders);
 

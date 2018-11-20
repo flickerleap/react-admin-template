@@ -47,6 +47,15 @@ export const model = new Model({
             name: 'image.src',
             label: 'Profile Image',
             type: 'text',
+        }, {
+            name: 'subscriptions',
+            label: 'Subscriptions',
+            type: 'checkboxlist',
+            items: [
+              {value: 'Newsletter', label: 'Newsletter'},
+              {value: 'Email', label: 'Email'}
+            ],
+            value: ['Newsletter']
         }
     ],
     links: [

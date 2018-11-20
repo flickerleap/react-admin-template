@@ -17,7 +17,7 @@ export class CheckboxList extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.value !== prevProps.value) {
+        if (this.props.value !== prevProps.value || this.props.items !== prevProps.items) {
             this.setState(() => ({
                 values: this.getValuesArray()
             }));
@@ -57,7 +57,12 @@ export class CheckboxList extends React.Component {
     };
 
     getValuesArray() {
-        let values = [];
+        let values = this.props.items.map((item) => {
+          item.selected = false;
+
+          return item;
+        });
+
         if (Array.isArray(this.props.value)) {
             values = this.props.items.map((item) => {
                 item.selected = !!this.props.value.includes(item.value);
@@ -77,7 +82,7 @@ export class CheckboxList extends React.Component {
 
     render() {
         const {
-            name, className = "form-control col-md-4", items = []
+            name, className = "form-control col-md-4"
         } = this.props;
 
         return (
@@ -85,7 +90,7 @@ export class CheckboxList extends React.Component {
                 <Label {...this.props} />
                 <div className="row">
                     {
-                        items.map((item, index) => (
+                        this.state.values.map((item, index) => (
                             <div key={index} className={className}>
                                 <input
                                     onChange={this.onChange}
@@ -93,7 +98,7 @@ export class CheckboxList extends React.Component {
                                     name={name}
                                     type="checkbox"
                                     value={item.value}
-                                    defaultChecked={item.selected}
+                                    checked={item.selected}
                                 />
                                 <span> {item.label}</span>
                             </div>
