@@ -24,52 +24,52 @@ export class CheckboxList extends React.Component {
         }
     }
 
-    getIndexOfValue = (items, value) => {
-        return items.findIndex((item) => {
-            return item.value === value;
-        });
-    };
-
     getEventObject = (values) => ({
         target: {
             name: this.props.name,
-            value: values.filter((value)=>value !== undefined)
+            value: values.reduce((list, value)=>{
+                if(value.selected) {
+                    list.push(value.value);
+                }
+
+                return list;
+            }, [])
         }
     });
 
     onChange = (event) => {
         const value = event.target.value;
-        const valueIndex = this.getIndexOfValue(this.props.items, event.target.value);
         this.setState((prevState) => {
-            const data = {
-                values: this.props.items.map((item, index) => {
-                    if (index === valueIndex) {
-                        return prevState.values.includes(value) ? undefined : value;
-                    }
+            const values = prevState.values.map((item) => {
+                if (item.value.toString() === value.toString()) {
+                    item.selected = !item.selected;
+                }
 
-                    return prevState.values[index];
-                })
+                return item;
+            });
+
+            this.props.onChange(this.getEventObject(values));
+
+            return {
+                values
             };
-
-            this.props.onChange(this.getEventObject(data.values));
-
-            return data;
         });
     };
 
-    isSelected = (index) => {
-        return this.state.values[index];
-    };
-
     getValuesArray() {
-        const values = [];
+        let values = [];
         if (Array.isArray(this.props.value)) {
-            this.props.value.forEach((value) => {
-                const index = this.getIndexOfValue(this.props.items, value.toString());
-                values[index] = value.toString();
+            values = this.props.items.map((item) => {
+                item.selected = !!this.props.value.includes(item.value);
+
+                return item;
             });
         } else if (this.props.value) {
-            values.push(this.props.value);
+          values = this.props.items.map((item) => {
+              item.selected = item.value.toString() === this.props.value.toString();
+
+              return item;
+          });
         }
 
         return values;
@@ -93,7 +93,7 @@ export class CheckboxList extends React.Component {
                                     name={name}
                                     type="checkbox"
                                     value={item.value}
-                                    defaultChecked={this.isSelected(index)}
+                                    defaultChecked={item.selected}
                                 />
                                 <span> {item.label}</span>
                             </div>
