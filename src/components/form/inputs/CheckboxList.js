@@ -57,7 +57,12 @@ export class CheckboxList extends React.Component {
     };
 
     getValuesArray() {
-        let values = [];
+        let values = this.props.items.map((item) => {
+          item.selected = false;
+
+          return item;
+        });
+
         if (Array.isArray(this.props.value)) {
             values = this.props.items.map((item) => {
                 item.selected = !!this.props.value.includes(item.value);
