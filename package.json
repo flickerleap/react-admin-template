@@ -1,7 +1,7 @@
 {
-  "name": "react-admin-template",
+  "name": "@flickerleap/react-admin-template",
   "version": "0.2.17",
-  "description": "",
+  "description": "This is a React based admin template using Bootstrap 4. This project is very young and has a long way to go. If you have any issues, please open an issue and / or try open a PR to fix it.",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
   "files": [
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/flickerleap/react-admin-template.git"
+    "url": "git+https://github.com/flickerleap/react-admin-template.git"
   },
   "author": "Flicker Leap",
   "license": "MIT",
@@ -83,5 +83,15 @@
     "webpack-dev-server": "^2.11.3",
     "webpack-merge": "^4.1.4",
     "webpack-serve": "^0.2.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/flickerleap/react-admin-template/issues"
+  },
+  "homepage": "https://github.com/flickerleap/react-admin-template#readme",
+  "keywords": [
+    "react",
+    "laravel",
+    "admin",
+    "template"
+  ]
 }
