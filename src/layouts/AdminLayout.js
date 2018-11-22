@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import {Footer, Header, Sidebar} from "../components/layout/layout";
 import {Container} from 'reactstrap';
+import ErrorBoundary from '../components/errors/ErrorBoundary'
 
 export class AdminLayout extends React.Component {
     render() {
@@ -12,22 +13,24 @@ export class AdminLayout extends React.Component {
                 <Header {...appConfig} menuItems={headerMenuItems}/>
                 <div className='app-body'>
                     <Sidebar links={links} {...rest}/>
-                    <main className="main">
-                        <Container fluid>
-                            <Switch>
-                                {
-                                    routes.map((route, index) => {
-                                        const component = getComponent(route);
-                                        const exact = route.exact !== undefined ? route.exact : true;
-                                        return (
-                                            <Route key={index} path={route.path} component={component}
-                                                   exact={exact}/>
-                                        );
-                                    })
-                                }
-                            </Switch>
-                        </Container>
-                    </main>
+                    <ErrorBoundary logger={appConfig.logger}>
+                        <main className="main">
+                            <Container fluid>
+                                <Switch>
+                                    {
+                                        routes.map((route, index) => {
+                                            const component = getComponent(route);
+                                            const exact = route.exact !== undefined ? route.exact : true;
+                                            return (
+                                                <Route key={index} path={route.path} component={component}
+                                                       exact={exact}/>
+                                            );
+                                        })
+                                    }
+                                </Switch>
+                            </Container>
+                        </main>
+                    </ErrorBoundary>
                 </div>
 
                 <Footer copyright={appConfig.copyright}/>
