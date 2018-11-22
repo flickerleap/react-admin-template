@@ -7,7 +7,7 @@ export class Logger {
 
   }
 
-  fallbackRender () {
+  render () {
 
   }
 }

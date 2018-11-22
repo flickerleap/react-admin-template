@@ -1,4 +1,5 @@
 import React from 'react'
+import { Container } from 'reactstrap'
 
 export class ErrorBoundary extends React.Component {
   constructor (props) {
@@ -6,21 +7,28 @@ export class ErrorBoundary extends React.Component {
     this.state = {error: null}
   }
 
-  componentDidCatch (error, info) {
-    this.setState(() => ({
-      error
-    }));
-    // You can also log the error to an error reporting service
-    log(error, info)
+  static getDerivedStateFromError (error) {
+    // Update state so the next render will show the fallback UI.
+    return {error}
   }
 
-  log(error, errorInfo) {
-    this.props.logger.log(error, errorInfo);
+  componentDidCatch (error, errorInfo) {
+    this.setState(() => ({
+      error
+    }))
+    // You can also log the error to an error reporting service
+    this.props.logger.log(error, errorInfo)
   }
 
   render () {
     if (this.state.error) {
-      return this.props.logger.fallbackRender()
+      return (
+        <main className="main">
+          <Container fluid>
+            {this.props.logger.render()}
+          </Container>
+        </main>
+      )
     }
 
     return this.props.children

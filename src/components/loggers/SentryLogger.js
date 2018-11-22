@@ -5,23 +5,28 @@ import { Logger } from './Logger'
 export class SentryLogger extends Logger {
   constructor (dsn) {
     super('sentry')
+
     Sentry.init({
       dsn
     })
   }
 
   log (error, errorInfo) {
-    Sentry.withScope(scope => {
-      Object.keys(errorInfo).forEach(key => {
-        scope.setExtra(key, errorInfo[key])
+    if(process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
+      Sentry.withScope(scope => {
+        Object.keys(errorInfo).forEach(key => {
+          scope.setExtra(key, errorInfo[key])
+        })
+        Sentry.captureException(error)
       })
-      Sentry.captureException(error)
-    })
+    }
   }
 
-  fallbackRender () {
+  render () {
     return (
-      <a onClick={() => Sentry.showReportDialog()}>Report feedback</a>
+      <div>
+        <h1>Sorry, something went wrong.</h1>
+      </div>
     )
   }
 }

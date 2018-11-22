@@ -10,7 +10,7 @@ export class DefaultLogger extends Logger {
     console.log(error, errorInfo)
   }
 
-  fallbackRender () {
+  render () {
     return (
       <h1>Something went wrong.</h1>
     )
