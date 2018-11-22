@@ -1,9 +1,8 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/mern-starter
     docker:
-      - image: circleci/node:10.1-browsers
+      - image: flickerleap/docker-circleci-laravel:latest
     steps:
       - checkout
       - run:

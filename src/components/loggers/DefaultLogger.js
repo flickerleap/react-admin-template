@@ -1,8 +1,7 @@
 import React from 'react'
-import * as Sentry from '@sentry/browser'
-import Logger from './Logger'
+import { Logger } from './Logger'
 
-export default class DefaultLogger extends Logger {
+export class DefaultLogger extends Logger {
   constructor () {
     super('default')
   }

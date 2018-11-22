@@ -1,13 +1,13 @@
 import React from 'react'
 import * as Sentry from '@sentry/browser'
-import Logger from './Logger'
+import { Logger } from './Logger'
 
-export default class SentryLogger extends Logger {
+export class SentryLogger extends Logger {
   constructor (dsn) {
     super('sentry')
     Sentry.init({
       dsn
-    });
+    })
   }
 
   log (error, errorInfo) {
