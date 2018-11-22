@@ -1,6 +1,6 @@
 {
   "name": "@flickerleap/react-admin-template",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "This is a React based admin template using Bootstrap 4. This project is very young and has a long way to go. If you have any issues, please open an issue and / or try open a PR to fix it.",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
