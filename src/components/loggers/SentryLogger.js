@@ -6,13 +6,19 @@ export class SentryLogger extends Logger {
   constructor (dsn) {
     super('sentry')
 
-    Sentry.init({
-      dsn
-    })
+    if(this.isProduction()) {
+      Sentry.init({
+        dsn
+      })
+    }
+  }
+
+  isProduction = () => {
+    return process.env.NODE_ENV && process.env.NODE_ENV === 'production'
   }
 
   log (error, errorInfo) {
-    if(process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
+    if(this.isProduction()) {
       Sentry.withScope(scope => {
         Object.keys(errorInfo).forEach(key => {
           scope.setExtra(key, errorInfo[key])
