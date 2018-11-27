@@ -1,6 +1,6 @@
 {
   "name": "@flickerleap/react-admin-template",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "description": "This is a React based admin template using Bootstrap 4. This project is very young and has a long way to go. If you have any issues, please open an issue and / or try open a PR to fix it.",
   "main": "dist/bundle.js",
   "style": "dist/styles.css",
@@ -32,6 +32,7 @@
     "bootstrap": "^4.1.2",
     "classnames": "^2.2.6",
     "dotenv-webpack": "^1.5.7",
+    "event-stream": "3.3.4",
     "font-awesome": "^4.7.0",
     "moment": "^2.22.1",
     "query-string": "^6.1.0",
