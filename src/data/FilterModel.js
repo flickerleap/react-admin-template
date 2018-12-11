@@ -38,7 +38,10 @@ export class FilterModel extends BaseModel {
         }, []);
     };
 
-    resetFields() {
+  /**
+   * Resets the values in the filter fields back to their defaults
+   */
+  resetFields() {
         this.fields = this.getFields(this.fields);
     }
 
