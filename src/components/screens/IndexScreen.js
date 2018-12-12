@@ -64,7 +64,7 @@ export class IndexScreen extends React.Component {
     const params = Object.assign(paramsFromProps, this.getParams())
     params.page = params.page || page
     params.filters = params.filters ? Object.assign(params.filters, filters) : filters
-    if(resetParams) {
+    if (resetParams) {
       params.filters = filters
       params.page = page
     }
@@ -88,13 +88,12 @@ export class IndexScreen extends React.Component {
   /**
    *
    * @param {{}} filters
-   * @param {boolean} resetParams
    */
-  onFilter = (filters = {}, resetParams = false) => {
+  onFilter = (filters = {}) => {
     this.setState(() => ({
       loading: true
     }))
-    this.fetchItems({filters, resetParams})
+    this.fetchItems({filters, resetParams: true})
   }
 
   /**

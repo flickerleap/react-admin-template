@@ -50,7 +50,7 @@ export class FilterBar extends React.Component {
       }
     })
 
-    this.props.onFilter(data, true)
+    this.props.onFilter(data)
   }
 
   onReset = (event) => {
@@ -59,7 +59,7 @@ export class FilterBar extends React.Component {
     model.resetFields()
     this.setModel(model)
 
-    this.props.onFilter({}, true)
+    this.props.onFilter({})
   }
 
   render () {
