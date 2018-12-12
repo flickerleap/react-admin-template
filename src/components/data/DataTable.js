@@ -11,7 +11,7 @@ import { DisplayModel } from '../../data/DisplayModel'
  * @param {Array} props.items
  * @param {Array} props.fields
  * @param {Object} props.pagination
- * @returns {DataTable}
+ * @returns {React.Component}
  * @constructor
  */
 export class DataTable extends React.Component {

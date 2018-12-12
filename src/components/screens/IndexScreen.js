@@ -42,6 +42,7 @@ export class IndexScreen extends React.Component {
    */
   getQueryParams () {
     const params = qs.parse(this.props.history.location.search)
+
     return params || {}
   }
 
@@ -49,24 +50,24 @@ export class IndexScreen extends React.Component {
    * Runs code when the component has been mounted
    */
   componentDidMount () {
-    this.fetchItems(this.getParams())
-  }
-
-  componentDidUpdate (prevProps) {
-    if (this.props.history.location.search !== prevProps.history.location.search) {
-      this.fetchItems(this.getParams())
-    }
+    this.fetchItems({})
   }
 
   /**
    *
    * @param {number} page
    * @param {{}} filters
+   * @param {boolean} resetParams
    */
-  fetchItems = ({page = 1, filters = {}}) => {
-    const {fetch, params = {}} = this.props
+  fetchItems = ({page = 1, filters = {}, resetParams = false}) => {
+    const {fetch, params: paramsFromProps = {}} = this.props
+    const params = Object.assign(paramsFromProps, this.getParams())
     params.page = params.page || page
     params.filters = params.filters ? Object.assign(params.filters, filters) : filters
+    if (resetParams) {
+      params.filters = filters
+      params.page = page
+    }
     fetch(params).then((action) => {
       this.setState(() => ({
         loading: false
@@ -92,7 +93,7 @@ export class IndexScreen extends React.Component {
     this.setState(() => ({
       loading: true
     }))
-    this.fetchItems({filters})
+    this.fetchItems({filters, resetParams: true})
   }
 
   /**
